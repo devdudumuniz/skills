@@ -1,0 +1,4 @@
+# Scripts de instalação de dependências NÃO são executados (supply chain).
+# esbuild funciona pelo binário da dependência opcional da plataforma (@esbuild/<os>-<arch>).
+allowBuilds:
+  esbuild: false

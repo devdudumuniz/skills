@@ -1,0 +1,109 @@
+# status/portal.yaml — metadados do painel e conteúdo EXECUTIVO. Não guarda estado (status, datas, progresso são
+# derivados de backlog.yaml + events.jsonl). Veja references/DATA-MODEL.md.
+apiVersion: status.kit/v1
+kind: ProjectPortal
+version: 1
+
+project:
+  title: "__TITLE__"
+  office: "__OWNER__"                  # empresa/cliente/equipe (aparece no cabeçalho)
+  report_heading: Relatório de Evolução do Projeto
+
+task_id_prefix: "__PREFIX__"           # ids das tarefas: __PREFIX__-001, __PREFIX__-002…
+
+summary:                               # textos curtos do "Resumo do projeto" (derivados de docs; cite a fonte no commit)
+  objective: ""                        # para que o projeto existe
+  modernizing: ""                      # o que está sendo feito agora
+
+# Quem aparece como executor. Ator não listado usa o rótulo do TIPO (actor_types).
+actors:
+  # "agent:claude-code": Claude Code
+actor_types:
+  human: Equipe (humano)
+  agent: Agente de IA
+  engine: Automação
+  service: Automação
+  system: Automação
+
+# Ações que o PRÓPRIO sistema executa (CLI de verificações, relatórios, fluxos agendados) aparecem com este rótulo,
+# nem como pessoa nem como IA. Troque o nome se quiser (ex.: "Zuza Agent").
+orchestrator:
+  label: Automação
+  event_types: [GATES_RECORDED, HANDOFF_RECORDED, REPORT_REGISTERED, PHASE_COMPLETED, MILESTONE_DELIVERED]
+  actor_types: [engine, service, system]
+
+# Horas trabalhadas (derivadas de sessões registradas + janelas das tarefas + atividade real: eventos, commits, arquivos).
+hours:
+  session_gap_minutes: 30              # pausas até isto continuam na mesma sessão
+  idle_cutoff_minutes: 180             # pausas maiores sem NENHUM registro são descontadas
+  git: true                            # usa os commits como evidência de atividade
+  file_evidence: null                  # null = projeto inteiro (menos node_modules, .git…); ou lista de pastas: [src, docs]
+
+# Verificações permitidas (lista FIXA; texto de tarefa nunca vira comando). `cmd` é lista de argumentos, sem shell.
+# `{python}` vira o interpretador atual. `parse`+`metric` extraem um número da saída (ex.: quantidade de testes).
+gates:
+  # tests:
+  #   label: Testes automatizados
+  #   cmd: ["{python}", "-m", "unittest", "discover"]
+  #   parse: "Ran (\\d+) tests?"
+  #   metric: tests
+  # build:
+  #   label: Build
+  #   cmd: ["npm", "run", "build"]
+quality_groups: []                     # [] = uma linha por verificação; ou agrupe: [{id: tests, label: Testes, gates: [tests]}]
+
+# Visão do cliente: tarefas destes `kind` aparecem como "Item de segurança em tratamento" (sem detalhes).
+client:
+  mask_kinds: [security]
+redact: []                             # nomes de clientes/pessoas a mascarar nos textos do cliente (viram iniciais)
+pii: br                                # br = mascara CPF/CNPJ/telefone; none = não mascara
+
+# Títulos/objetivos EXECUTIVOS por tarefa (opcional). Sem entrada, o painel usa o texto do backlog, sanitizado.
+tasks: {}
+#  T-001: {title: "Título para o cliente", goal: "O que isso entrega, em uma frase."}
+
+# Processos e capacidades (aba "Processos e capacidades"). A régua de 5 níveis (Identificada → Em migração → Implementada →
+# Testada → Homologada) é DERIVADA das tarefas: `migrated_by` (constroem/migram), `tested_by` (testam), `homologated_by`
+# (aprovação). Nunca declare nível, status ou progresso: o `doctor` reprova. `automation` (SIM|PARCIAL|NÃO) é opcional e
+# descreve o que já existia antes; sem ele é derivado das tarefas.
+domains: []
+#  - id: domain.pagamentos
+#    label: Pagamentos
+#    what_it_does: "O que a capacidade faz."
+#    input: "..."
+#    output: "..."
+#    priority: P1
+#    migrated_by: [__PREFIX__-003]
+#    tested_by: [__PREFIX__-004]
+#    homologated_by: []
+#    next_milestone: "..."
+#    skills: [{label: "Pacote X", skills: ["a", "b"]}]          # opcional: itens encontrados no levantamento
+#    components: [{name: "Serviço Y", status: Implementada}]    # opcional: componentes da plataforma
+# Tabela "Processos" (opcional). Sem ela, uma linha por domínio.
+processes: []
+#  - {process: "Emissão de nota", domain: domain.pagamentos, objective: "...", automation: PARCIAL, priority: P2, next_milestone: "..."}
+# Tabela "Ambiente atual × nova plataforma" (aba Evolução). Aceita {tests_count}, {tasks_done}, {tasks_total}, {hours_worked}.
+comparative: []
+#  - {category: Segurança, current: "Como era.", new: "Como ficou.", source: docs/x.md}
+# Textos que dependem do projeto (todos opcionais; o painel tem padrões neutros).
+labels: {}
+#  modernizing: "O que está sendo modernizado"      # título do card do resumo (padrão: "O que está sendo feito")
+#  nothing_waiting: "Nada aguardando o escritório ou a equipe."
+#  processes_title: "Processos do escritório"
+#  capabilities_title: "Capacidades identificadas"
+#  capabilities_intro: "Levantamento das capacidades, agrupadas por área."
+#  comparative_title: "Ambiente atual × nova plataforma"
+#  before_after_intro: "Como era antes, o que existe hoje, por que cada mudança foi feita…"
+#  automation_pill: "Automatizada"
+
+# Achados do levantamento (situação derivada das tarefas). `sensitive: true` mostra ao cliente só "item de segurança".
+findings: []
+#  - {id: finding.x, title: "...", category: Operação, description: "...", impact: "...", action: "...", tasks: [T-005]}
+
+# Evolução (cards da aba "Evolução e achados"); aceita {tasks_done}, {tasks_total}, {tests_count}, {hours_worked}.
+evolution: {}
+#  existed:    {items: ["O que existia antes"]}
+#  identified: {items: ["O que foi identificado"]}
+#  preserved:  {items: []}
+#  rebuilt:    {items: []}
+#  improved:   {items: ["{tasks_done} de {tasks_total} tarefas concluídas"]}

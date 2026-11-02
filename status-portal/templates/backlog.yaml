@@ -1,0 +1,25 @@
+# status/backlog.yaml — o PLANO: definição das tarefas. NUNCA escreva estado aqui (status, datas, responsável,
+# progresso): ele vem de events.jsonl e o `status doctor` reprova se aparecer.
+#
+# Campos: id · title · priority P0..P3 · kind (dev, docs, ops, security, decision, input…) · executor agent|human|any ·
+# goal · steps · acceptance · depends_on · blocked_by (bloqueio EXTERNO que só humano remove) ·
+# requires_human_approval (+ approval_reason) · gates (nomes definidos em portal.yaml) · refs.
+apiVersion: status.kit/v1
+kind: Backlog
+version: 1
+tasks:
+  - id: __PREFIX__-001
+    title: Configurar o painel de acompanhamento deste projeto
+    priority: P1
+    kind: docs
+    executor: any
+    goal: >-
+      Substituir esta tarefa de exemplo pelo backlog real do projeto, definir as fases e as verificações,
+      e conferir o painel no navegador.
+    steps:
+      - "Editar status/backlog.yaml com as tarefas reais (uma por entrega verificável)."
+      - "Agrupar em fases em status/phases.yaml e preencher status/portal.yaml."
+      - "python status/status.py doctor  → PASS; python status/status.py serve  → abrir o painel."
+    acceptance:
+      - "doctor PASS"
+      - "painel abre e mostra as tarefas e fases reais"

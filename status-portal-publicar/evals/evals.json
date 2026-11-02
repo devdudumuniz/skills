@@ -1,0 +1,23 @@
+{
+  "skill_name": "status-portal-publicar",
+  "evals": [
+    {
+      "id": 2,
+      "name": "publicar-sem-vazar-nome",
+      "prompt": "O cliente (Loja Exemplo) vai acompanhar o painel de status deste projeto por status.lojaexemplo.com.br, atrás do nosso Nginx Proxy Manager em 192.168.1.50. O dono, Fulano da Silva, não pode aparecer em nada que o cliente veja. Deixe tudo pronto para publicar (arquivos e comandos, e a conferência do que o cliente enxerga), mas NÃO suba container nem altere o proxy agora: eu faço depois de revisar. Projeto em {project}.",
+      "expected_output": "Conferência da visão do cliente detecta o nome, corrige, nova conferência limpa; compose/env na LAN (não 0.0.0.0), client-viewer, trusted-proxy/token, instruções do proxy com Access List; nada publicado.",
+      "files": [
+        "fixtures/loja-app (ver H:/skills-workspace/make_fixtures.py e setup_iteration.py)"
+      ],
+      "assertions": [
+        "Nome 'Fulano da Silva' não aparece na visão do cliente",
+        "Servidor/compose usa client-viewer e IP da LAN, nunca 0.0.0.0 no host",
+        "Proxy: --trusted-proxy ou STATUS_PROXY_TOKEN previstos",
+        "Instruções do proxy citam subdomínio, IP do NPM e Access List",
+        "Conferência da visão do cliente executada e reportada",
+        "Painel íntegro depois das mudanças (doctor PASS)",
+        "Resposta deixa claro que nada foi publicado"
+      ]
+    }
+  ]
+}

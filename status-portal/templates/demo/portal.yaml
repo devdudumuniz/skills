@@ -1,0 +1,110 @@
+apiVersion: status.kit/v1
+kind: ProjectPortal
+version: 1
+project:
+  title: Migração da Loja Online
+  office: Empresa Exemplo
+  report_heading: Relatório de Evolução do Projeto
+task_id_prefix: D
+summary:
+  objective: "Levar a loja online para uma plataforma nova, mais rápida e segura, sem perder o histórico de produtos e pedidos."
+  modernizing: "Catálogo e pedidos estão sendo migrados em etapas, com conferência de dados a cada módulo."
+actors:
+  "agent:demo-bot": Agente de demonstração
+orchestrator:
+  label: Automação
+hours:
+  session_gap_minutes: 30
+  idle_cutoff_minutes: 180
+  git: false
+  file_evidence: []
+gates:
+  tests:
+    label: Testes automatizados
+    cmd: ["{python}", "-c", "print('Ran 42 tests')"]
+    parse: "Ran (\\d+) tests?"
+    metric: tests
+  security:
+    label: Segurança
+    cmd: ["{python}", "-c", "print('ok')"]
+quality_groups:
+  - {id: tests, label: Testes, gates: [tests]}
+  - {id: security, label: Segurança, gates: [security]}
+client:
+  mask_kinds: [security]
+redact: ["Fulano da Silva"]
+tasks: {}
+domains:
+  - id: domain.catalogo
+    label: Catálogo de produtos
+    what_it_does: "Cadastro, preços e estoque dos produtos."
+    input: "Planilha e banco antigo"
+    output: "Catálogo na nova plataforma"
+    priority: P1
+    migrated_by: [D-003]
+    tested_by: [D-003]
+    next_milestone: "Catálogo conferido"
+  - id: domain.pedidos
+    label: Pedidos e entregas
+    what_it_does: "Histórico de pedidos e acompanhamento de entrega."
+    input: "Banco antigo"
+    output: "Pedidos na nova plataforma"
+    priority: P1
+    migrated_by: [D-004]
+    next_milestone: "Pedidos conferidos"
+  - id: domain.pagamento
+    label: Meio de pagamento
+    what_it_does: "Checkout ligado ao meio de pagamento."
+    priority: P1
+    automation: PARCIAL
+    migrated_by: [D-005]
+    next_milestone: "Pagamento de teste aprovado"
+processes:
+  - process: Cadastro de produtos
+    domain: domain.catalogo
+  - process: Fechamento de pedidos
+    domain: domain.pedidos
+  - process: Cobrança no checkout
+    domain: domain.pagamento
+  - process: Emissão de nota fiscal
+    objective: "Emitir a nota a partir do pedido pago."
+    automation: NÃO
+    priority: P2
+    next_milestone: "Fora do escopo desta fase"
+comparative:
+  - category: Cadastro
+    current: "Planilha enviada por e-mail, sem histórico."
+    new: "Cadastro único na plataforma, com histórico de alterações."
+  - category: Testes
+    current: "Conferência manual dos produtos."
+    new: "Testes automatizados (quantidade atual: {tests_count}) antes de concluir cada módulo."
+  - category: Segurança
+    current: "Acesso compartilhado por senha."
+    new: "Acesso por conta individual e verificação de segredos a cada entrega."
+labels:
+  modernizing: "O que está sendo modernizado"
+  processes_title: "Processos da loja"
+  capabilities_intro: "Capacidades da loja migradas em etapas. A situação de cada uma vem do andamento real das tarefas."
+findings:
+  - id: finding.chave
+    title: "Chave de acesso no repositório antigo"
+    category: Segurança
+    sensitive: true
+    description: "Chave exposta no histórico."
+    impact: "Risco de acesso indevido."
+    action: "Trocar a chave."
+    tasks: [D-008]
+  - id: finding.imagens
+    title: "Imagens de produto sem padrão"
+    category: Dados
+    description: "Fotos com tamanhos diferentes."
+    impact: "Loja lenta no celular."
+    action: "Padronizar durante a migração do catálogo."
+    tasks: [D-003]
+evolution:
+  existed:
+    items: ["Loja na plataforma antiga, com manutenção manual."]
+  identified:
+    items: ["{tasks_total} tarefas planejadas para a virada."]
+  improved:
+    items: ["{tasks_done} de {tasks_total} tarefas concluídas."]

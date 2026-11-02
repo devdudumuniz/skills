@@ -1,0 +1,15 @@
+# status/phases.yaml — SÓ AGRUPA tarefas existentes em fases e define marcos. Não guarda estado: situação, datas e progresso
+# de cada fase são derivados dos eventos. Tarefa fora de fase aparece em "Outras tarefas". `doctor` reprova tarefa em duas
+# fases, tarefa inexistente e qualquer campo de estado (status, progress, started_at, completed_at).
+apiVersion: status.kit/v1
+kind: ProjectPhases
+version: 1
+phases:
+  - id: phase.start
+    title: Início e configuração
+    description: Preparação do projeto e do acompanhamento.
+    objective: Projeto com plano e verificações definidos.
+    tasks: [__PREFIX__-001]
+# Marcos entregues: um marco aparece como entregue quando TODAS as suas tarefas estão DONE.
+milestones: []
+#  - {id: milestone.base, title: "Base entregue", description: "...", phase: phase.start, tasks: [__PREFIX__-001]}

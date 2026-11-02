@@ -1,0 +1,25 @@
+apiVersion: status.kit/v1
+kind: ProjectPhases
+version: 1
+phases:
+  - id: phase.discovery
+    title: Levantamento e plano
+    description: "Entender o sistema atual e definir a ordem da migração."
+    objective: "Plano aprovado e riscos conhecidos."
+    tasks: [D-001, D-002]
+  - id: phase.migration
+    title: Migração dos módulos
+    description: "Catálogo e pedidos na nova plataforma."
+    objective: "Dados migrados e conferidos."
+    tasks: [D-003, D-004, D-005]
+  - id: phase.golive
+    title: Decisões e virada
+    description: "Decisões do cliente e publicação."
+    objective: "Loja no ar com segurança."
+    tasks: [D-006, D-007, D-008, D-009, D-010]
+milestones:
+  - id: milestone.plan
+    title: Plano de migração aprovado
+    description: "Ordem de migração e plano de retorno definidos."
+    phase: phase.discovery
+    tasks: [D-001, D-002]

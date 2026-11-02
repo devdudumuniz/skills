@@ -1,0 +1,16 @@
+# status/comparison.yaml — aba "Antes × agora" (OPCIONAL: sem itens, a aba não aparece).
+# Descreve, com a FONTE de cada afirmação, como era antes e como está agora, por que decidiu e o impacto, e os erros
+# encontrados. Nenhum status aqui: a situação de cada item é DERIVADA das tarefas ligadas em `tasks`. Erro sem tarefa
+# aparece como "Sem tarefa vinculada" (um achado em si). `sensitive: true` mostra ao cliente só "item de segurança".
+# ATENÇÃO YAML: item de lista com ": " dentro vira mapa — coloque o texto entre aspas.
+apiVersion: status.kit/v1
+kind: ProjectComparison
+version: 1
+flows: []
+#  - {id: f1, name: "Fluxo X", before: ["Como era"], now: ["Como ficou"], source: docs/x.md, tasks: [__PREFIX__-002]}
+changes: []
+#  - {id: c1, title: "Mudança", decision: "O que foi decidido", why: "Por quê", impact: "Efeito", source: docs/y.md, tasks: [__PREFIX__-002]}
+decisions: []
+#  - {id: d1, title: "Decisão", why: "Motivo", impact: "Efeito", source: docs/z.md, tasks: [__PREFIX__-003]}
+errors: []
+#  - {id: e1, title: "Erro", what: "O que acontecia", where: "caminho/arquivo (só administração)", source: docs/w.md, tasks: [__PREFIX__-004], sensitive: false}

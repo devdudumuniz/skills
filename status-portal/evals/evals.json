@@ -1,0 +1,24 @@
+{
+  "skill_name": "status-portal",
+  "evals": [
+    {
+      "id": 0,
+      "name": "instalar-painel-a-partir-do-plano",
+      "prompt": "Preciso de um painel de acompanhamento de status para o projeto em {project}, igual ao do Control Center que usamos para mostrar ao cliente: fases, tarefas, o que está esperando decisão, tudo isso. O cliente é a Loja Exemplo Ltda. Monte com base no plano que já está em docs/ e no histórico do git, e me diga o que ficou de fora.",
+      "expected_output": "Painel instalado em status/, backlog/fases/gates montados do plano e do git sem inventar estado, doctor PASS, regras para agentes no AGENTS.md, relatório final com o que ficou vazio.",
+      "files": [
+        "fixtures/loja-app (ver H:/skills-workspace/make_fixtures.py e setup_iteration.py)"
+      ],
+      "assertions": [
+        "Painel instalado em status/ (portal, backlog, fases, motor)",
+        "`status.py doctor` passa (plano válido, sem estado declarado, cadeia íntegra)",
+        "Backlog derivado do plano: ≥ 6 tarefas cobrindo catálogo, pedidos, pagamento, frete, layout e produção",
+        "Nenhuma conclusão registrada sem evidência (estado não inventado)",
+        "Verificação de testes configurada como gate (unittest/pytest)",
+        "Regras de registro para agentes no AGENTS.md",
+        "Visão do cliente sem e-mail do dono nem caminhos locais",
+        "Resposta final diz o que ficou de fora/vazio"
+      ]
+    }
+  ]
+}

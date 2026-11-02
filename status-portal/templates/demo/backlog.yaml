@@ -1,0 +1,87 @@
+apiVersion: status.kit/v1
+kind: Backlog
+version: 1
+tasks:
+  - id: D-001
+    title: Levantamento do sistema atual
+    priority: P0
+    kind: docs
+    executor: agent
+    goal: "Mapear módulos, dados e integrações do sistema atual."
+    steps: ["Ler o código e a documentação"]
+    acceptance: ["Documento de levantamento publicado"]
+  - id: D-002
+    title: Plano de migração aprovado
+    priority: P0
+    kind: docs
+    executor: any
+    goal: "Definir a ordem de migração dos módulos e o plano de retorno."
+    acceptance: ["Plano revisado pela equipe"]
+    depends_on: [D-001]
+  - id: D-003
+    title: Migrar o módulo de catálogo
+    priority: P1
+    kind: dev
+    executor: agent
+    goal: "Levar o catálogo de produtos para a nova plataforma sem perder histórico."
+    acceptance: ["Produtos migrados e conferidos"]
+    depends_on: [D-002]
+    gates: [tests]
+  - id: D-004
+    title: Migrar o módulo de pedidos
+    priority: P1
+    kind: dev
+    executor: agent
+    goal: "Migrar pedidos e status de entrega."
+    acceptance: ["Pedidos migrados e conferidos"]
+    depends_on: [D-003]
+    gates: [tests]
+  - id: D-005
+    title: Integração com o meio de pagamento
+    priority: P1
+    kind: ops
+    executor: human
+    goal: "Ligar o novo checkout ao meio de pagamento em ambiente de teste."
+    acceptance: ["Pagamento de teste aprovado"]
+    blocked_by: ["credenciais de teste do meio de pagamento"]
+  - id: D-006
+    title: Decidir a política de frete grátis
+    priority: P2
+    kind: decision
+    executor: human
+    goal: "Definir o valor mínimo para frete grátis na nova loja."
+    acceptance: ["Decisão registrada"]
+  - id: D-007
+    title: Aprovar o layout do checkout
+    priority: P2
+    kind: dev
+    executor: human
+    requires_human_approval: true
+    approval_reason: identidade visual
+    goal: "O cliente aprova o layout do checkout."
+    acceptance: ["Layout aprovado"]
+  - id: D-008
+    title: Corrigir exposição de chave no repositório antigo
+    priority: P0
+    kind: security
+    executor: human
+    goal: "Trocar a chave e limpar o histórico do repositório antigo."
+    acceptance: ["Chave trocada"]
+  - id: D-009
+    title: Publicar a nova loja em produção
+    priority: P0
+    kind: ops
+    executor: human
+    requires_human_approval: true
+    approval_reason: virada de produção
+    goal: "Colocar a nova loja no ar com plano de retorno."
+    acceptance: ["Loja no ar"]
+    depends_on: [D-004, D-005, D-007]
+  - id: D-010
+    title: Treinar a equipe de atendimento
+    priority: P3
+    kind: docs
+    executor: human
+    goal: "Treinamento no novo painel."
+    acceptance: ["Equipe treinada"]
+    depends_on: [D-009]

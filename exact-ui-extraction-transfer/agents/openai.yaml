@@ -1,0 +1,4 @@
+interface:
+  display_name: "Exact UI Extraction & Transfer"
+  short_description: "Reproduza interfaces medidas com fidelidade"
+  default_prompt: "Use $exact-ui-extraction-transfer para extrair esta interface autorizada e reproduzir o componente indicado com QA visual."

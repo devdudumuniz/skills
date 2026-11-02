@@ -1,0 +1,47 @@
+apiVersion: status.kit/v1
+kind: ProjectComparison
+version: 1
+flows:
+  - id: catalogo
+    name: Cadastro de produtos
+    before:
+      - "Planilha editada à mão e enviada por e-mail."
+      - "Preço e estoque desatualizados com frequência."
+    now:
+      - "Cadastro único na nova plataforma, com histórico de alterações."
+      - "Preço e estoque sincronizados."
+    source: docs/levantamento.md
+    tasks: [D-001, D-003]
+changes:
+  - id: c1
+    title: Migração em etapas por módulo
+    decision: "Migrar catálogo, depois pedidos, por último o pagamento."
+    why: "Reduz o risco e permite conferir cada módulo antes de seguir."
+    impact: "A loja antiga continua no ar até a virada."
+    source: docs/plano.md
+    tasks: [D-002, D-003]
+decisions:
+  - id: d1
+    title: Política de frete grátis
+    why: "Define o valor mínimo na nova loja."
+    impact: "Afeta o ticket médio e a margem."
+    source: docs/decisoes.md
+    tasks: [D-006]
+errors:
+  - id: e1
+    title: Produtos duplicados no cadastro antigo
+    what: "Havia produtos repetidos com preços diferentes."
+    where: planilha produtos.xlsx
+    source: docs/levantamento.md
+    tasks: [D-003]
+  - id: e2
+    title: Chave de acesso exposta
+    what: "Chave no histórico do repositório antigo."
+    where: repositório legado
+    sensitive: true
+    tasks: [D-008]
+  - id: e3
+    title: Pedido sem CEP validado
+    what: "Alguns pedidos antigos têm CEP inválido."
+    where: "banco legado (tabela pedidos)"
+    tasks: []
