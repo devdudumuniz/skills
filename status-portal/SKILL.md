@@ -1,21 +1,15 @@
 ---
 name: status-portal
-description: Instala e configura, em qualquer projeto, o painel de acompanhamento de status do Control Center (mesmas telas do portal do cliente do legal-workspace — visão geral, fases e planejamento, tarefas, processos e capacidades, antes × agora, evolução e achados, histórico, relatórios PDF), somente leitura e derivado de backlog + eventos, com visão segura para o cliente. Use SEMPRE que o usuário pedir painel/portal/dashboard/interface de status ou acompanhamento de um projeto, "quero ver em que pé está esse projeto", relatório de evolução para cliente, "replica o painel de acompanhamento" ou "cria o status daqui", mesmo sem citar o nome da skill. Para registrar tarefas depois use status-portal-registro; para publicar use status-portal-publicar.
+description: Instala e configura, em qualquer projeto, um painel completo de acompanhamento e status de engenharia (visão geral, fases e planejamento, tarefas, processos e capacidades, antes × agora, evolução e achados, histórico de eventos auditável, relatórios executivos em PDF), somente leitura e derivado de backlog + eventos, com visão segura sanitizada para clientes e stakeholders. Use SEMPRE que o usuário pedir painel/portal/dashboard/interface de status ou acompanhamento de um projeto, "quero ver em que pé está esse projeto", relatório de evolução para cliente, "replica o painel de acompanhamento" ou "cria o status daqui", mesmo sem citar o nome da skill. Para registrar tarefas depois use status-portal-registro; para publicar use status-portal-publicar.
 ---
 
 # status-portal — criar o painel de status de um projeto
 
-Kit único, copiado para dentro do projeto (`<projeto>/status/`), que cria a **mesma interface** do portal de
-acompanhamento do Control Center (o front é o mesmo código-fonte, compilado: `ui-src/` → `engine/ui/`) com os dados
-**daquele** ambiente. O servidor e o CLI são Python puro (PyYAML; `reportlab` para PDF); Node só é preciso para
-*reconstruir* a interface, nunca para usar o painel.
+Kit único, copiado para dentro do projeto (`<projeto>/status/`), que cria um portal moderno de acompanhamento (o front é o mesmo código-fonte, compilado: `ui-src/` → `engine/ui/`) com os dados **daquele** ambiente. O servidor e o CLI são Python puro (PyYAML; `reportlab` para PDF); Node só é preciso para *reconstruir* a interface, nunca para usar o painel.
 
-O status **nunca é digitado**: é calculado de `status/backlog.yaml` (o plano) + `status/events.jsonl` (o que aconteceu, com
-data, hora e autor, encadeado por hash). Por isso a skill instala também as regras que obrigam quem trabalha a registrar
-cada etapa — painel sem registro fica parado.
+O status **nunca é digitado**: é calculado de `status/backlog.yaml` (o plano) + `status/events.jsonl` (o que aconteceu, com data, hora e autor, encadeado por hash). Por isso a skill instala também as regras que obrigam quem trabalha a registrar cada etapa — painel sem registro fica parado.
 
-`<KIT>` = a pasta desta skill. Para rodar o kit use um Python com `pyyaml` e `reportlab`
-(`python -m pip install pyyaml reportlab`; nesta máquina: `C:\dev\venv\legal-workspace\Scripts\python.exe`).
+`<KIT>` = a pasta desta skill. Para rodar o kit use um Python com `pyyaml` e `reportlab` (`python -m pip install pyyaml reportlab`).
 
 ## As três skills
 

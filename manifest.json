@@ -1,0 +1,118 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devdudumuniz/skills/main/manifest.schema.json",
+  "name": "dm-skills",
+  "version": "1.0.0",
+  "description": "Universal open catalog of production-grade AI agent skills for software engineering, devops, security, systems diagnosis, exact UI replication, and engineering status governance.",
+  "homepage": "https://github.com/devdudumuniz/skills",
+  "license": "MIT",
+  "supported_runtimes": [
+    "claude",
+    "codex",
+    "manus",
+    "antigravity",
+    "hermes",
+    "opencode",
+    "cursor"
+  ],
+  "skills": [
+    {
+      "id": "devops-delivery",
+      "name": "DevOps Delivery",
+      "category": "devops",
+      "description": "Planeja e revisa entregas DevOps em um repositório, cobrindo CI/CD, ambientes, observabilidade, rollback e risco, sem executar deploy ou alterar produção por padrão.",
+      "path": "devops-delivery",
+      "entrypoint": "SKILL.md",
+      "package": "packages/devops-delivery.skill",
+      "execution_mode": "plan-first",
+      "tags": ["devops", "ci-cd", "deploy", "delivery", "infrastructure", "observability"]
+    },
+    {
+      "id": "vibecode-builder",
+      "name": "Vibecode Builder",
+      "category": "engineering",
+      "description": "Transforma uma ideia de produto em uma implementação pequena e verificável, orientando descoberta do repositório, escopo, UX, código, testes e revisão sem sacrificar segurança ou funcionalidade existente.",
+      "path": "vibecode-builder",
+      "entrypoint": "SKILL.md",
+      "package": "packages/vibecode-builder.skill",
+      "execution_mode": "iterative-tdd",
+      "tags": ["product", "engineering", "feature", "tdd", "scaffolding", "fullstack"]
+    },
+    {
+      "id": "automation-designer",
+      "name": "Automation Designer",
+      "category": "automation",
+      "description": "Projeta automações e workflows confiáveis com gatilhos, idempotência, retries, timeouts, segredos por referência, observabilidade e rollback, sem executar integrações ou ações externas por padrão.",
+      "path": "automation-designer",
+      "entrypoint": "SKILL.md",
+      "package": "packages/automation-designer.skill",
+      "execution_mode": "plan-first",
+      "tags": ["automation", "workflows", "n8n", "cron", "orchestration", "idempotency"]
+    },
+    {
+      "id": "security-baseline",
+      "name": "Security Baseline",
+      "category": "security",
+      "description": "Faz revisão defensiva e somente leitura de segurança em código, dependências, configuração e arquitetura, produzindo findings priorizados sem explorar, exfiltrar ou corrigir sistemas automaticamente.",
+      "path": "security-baseline",
+      "entrypoint": "SKILL.md",
+      "package": "packages/security-baseline.skill",
+      "execution_mode": "read-only",
+      "tags": ["security", "audit", "vulnerabilities", "credentials", "compliance", "hardening"]
+    },
+    {
+      "id": "network-server-diagnostics",
+      "name": "Network & Server Diagnostics",
+      "category": "diagnostics",
+      "description": "Diagnostica conectividade e saúde de servidores de forma controlada, correlacionando DNS, rotas, portas, TLS, serviços, recursos e logs sem alterar firewall, roteamento, serviços ou dados por padrão.",
+      "path": "network-server-diagnostics",
+      "entrypoint": "SKILL.md",
+      "package": "packages/network-server-diagnostics.skill",
+      "execution_mode": "read-only",
+      "tags": ["network", "dns", "tls", "ports", "firewall", "diagnostics", "troubleshooting"]
+    },
+    {
+      "id": "exact-ui-extraction-transfer",
+      "name": "Exact UI Extraction & Transfer",
+      "category": "frontend",
+      "description": "Extrai geometria, CSS computado, tokens, ativos e estados de uma interface autorizada e reproduz componentes ou layouts selecionados em um projeto identificado, com comparação visual e gates de regressão.",
+      "path": "exact-ui-extraction-transfer",
+      "entrypoint": "SKILL.md",
+      "package": "packages/exact-ui-extraction-transfer.skill",
+      "execution_mode": "plan-first",
+      "tags": ["ui", "frontend", "design-tokens", "pixel-faithful", "tailwind", "components"]
+    },
+    {
+      "id": "status-portal",
+      "name": "Status Portal",
+      "category": "governance",
+      "description": "Instala e configura, em qualquer projeto, um painel completo de acompanhamento e status de engenharia (visão geral, fases e planejamento, tarefas, processos e capacidades, antes × agora, evolução e achados, histórico auditável, relatórios executivos em PDF), somente leitura e derivado de backlog + eventos.",
+      "path": "status-portal",
+      "entrypoint": "SKILL.md",
+      "package": "packages/status-portal.skill",
+      "execution_mode": "non-destructive",
+      "tags": ["governance", "dashboard", "status", "audit", "progress-tracking", "client-view"]
+    },
+    {
+      "id": "status-portal-registro",
+      "name": "Status Portal Registro",
+      "category": "governance",
+      "description": "Registra no painel de status do projeto cada etapa de trabalho no momento em que acontece: abrir sessão, assumir tarefa, rodar verificações, concluir com evidência criptográfica/hash, registrar bloqueios, passar bastão e gerar relatórios de fase.",
+      "path": "status-portal-registro",
+      "entrypoint": "SKILL.md",
+      "package": "packages/status-portal-registro.skill",
+      "execution_mode": "append-only",
+      "tags": ["ledger", "events", "audit-trail", "evidence", "handoff", "tracking"]
+    },
+    {
+      "id": "status-portal-publicar",
+      "name": "Status Portal Publicar",
+      "category": "governance",
+      "description": "Publica o painel de status de um projeto com segurança (container Docker em modo somente leitura, proxy reverso com domínio, export estático pré-compilado), executando varredura automatizada contra vazamento de dados internos.",
+      "path": "status-portal-publicar",
+      "entrypoint": "SKILL.md",
+      "package": "packages/status-portal-publicar.skill",
+      "execution_mode": "read-only-publish",
+      "tags": ["deployment", "docker", "reverse-proxy", "sanitization", "privacy", "client-portal"]
+    }
+  ]
+}

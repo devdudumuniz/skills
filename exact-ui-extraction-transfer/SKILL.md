@@ -81,9 +81,11 @@ Antes de mutar arquivos:
 - não instale dependências ou migre framework apenas para copiar aparência;
 - separe falhas preexistentes das introduzidas pela tarefa.
 
-Monte um crosswalk mínimo:
+Antes de escrever código, descubra a versão/configuração do Tailwind, os tokens de tema, os componentes
+compartilhados e as convenções de composição do projeto. Monte um crosswalk que transforme a evidência
+medida diretamente em implementação nativa do destino:
 
-| Medida/padrão da referência | Evidência | Componente/token do destino | Resultado |
+| Medida/padrão da referência | Evidência | Componente/token/utilitários Tailwind existentes | Resultado |
 |---|---|---|---|
 
 Use `APPLIED`, `ADAPTED`, `NOT_APPLICABLE` ou `BLOCKED`. Preserve marca, textos, dados, permissões e
@@ -93,10 +95,20 @@ conexões, estados ou capacidades vistos na referência.
 ## 5. Implementar com fidelidade controlada
 
 - Substitua somente o nó autorizado e preserve ancestrais/irmãos declarados.
-- Reuse componentes, callbacks, ativos e biblioteca de ícones do destino quando equivalentes.
+- Traduza os estilos extraídos em classes Tailwind usadas pelo projeto e nos seus tokens/utilitários
+  canônicos; aplique-os diretamente aos componentes existentes durante a transferência.
+- Reuse componentes, variantes, callbacks, ativos e biblioteca de ícones do destino quando equivalentes;
+  procure primeiro nos componentes compartilhados e padrões da rota.
+- Não crie uma folha de estilos paralela nem replique componentes existentes para obter fidelidade.
+  Não introduza convenções, bibliotecas ou camadas visuais fora do padrão do projeto.
+- Se uma medida não tiver classe ou token equivalente, procure uma composição Tailwind compatível com
+  os padrões locais. Só use valor arbitrário/classe utilitária nova quando a medida observada exigir isso
+  e a convenção do projeto permitir; registre a justificativa no crosswalk. CSS dedicado ou componente
+  novo só cabem quando o projeto já usa esse padrão para casos equivalentes; mantenha-os no local
+  canônico e no menor escopo possível.
 - Use o SVG/ativo da fonte apenas quando autorizado e quando não houver equivalente canônico.
-- Defina tokens no ponto canônico mais estreito que cubra o escopo; evite CSS global, duplicação e
-  `!important` em massa.
+- Se um token reutilizável realmente estiver ausente e for necessário, defina-o no ponto canônico mais
+  estreito previsto pelo projeto; evite CSS global, duplicação e `!important` em massa.
 - Preserve acessibilidade, semântica, teclado, foco, rotas, autenticação e regras de negócio.
 - Implemente estados dinâmicos observados; HTML/CSS estático não prova resize, collapse ou scroll.
 - Não remova testes nem atualize snapshots apenas para esconder divergências.

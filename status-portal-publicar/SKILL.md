@@ -51,9 +51,7 @@ com PyYAML: `python ../status-portal-registro/scripts/find_status.py`.
   PDFs (`sync`) continua sendo no CLI da máquina.
 - O consolidado é só administração e nunca vai para a visão do cliente nem para o export.
 - Export estático é um **retrato**: reexporte quando o status mudar (após `sync`, no CI ou agendado).
-- **Docker nesta máquina (anton-server): motor Hyper-V obrigatório.** Nunca ligue o motor WSL 2, não edite
-  `settings-store.json`, não reinicie o Docker Desktop, não faça prune/"Clean / Purge data" nem apague `.vhdx`. Se o Docker
-  estiver parado ou aparecer vazio, avise o responsável em vez de agir.
+- **Docker & Runtime de Containers:** Respeite a configuração do Docker local e as políticas do host. Não faça prune destrutivo ("Clean / Purge data") nem apague volumes e discos virtuais sem autorização explícita. Se o Docker estiver indisponível, reporte ao operador antes de reiniciar serviços do sistema.
 - Ações externas (subir container exposto à LAN, mexer em proxy/DNS) pedem confirmação do usuário; nunca presuma.
 
 ## Quando algo cai

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Reconstrói a interface do painel (engine/ui/) a partir de ui-src/. Só é preciso ao MUDAR a interface.
 
-    python build_ui.py [--store-dir C:\\dev\\pnpm\\store] [--keep]
+    python build_ui.py [--store-dir <path-to-pnpm-store>] [--keep]
 
 Requer Node 18+ e pnpm (ou npm). Compila numa pasta temporária (o kit não guarda node_modules), faz typecheck (tsc) e
 grava o resultado em engine/ui/. Usar o painel NÃO exige Node: o servidor Python serve os arquivos já compilados.

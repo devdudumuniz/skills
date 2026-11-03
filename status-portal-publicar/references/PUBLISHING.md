@@ -30,8 +30,7 @@ ter autenticação na frente (proxy com Access List, VPN, SSO). Escolha **uma** 
 - Parar: `... down` (nada do projeto é apagado).
 - **Limitação:** o container é somente leitura e visão do cliente. Para registrar eventos, gerar PDFs (`sync`) e ver a visão
   de administração, rode o CLI na máquina (`python status/status.py ...`): o container só lê o que o CLI gravou.
-- **Nesta máquina (anton-server):** Docker Desktop usa o motor **Hyper-V**. Nunca ligue o motor WSL 2, não reinicie o Docker
-  Desktop por conta própria, não faça prune/"Clean / Purge data" e não apague `.vhdx`. Docker parado: peça ao responsável.
+- **Ambiente Docker do Host:** Preserve configurações de engine, volumes e redes existentes. Não faça prune destrutivo nem apague volumes sem autorização. Docker parado: peça ao responsável.
 
 ## C. Proxy reverso (ex.: Nginx Proxy Manager)
 
