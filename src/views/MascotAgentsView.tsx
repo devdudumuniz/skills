@@ -3,6 +3,7 @@ import { MASCOT_AGENTS, MascotAgent } from "../data/mascotsData";
 import { Icon } from "../components/Icons";
 import { DedaLogo } from "../components/DedaLogo";
 import { MascotDetailModal } from "../components/MascotDetailModal";
+import { MascotQuickInfoModal } from "../components/MascotQuickInfoModal";
 
 interface MascotAgentsViewProps {
   onTestPrompt: (skillId: string, promptText: string) => void;
@@ -16,6 +17,7 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
   onBackToCatalog,
 }) => {
   const [selectedMascot, setSelectedMascot] = useState<MascotAgent | null>(null);
+  const [quickInfoMascot, setQuickInfoMascot] = useState<MascotAgent | null>(null);
   const [activeTab, setActiveTab] = useState<"mascots" | "team">("mascots");
   const [simulatingTeam, setSimulatingTeam] = useState(false);
   const [teamStep, setTeamStep] = useState(0);
@@ -125,103 +127,163 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
               src={m.avatar}
               alt={m.name}
               className="w-16 h-16 rounded-2xl object-cover border-2 border-[#383838] shadow-lg -ml-4 first:ml-0 hover:scale-110 transition-transform cursor-pointer"
-              title={`${m.name} — ${m.title}`}
-              onClick={() => setSelectedMascot(m)}
+              title={`${m.name} — ${m.title} (Clique para ver estilo & especialidades)`}
+              onClick={() => setQuickInfoMascot(m)}
             />
           ))}
         </div>
       </section>
 
-      {/* View Mode 1: Individual Mascot Cards */}
+      {/* View Mode 1: Individual Mascot Cards with Interactive Hover Scale & Click-to-Info Modal */}
       {activeTab === "mascots" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {MASCOT_AGENTS.map((mascot) => (
-            <div
-              key={mascot.id}
-              className="bg-[#1c1c1c] border border-[#2e2e2e] hover:border-[#545454] rounded-2xl p-6 transition-all duration-200 shadow-md flex flex-col justify-between group"
-            >
-              <div>
-                {/* Mascot Header */}
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#383838] shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                    <img
-                      src={mascot.avatar}
-                      alt={mascot.name}
-                      className="w-full h-full object-cover filter contrast-105"
-                    />
-                    <span className="absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-[#EAEAEA] border border-black animate-pulse"></span>
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-xs uppercase tracking-wider font-bold text-[#9B9B9B]">
+              Selecione um mascote para ver estilo de resolução & especialidades
+            </span>
+            <span className="text-[11px] text-[#767676]">Clique no card para abrir o modal</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {MASCOT_AGENTS.map((mascot) => (
+              <div
+                key={mascot.id}
+                onClick={() => setQuickInfoMascot(mascot)}
+                className="bg-[#1c1c1c] border border-[#2e2e2e] hover:border-[#666666] rounded-2xl p-6 transition-all duration-300 ease-out hover:scale-[1.025] hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(0,0,0,0.7)] flex flex-col justify-between group cursor-pointer relative overflow-hidden"
+              >
+                {/* Subtle Glow Background on Hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                <div>
+                  {/* Top Bar inside Card: Avatar + Name + Interactive Hover Pill */}
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#383838] group-hover:border-[#EAEAEA] shrink-0 shadow-lg transition-all duration-300">
+                      <img
+                        src={mascot.avatar}
+                        alt={mascot.name}
+                        className="w-full h-full object-cover filter contrast-105 group-hover:scale-108 group-hover:rotate-1 transition-transform duration-300 ease-out"
+                      />
+                      <span className="absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-[#EAEAEA] border border-black animate-pulse"></span>
+                    </div>
+
+                    <div className="overflow-hidden flex-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="text-lg font-bold text-[#EAEAEA] group-hover:text-white transition-colors">
+                            {mascot.name}
+                          </h3>
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#292929] border border-[#3d3d3d] text-[#C2C2C2] font-semibold">
+                            {mascot.nickname}
+                          </span>
+                        </div>
+
+                        {/* Interactive Pill on Card */}
+                        <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#242424] text-[#9B9B9B] border border-[#333333] group-hover:border-[#EAEAEA] group-hover:text-[#EAEAEA] group-hover:bg-[#2b2b2b] transition-all shrink-0">
+                          <span>Ver Estilo</span>
+                          <Icon n="chevron" size={10} />
+                        </span>
+                      </div>
+
+                      <div className="text-xs font-semibold text-[#9B9B9B] mt-0.5">
+                        {mascot.title}
+                      </div>
+
+                      <div className="text-[11px] text-[#767676] mt-0.5">
+                        {mascot.species}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="overflow-hidden flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-lg font-bold text-[#EAEAEA] group-hover:text-white transition-colors">
-                        {mascot.name}
-                      </h3>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#292929] border border-[#3d3d3d] text-[#C2C2C2] font-semibold">
-                        {mascot.nickname}
+                  {/* Problem Solving Style Badge & Approach (Requested by user) */}
+                  <div className="p-3 rounded-xl bg-[#161616] border border-[#282828] group-hover:border-[#383838] transition-colors mb-3">
+                    <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-[#EAEAEA]">
+                        <div className="w-4 h-4 rounded bg-[#262626] flex items-center justify-center text-[#EAEAEA]">
+                          <Icon n="zap" size={11} />
+                        </div>
+                        <span>Estilo: {mascot.problemSolvingStyle.headline}</span>
+                      </div>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#242424] border border-[#383838] text-[#C2C2C2] font-mono">
+                        {mascot.problemSolvingStyle.badge}
                       </span>
                     </div>
-
-                    <div className="text-xs font-semibold text-[#9B9B9B] mt-0.5">
-                      {mascot.title}
-                    </div>
-
-                    <div className="text-[11px] text-[#767676] mt-0.5">
-                      {mascot.species}
-                    </div>
+                    <p className="text-[11.5px] text-[#9B9B9B] leading-relaxed line-clamp-2">
+                      {mascot.problemSolvingStyle.description}
+                    </p>
                   </div>
-                </div>
 
-                {/* Role & Tagline */}
-                <div className="p-3 rounded-xl bg-[#151515] border border-[#262626] mb-4">
-                  <div className="text-xs font-semibold text-[#EAEAEA]">{mascot.role}</div>
-                  <p className="text-xs text-[#9B9B9B] mt-1 leading-relaxed">{mascot.tagline}</p>
-                </div>
-
-                {/* Core Expertises */}
-                <div className="space-y-2 mb-5">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-[#767676]">
-                    Expertises Principais
+                  {/* Role & Tagline */}
+                  <div className="p-2.5 rounded-xl bg-[#191919] border border-[#242424] mb-4">
+                    <div className="text-xs font-semibold text-[#C2C2C2]">{mascot.role}</div>
+                    <p className="text-[11px] text-[#767676] mt-0.5 italic">"{mascot.tagline}"</p>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {mascot.expertises.slice(0, 4).map((exp, idx) => (
-                      <div
-                        key={idx}
-                        className="p-2 rounded-lg bg-[#222222] border border-[#2d2d2d] flex items-center gap-2"
-                      >
-                        <div className="w-4 h-4 rounded bg-[#2c2c2c] flex items-center justify-center shrink-0 text-[#EAEAEA]">
-                          <Icon n={exp.icon} size={11} />
+
+                  {/* Core Expertises */}
+                  <div className="space-y-1.5 mb-5">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#767676] flex items-center justify-between">
+                      <span>Especialidades Únicas</span>
+                      <span className="text-[10px] font-normal text-[#9B9B9B]">{mascot.expertises.length} áreas</span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                      {mascot.expertises.slice(0, 4).map((exp, idx) => (
+                        <div
+                          key={idx}
+                          className="p-2 rounded-lg bg-[#202020] border border-[#2a2a2a] flex items-center gap-2 group-hover:border-[#383838] transition-colors"
+                        >
+                          <div className="w-4 h-4 rounded bg-[#292929] flex items-center justify-center shrink-0 text-[#EAEAEA]">
+                            <Icon n={exp.icon} size={11} />
+                          </div>
+                          <span className="text-[11px] text-[#C2C2C2] truncate">{exp.title}</span>
                         </div>
-                        <span className="text-[11px] text-[#C2C2C2] truncate">{exp.title}</span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Bottom Actions */}
-              <div className="pt-4 border-t border-[#2e2e2e] flex items-center gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setSelectedMascot(mascot)}
-                  className="flex-1 py-2.5 px-3 rounded-xl bg-[#292929] hover:bg-[#333333] text-[#EAEAEA] text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5 border border-[#3d3d3d]"
-                >
-                  <Icon n="file-text" size={13} />
-                  <span>Ver Detalhes do Mascote</span>
-                </button>
+                {/* Bottom Actions (Stop propagation to allow distinct actions) */}
+                <div className="pt-4 border-t border-[#2e2e2e] flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setQuickInfoMascot(mascot);
+                    }}
+                    className="flex-1 py-2.5 px-3 rounded-xl bg-[#292929] hover:bg-[#333333] text-[#EAEAEA] text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5 border border-[#3d3d3d]"
+                    title="Abrir modal com estilo de resolução e especialidades"
+                  >
+                    <Icon n="zap" size={13} />
+                    <span>Estilo & Especialidades</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={() => onTestPrompt(mascot.suggestedSkillId, mascot.samplePrompts[0])}
-                  className="py-2.5 px-3.5 rounded-xl bg-[#EAEAEA] hover:bg-white text-[#151515] text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 shrink-0"
-                  title="Testar no Playground"
-                >
-                  <Icon n="play" size={13} />
-                  <span>Testar</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedMascot(mascot);
+                    }}
+                    className="py-2.5 px-3 rounded-xl bg-[#222222] hover:bg-[#2a2a2a] text-[#C2C2C2] hover:text-[#EAEAEA] text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-1.5 border border-[#333333]"
+                    title="Ver ficha completa do colega de equipe"
+                  >
+                    <Icon n="file-text" size={13} />
+                    <span className="hidden sm:inline">Ficha</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onTestPrompt(mascot.suggestedSkillId, mascot.samplePrompts[0]);
+                    }}
+                    className="py-2.5 px-3.5 rounded-xl bg-[#EAEAEA] hover:bg-white text-[#151515] text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5 shrink-0"
+                    title="Testar no Playground"
+                  >
+                    <Icon n="play" size={13} />
+                    <span>Testar</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
 
@@ -247,7 +309,7 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
                 type="button"
                 onClick={handleRunTeamSimulation}
                 disabled={simulatingTeam}
-                className="py-3 px-5 rounded-xl bg-[#EAEAEA] hover:bg-white text-[#151515] text-xs font-extrabold uppercase tracking-wider transition-all shadow-lg cursor-pointer flex items-center gap-2 shrink-0 disabled:opacity-50"
+                className="py-3 px-5 rounded-xl bg-[#EAEAEA] hover:bg-white text-[#151515] text-xs font-extrabold uppercase tracking-wider transition-all shadow-lg cursor-pointer flex items-center gap-2 shrink-0 disabled:opacity-50 active:scale-[0.99]"
               >
                 <Icon n={simulatingTeam ? "activity" : "play"} size={14} />
                 <span>{simulatingTeam ? "Executando Pipeline..." : "Simular Trabalho em Equipe"}</span>
@@ -263,12 +325,13 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
                 return (
                   <div
                     key={m.id}
-                    className={`p-4 rounded-xl border transition-all duration-300 relative ${
+                    onClick={() => setQuickInfoMascot(m)}
+                    className={`p-4 rounded-xl border transition-all duration-300 relative cursor-pointer ${
                       isActive
                         ? "bg-[#252525] border-[#EAEAEA] shadow-xl scale-[1.02]"
                         : isPassed
-                        ? "bg-[#1f1f1f] border-[#3d3d3d]"
-                        : "bg-[#181818] border-[#292929] opacity-75"
+                        ? "bg-[#1f1f1f] border-[#3d3d3d] hover:border-[#545454]"
+                        : "bg-[#181818] border-[#292929] hover:border-[#383838] opacity-75"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-3">
@@ -358,7 +421,15 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
         </div>
       )}
 
-      {/* Mascot Detail Modal (Inspirado em Grok Bot - sem planos de pagamento, apenas expertises) */}
+      {/* Modal 1: Quick Informative Modal (Requested: Mostrando as especialidades únicas e estilo de resolução de problemas) */}
+      <MascotQuickInfoModal
+        mascot={quickInfoMascot}
+        onClose={() => setQuickInfoMascot(null)}
+        onOpenFullDetails={(m) => setSelectedMascot(m)}
+        onTestPrompt={onTestPrompt}
+      />
+
+      {/* Modal 2: Full Mascot Details Modal (Inspirado em Grok Bot - sem planos de pagamento, apenas expertises) */}
       <MascotDetailModal
         mascot={selectedMascot}
         onClose={() => setSelectedMascot(null)}

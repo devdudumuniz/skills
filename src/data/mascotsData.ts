@@ -4,6 +4,14 @@ export interface MascotExpertise {
   icon: string;
 }
 
+export interface ProblemSolvingStyle {
+  headline: string;
+  description: string;
+  approach: string;
+  badge: string;
+  keyMotto: string;
+}
+
 export interface MascotAgent {
   id: "carcara" | "lobo_guara" | "tatu_bola" | "ararinha";
   name: string;
@@ -19,6 +27,8 @@ export interface MascotAgent {
   collaborationRole: string;
   collaborationAction: string;
   expertises: MascotExpertise[];
+  problemSolvingStyle: ProblemSolvingStyle;
+  uniqueSpecialties: string[];
   tools: string[];
   samplePrompts: string[];
   suggestedSkillId: string;
@@ -41,6 +51,20 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     collaborationStep: 4,
     collaborationRole: "Auditoria Final & Gate de Segurança",
     collaborationAction: "Executa varredura estática, verifica credenciais e valida a aprovação antes da entrega.",
+    problemSolvingStyle: {
+      headline: "Sentinela Analítico & Defensivo",
+      description:
+        "Examina a topologia do repositório de cima para baixo antes de qualquer intervenção. Separa fatos verificáveis de suposições, mapeia cada superfície de ataque com salvaguardas que impedem vazamentos e só emite parecer com provas auditáveis.",
+      approach: "Inspecionar primeiro, exigir evidências e aplicar o princípio do menor privilégio.",
+      badge: "Zero-Trust & Defesa Ativa",
+      keyMotto: "Se não puder ser provado e auditado, não entra em produção.",
+    },
+    uniqueSpecialties: [
+      "Varredura cirúrgica de segredos e credenciais com zero tolerância a falsos positivos",
+      "Auditoria estática de código contra Top 10 OWASP e vulnerabilidades CVE conhecidas",
+      "Diagnóstico defensivo de certificados TLS, rotas de rede e integridade de portas",
+      "Salvaguarda automática de privacidade: zero exfiltração em tempo de execução",
+    ],
     expertises: [
       {
         title: "Varredura Estática de Segurança",
@@ -87,6 +111,20 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     collaborationStep: 1,
     collaborationRole: "Planejamento Arquitetural & DevOps",
     collaborationAction: "Mapeia a topologia do repositório, define limites de serviços e traça o plano de entrega.",
+    problemSolvingStyle: {
+      headline: "Estrategista Sistêmico & Resiliente",
+      description:
+        "Pensa no pior cenário antes do caminho feliz. Modela arquiteturas desacopladas que se recuperam sozinhas através de retries exponenciais, idempotência, dead letter queues e isolamento de falhas, guiando o sistema com passadas largas e estáveis.",
+      approach: "Pensamento sistêmico, desacoplamento por domínio e observabilidade ponta a ponta.",
+      badge: "Resiliência & Alta Disponibilidade",
+      keyMotto: "Arquitetura sólida transforma imprevistos em transições suaves.",
+    },
+    uniqueSpecialties: [
+      "Design de arquiteturas desacopladas e mensageria orientada a eventos",
+      "Pipelines de CI/CD determinísticas com cache inteligente e zero fricção",
+      "Políticas de rollback instantâneo acionadas por anomalias de latência e erro p99",
+      "Infraestrutura ágil com containers Docker em modo somente leitura e proxy reverso",
+    ],
     expertises: [
       {
         title: "Arquitetura Distribuída & Microsserviços",
@@ -133,6 +171,20 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     collaborationStep: 3,
     collaborationRole: "Implementação TDD & Cobertura",
     collaborationAction: "Escreve testes de regressão, implementa a lógica pura e garante 100% de passagem nos gates.",
+    problemSolvingStyle: {
+      headline: "Blindagem Iterativa com TDD",
+      description:
+        "Tolerância zero para código frágil: jamais inicia uma implementação sem conceber o teste automatizado que falha primeiro. Desenvolve em fatias verticais cirúrgicas, refatorando continuamente para manter a cobertura de 100% dos casos de borda.",
+      approach: "Ciclo Red-Green-Refactor estrito, desacoplamento de funções puras e testes determinísticos.",
+      badge: "TDD & Tolerância Zero a Falhas",
+      keyMotto: "Código sem testes é castelo de areia; código blindado resiste a qualquer temporal.",
+    },
+    uniqueSpecialties: [
+      "Ciclo rigoroso de Test-Driven Development com cobertura integral de branches",
+      "Scaffolding determinístico de fatias funcionais verticais e componentes modulares",
+      "Suítes automatizadas de regressão visual, testes unitários e ponta a ponta",
+      "Empacotamento de especificações portáveis no padrão universal .skill",
+    ],
     expertises: [
       {
         title: "Test-Driven Development (TDD)",
@@ -179,6 +231,20 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     collaborationStep: 2,
     collaborationRole: "Design de Interface & Experiência",
     collaborationAction: "Projeta telas responsivas com Tailwind CSS, ajusta tokens de cor e redige textos cativantes.",
+    problemSolvingStyle: {
+      headline: "Empatia Visual & Precisão Estética",
+      description:
+        "Enxerga o software através dos olhos e das mãos de quem vai utilizá-lo. Converte requisitos abstratos em telas acolhedoras com Tailwind CSS, harmoniza tipografia e espaçamentos, e redige textos persuasivos que eliminam atritos cognitivos.",
+      approach: "Centralidade no usuário, fidelidade pixel-perfect e narrativa clara de produto.",
+      badge: "Design System & Micro-Interações",
+      keyMotto: "O código mais avançado do mundo é inútil se a experiência for fria ou confusa.",
+    },
+    uniqueSpecialties: [
+      "Desenvolvimento de interfaces pixel-perfect com utilitários modernos do Tailwind CSS",
+      "Extração exata de design tokens a partir de telas autorizadas e especificações Figma",
+      "Redação publicitária persuasiva de alta conversão (frameworks PAS, AIDA, CTAs)",
+      "Conformidade rigorosa com acessibilidade WCAG, contraste impecável e fluidez visual",
+    ],
     expertises: [
       {
         title: "Frontend Pixel-Perfect com Tailwind CSS",

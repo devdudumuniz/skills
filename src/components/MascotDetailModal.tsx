@@ -202,6 +202,36 @@ export const MascotDetailModal: React.FC<MascotDetailModalProps> = ({
               </div>
             </div>
 
+            {/* Feature 4: Estilo de Resolução de Problemas & Especialidades Únicas */}
+            <div className="bg-[#1f1f1f] border border-[#2e2e2e] rounded-xl p-5 hover:border-[#3d3d3d] transition-colors">
+              <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-md bg-[#292929] flex items-center justify-center text-[#EAEAEA]">
+                    <Icon n="zap" size={12} />
+                  </div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#EAEAEA]">
+                    Estilo de Resolução de Problemas: {mascot.problemSolvingStyle.headline}
+                  </h4>
+                </div>
+                <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#242424] border border-[#383838] text-[#C2C2C2]">
+                  {mascot.problemSolvingStyle.badge}
+                </span>
+              </div>
+
+              <p className="text-xs text-[#C2C2C2] leading-relaxed">
+                {mascot.problemSolvingStyle.description}
+              </p>
+
+              <div className="mt-3 pt-3 border-t border-[#2a2a2a] grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {mascot.uniqueSpecialties.map((spec, idx) => (
+                  <div key={idx} className="flex items-start gap-2 p-2 rounded-lg bg-[#161616] border border-[#242424]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#EAEAEA] mt-1.5 shrink-0"></span>
+                    <span className="text-[11px] text-[#C2C2C2] leading-snug">{spec}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Interactive Sample Prompts */}
             <div className="bg-[#1f1f1f] border border-[#2e2e2e] rounded-xl p-5">
               <div className="text-xs font-bold uppercase tracking-wider text-[#C2C2C2] mb-3 flex items-center justify-between">
