@@ -1,7 +1,7 @@
+export * from "../skills/types";
+
 export type Role = "ADMIN" | "CLIENT_VIEWER";
-
 export type Priority = "P0" | "P1" | "P2" | "P3";
-
 export type TaskStatus = "DONE" | "IN_PROGRESS" | "NEXT" | "PLANNED" | "WAITING" | "BLOCKED";
 
 export interface EvidenceRef {
@@ -88,7 +88,7 @@ export interface ProcessItem {
   process: string;
   domain?: string;
   objective: string;
-  level: number; // 0..4
+  level: number;
   status: string;
   automation: "SIM" | "PARCIAL" | "NÃO";
   priority: Priority;
@@ -282,89 +282,3 @@ export interface ProjectOverview {
   timeline: TimelineItem[];
   reports: ReportItem[];
 }
-
-export interface SkillFileNode {
-  name: string;
-  path: string;
-  isDir?: boolean;
-  children?: SkillFileNode[];
-  content?: string;
-  type?: "yaml" | "markdown" | "code" | "json";
-}
-
-export interface AgentSkill {
-  id: string;
-  name: string;
-  category:
-    | "devops"
-    | "engineering"
-    | "automation"
-    | "automacao"
-    | "security"
-    | "diagnostics"
-    | "frontend"
-    | "governance"
-    | "ai-agents"
-    | "data"
-    | "dados"
-    | "programacao"
-    | "negocios"
-    | "design"
-    | "midia"
-    | "conteudo"
-    | "aplicativos";
-  description: string;
-  path: string;
-  entrypoint: string;
-  package: string;
-  execution_mode: "plan-first" | "iterative-tdd" | "read-only" | "non-destructive" | "append-only" | "read-only-publish" | "agent-loop";
-  tags: string[];
-  markdown: string;
-  isOfficial: boolean;
-  author: string;
-  version: string;
-  supportedRuntimes: string[];
-  whenToUse?: string;
-  whenNotToUse?: string;
-  preconditions?: string;
-  procedure?: string[];
-  acceptanceCriteria?: string[];
-  securityRules?: {
-    planFirst: boolean;
-    zeroExfiltration: boolean;
-    explicitGates: boolean;
-    deterministicPackaging: boolean;
-  };
-  sampleTestPrompt?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  usageCount?: string;
-  installed?: boolean;
-  coverTheme?: {
-    bg: string;
-    accent: string;
-    icon: string;
-    subtitle?: string;
-    logo?: string;
-  };
-  promptSuggestions?: string[];
-  files?: SkillFileNode[];
-}
-
-export interface SkillTestCase {
-  id: string;
-  title: string;
-  inputPrompt: string;
-  expectedMode: string;
-  expectedGate: "auto_approve" | "human_approval_required" | "safety_block";
-}
-
-export interface SkillTestRunResult {
-  skillId: string;
-  status: "success" | "blocked" | "needs_approval" | "running";
-  logs: { timestamp: string; step: string; detail: string; level: "info" | "warn" | "success" | "error" }[];
-  plan?: string;
-  evidence?: string;
-  securityChecksPassed: boolean;
-}
-

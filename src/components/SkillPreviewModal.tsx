@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { AgentSkill } from "../types";
 import { BookCover } from "./BookCover";
+import { Icon } from "./Icons";
 
 interface SkillPreviewModalProps {
   skill: AgentSkill | null;
   onClose: () => void;
   onOpenDetails: (skill: AgentSkill) => void;
   onToggleInstall?: (skillId: string) => void;
+  onToggleFavorite?: (skillId: string) => void;
   onTestPrompt?: (skillId: string, prompt: string) => void;
 }
 
@@ -15,6 +17,7 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
   onClose,
   onOpenDetails,
   onToggleInstall,
+  onToggleFavorite,
   onTestPrompt,
 }) => {
   const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null);
@@ -139,6 +142,34 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
             zIndex: 30,
           }}
         >
+          {onToggleFavorite && (
+            <button
+              type="button"
+              onClick={() => onToggleFavorite(skill.id)}
+              title={skill.isFavorite ? "Remover dos favoritos" : "Salvar nos favoritos"}
+              style={{
+                background: "transparent",
+                border: "none",
+                color: skill.isFavorite ? "#EAEAEA" : "#9B9B9B",
+                cursor: "pointer",
+                padding: 4,
+                display: "flex",
+                alignItems: "center",
+                transition: "color 0.15s, transform 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#FFFFFF";
+                e.currentTarget.style.transform = "scale(1.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = skill.isFavorite ? "#EAEAEA" : "#9B9B9B";
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              <Icon n={skill.isFavorite ? "star-filled" : "star"} size={19} />
+            </button>
+          )}
+
           <button
             type="button"
             onClick={handleShare}

@@ -1,29 +1,39 @@
 import React, { useState } from "react";
 import { AgentSkill } from "../types";
 import { BookCover } from "../components/BookCover";
+import { Icon } from "../components/Icons";
 
 interface SkillsStoreViewProps {
   skills: AgentSkill[];
   onSelectSkill: (skill: AgentSkill) => void;
   onToggleInstall: (skillId: string) => void;
+  onToggleFavorite: (skillId: string) => void;
+  onlyFavorites?: boolean;
+  onClearFavoritesFilter?: () => void;
   onNavigateCreate: () => void;
   onNavigateTest: (skillId?: string) => void;
   onNavigatePlanned?: () => void;
-  onOpenStatusPortalDemo: () => void;
+  onNavigateGlobalSync: () => void;
 }
 
 export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
   skills,
   onSelectSkill,
   onToggleInstall,
+  onToggleFavorite,
+  onlyFavorites = false,
+  onClearFavoritesFilter,
   onNavigateCreate,
   onNavigateTest,
   onNavigatePlanned,
-  onOpenStatusPortalDemo,
+  onNavigateGlobalSync,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("todos");
   const [installedOnly, setInstalledOnly] = useState(false);
+  const [localFavoritesOnly, setLocalFavoritesOnly] = useState(false);
+
+  const isFilteringFavorites = onlyFavorites || localFavoritesOnly;
 
   const categories = [
     { id: "todos", label: "Todos" },
@@ -38,6 +48,9 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
   ];
 
   const filteredSkills = skills.filter((skill) => {
+    // Favorites filter
+    if (isFilteringFavorites && !skill.isFavorite) return false;
+
     // Installed filter
     if (installedOnly && !skill.installed) return false;
 
@@ -55,19 +68,46 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
       if (!matchesCategory) return false;
     }
 
-    // Search query
+    // Search query: allows filtering by name, category, description or tags
     if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
+      const q = searchQuery.toLowerCase().trim();
       const matchName = skill.name.toLowerCase().includes(q);
       const matchDesc = skill.description.toLowerCase().includes(q);
       const matchTag = skill.tags?.some((t) => t.toLowerCase().includes(q));
-      if (!matchName && !matchDesc && !matchTag) return false;
+      const matchCategoryText = (skill.category || "").toLowerCase().includes(q);
+
+      // Category semantic aliases (e.g. searching "programação" or "devops" or "apps")
+      const categoryAliases: Record<string, string[]> = {
+        programacao: ["programação", "programacao", "devops", "engineering", "frontend", "código", "codigo", "infra"],
+        dados: ["dados", "data", "security", "segurança", "diagnostics", "diagnóstico", "análise"],
+        automacao: ["automação", "automacao", "workflow", "processos", "automation"],
+        negocios: ["negócios", "negocios", "governance", "governanca", "gestão", "business"],
+        design: ["design", "ui", "ux", "visual", "interface", "extração"],
+        midia: ["mídia", "midia", "video", "áudio", "audio"],
+        conteudo: ["conteúdo", "conteudo", "copywriting", "texto", "redação"],
+        aplicativos: ["aplicativos", "apps", "discord", "audacity", "lightroom", "illustrator"],
+      };
+
+      const matchCategoryAlias = Object.entries(categoryAliases).some(([catKey, aliases]) => {
+        const isThisSkillCategory =
+          skill.category?.toLowerCase() === catKey ||
+          (catKey === "programacao" && (skill.category === "devops" || skill.category === "frontend")) ||
+          (catKey === "dados" && (skill.category === "security" || skill.category === "diagnostics")) ||
+          (catKey === "aplicativos" && (skill.id.includes("discord") || skill.id.includes("audacity")));
+
+        return isThisSkillCategory && aliases.some((alias) => alias.includes(q) || q.includes(alias));
+      });
+
+      if (!matchName && !matchCategoryText && !matchCategoryAlias && !matchDesc && !matchTag) {
+        return false;
+      }
     }
 
     return true;
   });
 
   const installedCount = skills.filter((s) => s.installed).length;
+  const favoriteCount = skills.filter((s) => s.isFavorite).length;
 
   return (
     <div
@@ -79,7 +119,7 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
         color: "#EAEAEA",
       }}
     >
-      {/* Top Action Bar (Laboratório Header: Create, Test, Installed, Planned, Demo) */}
+      {/* Top Action Bar (Laboratório Header: Create, Test, Installed, Favorites, Planned, Demo) */}
       <div
         style={{
           display: "flex",
@@ -104,10 +144,7 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
               color: "#EAEAEA",
             }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-            </svg>
+            <Icon n="beaker" size={18} />
           </div>
           <div>
             <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0, color: "#EAEAEA", letterSpacing: "-0.01em" }}>
@@ -148,13 +185,51 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
                 e.currentTarget.style.borderColor = "#545454";
               }}
             >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
+              <Icon n="calendar" size={13} />
               Próximas Skills
             </button>
           )}
+
+          {/* Favoritas Filter Toggle */}
+          <button
+            type="button"
+            onClick={() => {
+              if (onlyFavorites && onClearFavoritesFilter) {
+                onClearFavoritesFilter();
+              } else {
+                setLocalFavoritesOnly(!localFavoritesOnly);
+              }
+            }}
+            style={{
+              backgroundColor: isFilteringFavorites ? "#383838" : "#262626",
+              color: isFilteringFavorites ? "#EAEAEA" : "#C2C2C2",
+              border: isFilteringFavorites ? "1px solid #767676" : "1px solid #383838",
+              borderRadius: 8,
+              padding: "6px 12px",
+              fontSize: 12.5,
+              fontWeight: isFilteringFavorites ? 600 : 500,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              transition: "all 0.15s ease",
+            }}
+            onMouseEnter={(e) => {
+              if (!isFilteringFavorites) {
+                e.currentTarget.style.backgroundColor = "#303030";
+                e.currentTarget.style.borderColor = "#545454";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isFilteringFavorites) {
+                e.currentTarget.style.backgroundColor = "#262626";
+                e.currentTarget.style.borderColor = "#383838";
+              }
+            }}
+          >
+            <Icon n={isFilteringFavorites ? "star-filled" : "star"} size={14} />
+            Favoritas ({favoriteCount})
+          </button>
 
           {/* Minhas Habilidades Filter Toggle */}
           <button
@@ -174,9 +249,7 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
               gap: 6,
             }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+            <Icon n="check-circle" size={14} />
             Minhas Habilidades ({installedCount})
           </button>
 
@@ -198,9 +271,7 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
               gap: 6,
             }}
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="5 3 19 12 5 21 5 3" />
-            </svg>
+            <Icon n="play" size={13} />
             Testar no Playground
           </button>
 
@@ -232,22 +303,38 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
             Criar Nova Habilidade
           </button>
 
-          {/* Demo Status Portal link */}
+          {/* Ativação Global para Agentes */}
           <button
             type="button"
-            onClick={onOpenStatusPortalDemo}
-            title="Demonstração da skill status-portal em execução"
+            onClick={onNavigateGlobalSync}
+            title="Sincronizar skills globalmente para todos os agentes de IA (Claude Code, Codex, Manus, etc.)"
             style={{
               backgroundColor: "#222222",
-              color: "#9B9B9B",
-              border: "1px solid #383838",
+              color: "#C2C2C2",
+              border: "1px solid #444444",
               borderRadius: 8,
-              padding: "6px 10px",
-              fontSize: 12,
+              padding: "6px 12px",
+              fontSize: 12.5,
+              fontWeight: 500,
               cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              transition: "all 0.15s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "#2d2d2d";
+              e.currentTarget.style.borderColor = "#767676";
+              e.currentTarget.style.color = "#EAEAEA";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "#222222";
+              e.currentTarget.style.borderColor = "#444444";
+              e.currentTarget.style.color = "#C2C2C2";
             }}
           >
-            Demo Status Portal
+            <Icon n="terminal" size={13} />
+            Ativação Global
           </button>
         </div>
       </div>
@@ -274,7 +361,7 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
 
         <input
           type="text"
-          placeholder="Pesquisar habilidades"
+          placeholder="Pesquisar por nome ou categoria..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{
@@ -319,6 +406,48 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
           </button>
         )}
       </div>
+
+      {/* Filter Active Badge (When Filtering Favorites) */}
+      {isFilteringFavorites && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            backgroundColor: "#222222",
+            border: "1px solid #545454",
+            borderRadius: 8,
+            padding: "8px 14px",
+            marginBottom: 14,
+            fontSize: 12.5,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#EAEAEA" }}>
+            <Icon n="star-filled" size={14} />
+            <span>
+              Exibindo apenas <b>Habilidades Favoritas</b> ({filteredSkills.length})
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (onClearFavoritesFilter) onClearFavoritesFilter();
+              setLocalFavoritesOnly(false);
+            }}
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "#C2C2C2",
+              cursor: "pointer",
+              fontSize: 12,
+              textDecoration: "underline",
+              padding: 0,
+            }}
+          >
+            Ver todas as habilidades
+          </button>
+        </div>
+      )}
 
       {/* Category Filter Pills */}
       <div
@@ -381,6 +510,7 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
               key={skill.id}
               onClick={() => onSelectSkill(skill)}
               style={{
+                position: "relative",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
@@ -401,6 +531,47 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
                 e.currentTarget.style.borderColor = "#383838";
               }}
             >
+              {/* Favorite Toggle Button in top-right corner */}
+              <button
+                type="button"
+                title={skill.isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                aria-label={skill.isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleFavorite(skill.id);
+                }}
+                style={{
+                  position: "absolute",
+                  top: 10,
+                  right: 12,
+                  background: skill.isFavorite ? "#292929" : "transparent",
+                  border: skill.isFavorite ? "1px solid #545454" : "1px solid transparent",
+                  borderRadius: 6,
+                  width: 28,
+                  height: 28,
+                  padding: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: skill.isFavorite ? "#EAEAEA" : "#767676",
+                  transition: "all 0.15s ease",
+                  zIndex: 2,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#333333";
+                  e.currentTarget.style.borderColor = "#767676";
+                  e.currentTarget.style.color = "#FFFFFF";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = skill.isFavorite ? "#292929" : "transparent";
+                  e.currentTarget.style.borderColor = skill.isFavorite ? "#545454" : "transparent";
+                  e.currentTarget.style.color = skill.isFavorite ? "#EAEAEA" : "#767676";
+                }}
+              >
+                <Icon n={skill.isFavorite ? "star-filled" : "star"} size={15} />
+              </button>
+
               {/* Left Booklet Graphic */}
               <div style={{ flexShrink: 0 }}>
                 <BookCover
@@ -450,16 +621,13 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
                     fontSize: 12,
                   }}
                 >
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    <polyline points="9 12 11 14 15 10" />
-                  </svg>
+                  <Icon n="check-circle" size={13} />
                   <span>Atualizado em {skill.updatedAt || "28 de set. de 2026"}</span>
                 </div>
               </div>
 
               {/* Right Action Button: + Adicionar */}
-              <div style={{ flexShrink: 0 }}>
+              <div style={{ flexShrink: 0, marginTop: 12 }}>
                 <button
                   type="button"
                   onClick={(e) => {
@@ -496,17 +664,12 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
                 >
                   {skill.installed ? (
                     <>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
+                      <Icon n="check" size={13} />
                       Adicionado
                     </>
                   ) : (
                     <>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                      </svg>
+                      <Icon n="plus" size={13} />
                       Adicionar
                     </>
                   )}
@@ -514,6 +677,47 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
               </div>
             </div>
           ))
+        ) : isFilteringFavorites ? (
+          <div
+            style={{
+              textAlign: "center",
+              padding: "48px 24px",
+              backgroundColor: "#202020",
+              borderRadius: 14,
+              border: "1px dashed #545454",
+              color: "#9B9B9B",
+            }}
+          >
+            <div style={{ color: "#C2C2C2", marginBottom: 12, display: "flex", justifyContent: "center" }}>
+              <Icon n="star" size={36} />
+            </div>
+            <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: "#EAEAEA" }}>
+              Nenhuma habilidade favoritada encontrada
+            </div>
+            <p style={{ fontSize: 13, margin: "0 0 16px 0", maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
+              Clique no ícone de estrela no canto superior direito de qualquer card para salvar suas habilidades favoritas.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                if (onClearFavoritesFilter) onClearFavoritesFilter();
+                setLocalFavoritesOnly(false);
+                setSearchQuery("");
+                setActiveCategory("todos");
+              }}
+              style={{
+                backgroundColor: "#333333",
+                color: "#EAEAEA",
+                border: "1px solid #545454",
+                borderRadius: 8,
+                padding: "8px 16px",
+                fontSize: 13,
+                cursor: "pointer",
+              }}
+            >
+              Explorar todas as habilidades
+            </button>
+          </div>
         ) : (
           <div
             style={{
@@ -529,7 +733,7 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
               Nenhuma habilidade encontrada
             </div>
             <p style={{ fontSize: 13, margin: "0 0 16px 0" }}>
-              Tente buscar com outro termo ou selecione a categoria "Todos".
+              Tente buscar por outro nome ou categoria, ou selecione a categoria "Todos".
             </p>
             <button
               type="button"

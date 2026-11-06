@@ -6,14 +6,12 @@ interface SkillDetailModalProps {
   skill: AgentSkill | null;
   onClose: () => void;
   onTestSkill: (skillId: string) => void;
-  onOpenStatusPortalDemo?: () => void;
 }
 
 export function SkillDetailModal({
   skill,
   onClose,
   onTestSkill,
-  onOpenStatusPortalDemo,
 }: SkillDetailModalProps) {
   const [activeTab, setActiveTab] = useState<"spec" | "rules" | "install">("spec");
   const [selectedRuntime, setSelectedRuntime] = useState<string>("claude");
@@ -52,7 +50,7 @@ export function SkillDetailModal({
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <h2>{skill.name}</h2>
                 <span className={`badge ${skill.isOfficial ? "info" : "ok"}`}>
-                  {skill.isOfficial ? "Oficial DM Skills" : "Custom Lab"}
+                  {skill.isOfficial ? "Oficial Deda Skills" : "Custom Lab"}
                 </span>
                 <span className="badge neutral">v{skill.version}</span>
               </div>
@@ -251,21 +249,6 @@ export function SkillDetailModal({
 
         {/* Modal Foot */}
         <div className="modal-foot">
-          {skill.id === "status-portal" && onOpenStatusPortalDemo && (
-            <button
-              type="button"
-              className="btn-ghost"
-              onClick={() => {
-                onClose();
-                onOpenStatusPortalDemo();
-              }}
-              style={{ marginRight: "auto", display: "inline-flex", alignItems: "center", gap: 6 }}
-            >
-              <Icon n="eye" size={14} />
-              Abrir Demo Interativa da Skill
-            </button>
-          )}
-
           <button type="button" className="secondary" onClick={onClose}>
             Fechar
           </button>

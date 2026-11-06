@@ -19,10 +19,16 @@ export const AGENT_SKILLS: AgentSkill[] = [
     usageCount: "2.8k",
     installed: false,
     coverTheme: {
-      bg: "linear-gradient(155deg, #5865F2 0%, #353fa3 60%, #202660 100%)",
-      accent: "#ffffff",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "discord",
-      subtitle: "Discord Community",
+      subtitle: "Comunidade & Moderação • Xilogravura",
+      imageUrl: "/assets/cordel/discord.jpg",
+      cordelArt: {
+        themeName: "Praça do Forró & Casario da Comunidade",
+        elements: ["Praça pública", "Bandeirinhas de cordel", "Trio de forró", "Casal dançando", "Igreja sertaneja"],
+        caption: "Comunicação viva e acolhedora esculpida em xilogravura de cordel nordestino."
+      }
     },
     promptSuggestions: [
       "Projete cargos e canais para uma nova comunidade do Discord.",
@@ -158,10 +164,11 @@ Route Discord work by server authority, durable state, frequency, and execution 
     usageCount: "1.9k",
     installed: false,
     coverTheme: {
-      bg: "linear-gradient(155deg, #094779 0%, #062b4a 60%, #031424 100%)",
-      accent: "#ffca28",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "audacity",
-      subtitle: "Audio Engineering",
+      subtitle: "Engenharia de Som • Xilogravura",
+      imageUrl: "/assets/cordel/creative.jpg",
     },
     promptSuggestions: [
       "Remova ruído de fundo e zumbido elétrico de uma entrevista em áudio.",
@@ -236,10 +243,11 @@ Diretrizes detalhadas para engenharia de áudio digital, automação com macros 
     usageCount: "4.3k",
     installed: false,
     coverTheme: {
-      bg: "linear-gradient(155deg, #d97706 0%, #92400e 60%, #451a03 100%)",
-      accent: "#fde68a",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "video",
-      subtitle: "Motion Graphics",
+      subtitle: "Motion & Audiovisual • Xilogravura",
+      imageUrl: "/assets/cordel/creative.jpg",
     },
     promptSuggestions: [
       "Crie um vídeo explicativo de 30 segundos sobre lançamento de produto SaaS.",
@@ -310,10 +318,11 @@ description: Crie vídeos HTML editáveis baseados em cenas, renderizados para M
     usageCount: "1.4k",
     installed: false,
     coverTheme: {
-      bg: "linear-gradient(155deg, #0369a1 0%, #075985 60%, #082f49 100%)",
-      accent: "#38bdf8",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "lightroom",
-      subtitle: "Photo Curation",
+      subtitle: "Curadoria & Cores • Xilogravura",
+      imageUrl: "/assets/cordel/creative.jpg",
     },
     promptSuggestions: [
       "Faça a triagem automática de um ensaio de fotos descartando imagens fora de foco ou olhos fechados.",
@@ -386,10 +395,11 @@ description: Faça a triagem, edite, organize, exporte e migre bibliotecas de fo
     usageCount: "3.2k",
     installed: false,
     coverTheme: {
-      bg: "linear-gradient(155deg, #ea580c 0%, #c2410c 60%, #7c2d12 100%)",
-      accent: "#ffedd5",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "illustrator",
-      subtitle: "Vector Graphics",
+      subtitle: "Vetor & Identidade • Xilogravura",
+      imageUrl: "/assets/cordel/web_design.jpg",
     },
     promptSuggestions: [
       "Converta um rascunho de logotipo em curvas vetoriais perfeitas com geometria dourada.",
@@ -455,10 +465,11 @@ description: Crie ilustrações vetoriais, exportações, pacotes e ativos de ma
     usageCount: "5.6k",
     installed: false,
     coverTheme: {
-      bg: "linear-gradient(155deg, #475569 0%, #334155 60%, #1e293b 100%)",
-      accent: "#f1f5f9",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "copywriter",
-      subtitle: "High-Conversion Copy",
+      subtitle: "Cordel & Conversão • Xilogravura",
+      imageUrl: "/assets/cordel/copywriting.jpg",
     },
     promptSuggestions: [
       "Escreva uma proposta de valor (hero section) e 3 chamadas para ação (CTAs) para um produto B2B.",
@@ -529,10 +540,11 @@ description: Redação publicitária de alta conversão para landing pages e an�
     usageCount: "3.7k",
     installed: true,
     coverTheme: {
-      bg: "linear-gradient(155deg, #0284c7 0%, #0369a1 60%, #082f49 100%)",
-      accent: "#38bdf8",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "code",
-      subtitle: "Pixel-Perfect UI",
+      subtitle: "UI & Geometria • Xilogravura",
+      imageUrl: "/assets/cordel/web_design.jpg",
     },
     promptSuggestions: [
       "Extrair o card de estatísticas executivas e transferir como componente React modular com Tailwind CSS.",
@@ -604,10 +616,11 @@ description: Extrai geometria, CSS computado, tokens e ativos de interfaces.
     usageCount: "2.1k",
     installed: true,
     coverTheme: {
-      bg: "linear-gradient(155deg, #4f46e5 0%, #3730a3 60%, #1e1b4b 100%)",
-      accent: "#818cf8",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "devops",
-      subtitle: "CI/CD & Delivery",
+      subtitle: "CI/CD & Entrega • Xilogravura",
+      imageUrl: "/assets/cordel/devops.jpg",
     },
     promptSuggestions: [
       "Preparar plano de entrega para atualização de microsserviço com estratégia de blue-green deployment.",
@@ -661,10 +674,11 @@ description: Planeja e revisa entregas DevOps em um repositório.
     usageCount: "3.4k",
     installed: true,
     coverTheme: {
-      bg: "linear-gradient(155deg, #059669 0%, #047857 60%, #064e3b 100%)",
-      accent: "#34d399",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "security",
-      subtitle: "Defensive Audits",
+      subtitle: "Auditoria Defensiva • Xilogravura",
+      imageUrl: "/assets/cordel/security.jpg",
     },
     promptSuggestions: [
       "Executar varredura estática de segurança no código em busca de injeções de SQL e XSS.",
@@ -719,10 +733,11 @@ description: Faz revisão defensiva e somente leitura de segurança.
     usageCount: "1.8k",
     installed: false,
     coverTheme: {
-      bg: "linear-gradient(155deg, #7c3aed 0%, #6d28d9 60%, #3b0764 100%)",
-      accent: "#c4b5fd",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "code",
-      subtitle: "Resilient Workflows",
+      subtitle: "Workflows & Automação • Xilogravura",
+      imageUrl: "/assets/cordel/automation.jpg",
     },
     promptSuggestions: [
       "Desenhar um fluxo de processamento de pedidos assíncrono com idempotência e Dead Letter Queue (DLQ).",
@@ -774,10 +789,11 @@ description: Projeta automações e workflows confiáveis.
     usageCount: "2.9k",
     installed: true,
     coverTheme: {
-      bg: "linear-gradient(155deg, #1e3a8a 0%, #172554 60%, #0f172a 100%)",
-      accent: "#60a5fa",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "code",
-      subtitle: "Project Governance",
+      subtitle: "Governança & Projeto • Xilogravura",
+      imageUrl: "/assets/cordel/governance.jpg",
     },
     promptSuggestions: [
       "Configurar o painel de status para um projeto de modernização de ERP, definindo 3 fases e 8 tarefas críticas.",
@@ -849,10 +865,11 @@ description: Instala e configura um painel de acompanhamento e status de engenha
     usageCount: "1.2k",
     installed: false,
     coverTheme: {
-      bg: "linear-gradient(155deg, #047857 0%, #065f46 60%, #022c22 100%)",
-      accent: "#6ee7b7",
+      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
+      accent: "#EAEAEA",
       icon: "shield",
-      subtitle: "Connectivity & DNS",
+      subtitle: "Conectividade & Rotas • Xilogravura",
+      imageUrl: "/assets/cordel/devops.jpg",
     },
     promptSuggestions: [
       "Diagnosticar falha de handshake SSL e verificar a cadeia de certificados até a CA raiz.",
@@ -881,6 +898,171 @@ description: Diagnostica conectividade e saúde de servidores de forma controlad
 ---
 
 # Network Diagnostics Playbook`,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "vibecode-builder",
+    name: "Vibecode Builder",
+    category: "programacao",
+    description: "Transforma uma ideia de produto em uma implementação pequena e verificável, orientando descoberta do repositório, escopo, UX, código, testes e revisão sem sacrificar segurança ou funcionalidade existente.",
+    path: "skills/vibecode-builder",
+    entrypoint: "SKILL.md",
+    package: "packages/vibecode-builder.skill",
+    execution_mode: "iterative-tdd",
+    tags: ["product", "engineering", "feature", "tdd", "scaffolding", "fullstack"],
+    isOfficial: true,
+    author: "devdudumuniz",
+    version: "1.0.0",
+    supportedRuntimes: ["claude", "codex", "manus", "antigravity", "hermes", "opencode", "cursor", "local"],
+    updatedAt: "02 de nov. de 2026",
+    usageCount: "2.4k",
+    installed: true,
+    coverTheme: {
+      bg: "linear-gradient(155deg, #10b981 0%, #047857 60%, #064e3b 100%)",
+      accent: "#6ee7b7",
+      icon: "code",
+      subtitle: "Iterative TDD Builder",
+    },
+    promptSuggestions: [
+      "Criar fatia vertical para novo fluxo de autenticação com formulário, validação de schema e testes unitários.",
+      "Planejar e implementar componente de busca em tempo real com debounce e empty states.",
+      "Refatorar lógica de cálculo de progresso com testes automatizados de regressão.",
+    ],
+    markdown: `---
+name: vibecode-builder
+description: Transforma uma ideia de produto em uma implementação pequena e verificável com TDD.
+---
+
+# Vibecode Builder Playbook`,
+    files: [
+      {
+        name: "vibecode-builder",
+        path: "skills/vibecode-builder",
+        isDir: true,
+        children: [
+          {
+            name: "SKILL.md",
+            path: "skills/vibecode-builder/SKILL.md",
+            type: "markdown",
+            content: `---
+name: vibecode-builder
+description: Transforma uma ideia de produto em uma implementação verificável com TDD.
+---
+
+# Vibecode Builder`,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "status-portal-registro",
+    name: "Status Portal Registro",
+    category: "dados",
+    description: "Registra no painel de status do projeto cada etapa de trabalho no momento em que acontece: abrir sessão, assumir tarefa, rodar verificações, concluir com evidência criptográfica/hash, registrar bloqueios e passar bastão.",
+    path: "skills/status-portal-registro",
+    entrypoint: "SKILL.md",
+    package: "packages/status-portal-registro.skill",
+    execution_mode: "append-only",
+    tags: ["ledger", "events", "audit-trail", "evidence", "handoff", "tracking"],
+    isOfficial: true,
+    author: "devdudumuniz",
+    version: "1.0.0",
+    supportedRuntimes: ["claude", "codex", "manus", "antigravity", "hermes", "opencode", "cursor", "local"],
+    updatedAt: "28 de out. de 2026",
+    usageCount: "1.9k",
+    installed: false,
+    coverTheme: {
+      bg: "linear-gradient(155deg, #6366f1 0%, #4338ca 60%, #312e81 100%)",
+      accent: "#a5b4fc",
+      icon: "history",
+      subtitle: "Audited Ledger & Events",
+    },
+    promptSuggestions: [
+      "Registrar conclusão de tarefa no log de auditoria com hash do commit como evidência.",
+      "Abrir sessão de trabalho com actor agent:claude-code e puxar próximas tarefas prioritárias.",
+      "Registrar passagem de bastão (handoff) detalhando itens concluídos e pendências.",
+    ],
+    markdown: `---
+name: status-portal-registro
+description: Registra no painel de status do projeto cada etapa de trabalho com trilha auditável.
+---
+
+# Status Portal Registro`,
+    files: [
+      {
+        name: "status-portal-registro",
+        path: "skills/status-portal-registro",
+        isDir: true,
+        children: [
+          {
+            name: "SKILL.md",
+            path: "skills/status-portal-registro/SKILL.md",
+            type: "markdown",
+            content: `---
+name: status-portal-registro
+description: Registra etapas de trabalho no painel de status com auditoria e evidências.
+---
+
+# Status Portal Registro`,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "status-portal-publicar",
+    name: "Status Portal Publicar",
+    category: "automacao",
+    description: "Publica o painel de status de um projeto com segurança (container Docker em modo somente leitura, proxy reverso com domínio, export estático pré-compilado), executando varredura automatizada contra vazamento de dados internos.",
+    path: "skills/status-portal-publicar",
+    entrypoint: "SKILL.md",
+    package: "packages/status-portal-publicar.skill",
+    execution_mode: "read-only-publish",
+    tags: ["deployment", "docker", "reverse-proxy", "sanitization", "privacy", "client-portal"],
+    isOfficial: true,
+    author: "devdudumuniz",
+    version: "1.0.0",
+    supportedRuntimes: ["claude", "codex", "manus", "antigravity", "hermes", "opencode", "cursor", "local"],
+    updatedAt: "29 de out. de 2026",
+    usageCount: "1.5k",
+    installed: false,
+    coverTheme: {
+      bg: "linear-gradient(155deg, #059669 0%, #047857 60%, #064e3b 100%)",
+      accent: "#6ee7b7",
+      icon: "shield",
+      subtitle: "Secure Publish & Redaction",
+    },
+    promptSuggestions: [
+      "Executar varredura automatizada contra vazamento de credenciais na visão do cliente antes de publicar.",
+      "Configurar container Docker em modo somente leitura com bind mount do projeto.",
+      "Gerar arquivo de export estático pré-compilado para hospedagem estática segura.",
+    ],
+    markdown: `---
+name: status-portal-publicar
+description: Publica o painel de status de um projeto com segurança e sanitização ativa.
+---
+
+# Status Portal Publicar`,
+    files: [
+      {
+        name: "status-portal-publicar",
+        path: "skills/status-portal-publicar",
+        isDir: true,
+        children: [
+          {
+            name: "SKILL.md",
+            path: "skills/status-portal-publicar/SKILL.md",
+            type: "markdown",
+            content: `---
+name: status-portal-publicar
+description: Publica o painel de status de um projeto com segurança e sanitização ativa.
+---
+
+# Status Portal Publicar`,
           },
         ],
       },

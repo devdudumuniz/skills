@@ -1,140 +1,211 @@
 import { useState, useEffect } from "react";
-import { useProject } from "./context/ProjectContext";
+import { AGENT_SUITES, suiteToAgentSkill } from "../skills/data";
+import { AgentSkillSuite, AgentSkill, BundledSkill } from "../skills/types";
 import { Icon } from "./components/Icons";
-import { SkillsStoreView } from "./views/SkillsStoreView";
+import { DedaLogo } from "./components/DedaLogo";
+import { SkillStoreView } from "../skills/components/SkillStoreView";
+import { AgentSuiteDetailView } from "../skills/components/AgentSuiteDetailView";
 import { CreateSkillView } from "./views/CreateSkillView";
 import { SkillTestPlayground } from "./views/SkillTestPlayground";
 import { SkillPreviewModal } from "./components/SkillPreviewModal";
 import { SkillFileDetailModal } from "./components/SkillFileDetailModal";
-import { OverviewView } from "./views/OverviewView";
-import { PlanningView } from "./views/PlanningView";
-import { TasksView } from "./views/TasksView";
-import { ProcessesView } from "./views/ProcessesView";
-import { BeforeAfterView } from "./views/BeforeAfterView";
-import { EvolutionView } from "./views/EvolutionView";
-import { HistoryView } from "./views/HistoryView";
-import { ReportsView } from "./views/ReportsView";
-import { ReportModal } from "./components/ReportModal";
 import { PlannedSkillsView, PlannedSkillItem } from "./views/PlannedSkillsView";
-import { fmt } from "./components/UIPrimitives";
-import { AgentSkill, ReportItem } from "./types";
+import { GlobalAgentSyncView } from "./views/GlobalAgentSyncView";
+import { MascotAgentsView } from "./views/MascotAgentsView";
 
-type MainView = "skills-lab" | "planned-skills" | "create-skill" | "test-playground" | "status-portal-demo";
-
-const PORTAL_TABS = [
-  { id: "visao", label: "Visão geral", icon: "home" as const },
-  { id: "planejamento", label: "Fases e planejamento", icon: "list" as const },
-  { id: "tarefas", label: "Tarefas", icon: "check-square" as const },
-  { id: "processos", label: "Processos e capacidades", icon: "layers" as const },
-  { id: "antes-agora", label: "Antes × agora", icon: "swap" as const },
-  { id: "evolucao", label: "Evolução e achados", icon: "trend" as const },
-  { id: "historico", label: "Histórico", icon: "history" as const },
-  { id: "relatorios", label: "Relatórios", icon: "file" as const },
-];
+type MainView = "catalog" | "suite-detail" | "planned" | "create" | "test" | "global-sync" | "mascots";
 
 export function App() {
-  const {
-    role,
-    setRole,
-    overview,
-    skills,
-    toggleInstallSkill,
-    activeTestSkillId,
-    setActiveTestSkillId,
-  } = useProject();
+  const [suites, setSuites] = useState<AgentSkillSuite[]>(() => {
+    try {
+      const rawFavs = localStorage.getItem("dm_skills_favorites_suites");
+      if (rawFavs) {
+        const favIds = new Set<string>(JSON.parse(rawFavs));
+        return AGENT_SUITES.map((s) => ({
+          ...s,
+          isFavorite: favIds.has(s.id),
+        }));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return AGENT_SUITES;
+  });
 
-  const [currentView, setCurrentView] = useState<MainView>("skills-lab");
+  const [currentView, setCurrentView] = useState<MainView>("catalog");
+  const [selectedSuite, setSelectedSuite] = useState<AgentSkillSuite | null>(null);
+  const [isFavoritesOnly, setIsFavoritesOnly] = useState<boolean>(false);
   const [plannedSkillToCreate, setPlannedSkillToCreate] = useState<PlannedSkillItem | null>(null);
-  
-  // Modals matching images 2 and 3
+  const [activeTestSkillId, setActiveTestSkillId] = useState<string>("web-design");
+  const [activeTestPrompt, setActiveTestPrompt] = useState<string>("");
+
+  // Modals for deep inspection (Matching images 1 and 2)
   const [previewSkill, setPreviewSkill] = useState<AgentSkill | null>(null);
   const [detailFileSkill, setDetailFileSkill] = useState<AgentSkill | null>(null);
-
-  const [portalTab, setPortalTab] = useState<string>("visao");
-  const [tabExtra, setTabExtra] = useState<Record<string, string>>({});
-  const [activeReport, setActiveReport] = useState<ReportItem | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-
-  // Sync hash with views
-  useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash.replace(/^#\/?/, "");
-      if (hash.startsWith("criar")) {
-        setCurrentView("create-skill");
-      } else if (hash.startsWith("planejadas") || hash.startsWith("proximas")) {
-        setCurrentView("planned-skills");
-      } else if (hash.startsWith("testar")) {
-        setCurrentView("test-playground");
-        const queryIdx = hash.indexOf("?");
-        if (queryIdx !== -1) {
-          const params = new URLSearchParams(hash.substring(queryIdx));
-          const skId = params.get("skill");
-          if (skId) setActiveTestSkillId(skId);
-        }
-      } else if (hash.startsWith("demo-status-portal")) {
-        setCurrentView("status-portal-demo");
-        const queryIdx = hash.indexOf("?");
-        if (queryIdx !== -1) {
-          const params = new URLSearchParams(hash.substring(queryIdx));
-          const t = params.get("tab");
-          if (t) setPortalTab(t);
-        }
-      } else {
-        setCurrentView("skills-lab");
-      }
-    };
-
-    handleHash();
-    window.addEventListener("hashchange", handleHash);
-    return () => window.removeEventListener("hashchange", handleHash);
-  }, [setActiveTestSkillId]);
-
-  useEffect(() => {
-    if (currentView === "create-skill") {
-      document.title = "Criar Nova Habilidade — Laboratório de Skills";
-    } else if (currentView === "planned-skills") {
-      document.title = "Próximas Skills & Contribuição — Roadmap de Agentes";
-    } else if (currentView === "test-playground") {
-      document.title = "Playground de Testes — Laboratório de Skills";
-    } else if (currentView === "status-portal-demo") {
-      document.title = `${overview.project.title} — Demonstração da Skill Status Portal`;
-    } else {
-      document.title = "Laboratório de Habilidades para Agentes de IA";
-    }
-  }, [currentView, overview.project.title]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  const navigateToView = (view: MainView, hashParams = "") => {
-    setCurrentView(view);
-    const hash =
-      view === "create-skill"
-        ? "#/criar"
-        : view === "planned-skills"
-        ? "#/planejadas"
-        : view === "test-playground"
-        ? `#/testar${hashParams ? `?${hashParams}` : ""}`
-        : view === "status-portal-demo"
-        ? `#/demo-status-portal${hashParams ? `?${hashParams}` : ""}`
-        : "#/skills";
+  const toggleInstallSuite = (suiteId: string) => {
+    setSuites((prev) =>
+      prev.map((s) => {
+        if (s.id === suiteId) {
+          const next = !s.installed;
+          showToast(
+            next
+              ? `Habilidade '${s.name}' adicionada às suas habilidades!`
+              : `Habilidade '${s.name}' removida.`
+          );
+          return { ...s, installed: next };
+        }
+        return s;
+      })
+    );
+    if (selectedSuite && selectedSuite.id === suiteId) {
+      setSelectedSuite((prev) => (prev ? { ...prev, installed: !prev.installed } : null));
+    }
+  };
 
-    window.location.hash = hash;
+  const toggleFavoriteSuite = (suiteId: string) => {
+    setSuites((prev) => {
+      const updated = prev.map((s) => {
+        if (s.id === suiteId) {
+          const next = !s.isFavorite;
+          showToast(
+            next
+              ? `Habilidade '${s.name}' salva nos favoritos!`
+              : `Habilidade '${s.name}' removida dos favoritos.`
+          );
+          return { ...s, isFavorite: next };
+        }
+        return s;
+      });
+      try {
+        const favIds = updated.filter((s) => s.isFavorite).map((s) => s.id);
+        localStorage.setItem("dm_skills_favorites_suites", JSON.stringify(favIds));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
+    if (selectedSuite && selectedSuite.id === suiteId) {
+      setSelectedSuite((prev) => (prev ? { ...prev, isFavorite: !prev.isFavorite } : null));
+    }
+  };
+
+  const openSuiteDetail = (suite: AgentSkillSuite) => {
+    setSelectedSuite(suite);
+    setCurrentView("suite-detail");
+    window.location.hash = `#/suite/${suite.id}`;
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const navigatePortalTab = (tab: string, extra: Record<string, string> = {}) => {
-    setPortalTab(tab);
-    setTabExtra(extra);
-    const qs = new URLSearchParams({ tab, ...extra }).toString();
-    window.location.hash = `#/demo-status-portal?${qs}`;
+  const openTestPrompt = (suiteId: string, promptText: string) => {
+    setActiveTestSkillId(suiteId);
+    setActiveTestPrompt(promptText);
+    setCurrentView("test");
+    window.location.hash = `#/testar?skill=${encodeURIComponent(suiteId)}&prompt=${encodeURIComponent(promptText)}`;
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const handleInspectFiles = (suite: AgentSkillSuite, skill?: BundledSkill) => {
+    const baseSkill = suiteToAgentSkill(suite);
+    if (skill) {
+      setDetailFileSkill({
+        ...baseSkill,
+        name: `${suite.name}: ${skill.name}`,
+        description: skill.description,
+        procedure: skill.procedure,
+      });
+    } else {
+      setDetailFileSkill(baseSkill);
+    }
+  };
+
+  // Sync hash with views
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.replace(/^#\/?/, "");
+      if (hash.startsWith("suite/")) {
+        const suiteId = hash.replace("suite/", "").split("?")[0];
+        const match = suites.find((s) => s.id === suiteId);
+        if (match) {
+          setSelectedSuite(match);
+          setCurrentView("suite-detail");
+          setIsFavoritesOnly(false);
+          return;
+        }
+      }
+
+      if (hash.startsWith("criar")) {
+        setCurrentView("create");
+        setIsFavoritesOnly(false);
+      } else if (hash.startsWith("planejadas") || hash.startsWith("proximas")) {
+        setCurrentView("planned");
+        setIsFavoritesOnly(false);
+      } else if (hash.startsWith("global") || hash.startsWith("sincronizar") || hash.startsWith("agentes")) {
+        setCurrentView("global-sync");
+        setIsFavoritesOnly(false);
+      } else if (hash.startsWith("mascotes") || hash.startsWith("mascote") || hash.startsWith("assistentes")) {
+        setCurrentView("mascots");
+        setIsFavoritesOnly(false);
+      } else if (hash.startsWith("favoritas") || hash.startsWith("favoritos")) {
+        setCurrentView("catalog");
+        setIsFavoritesOnly(true);
+      } else if (hash.startsWith("testar")) {
+        setCurrentView("test");
+        setIsFavoritesOnly(false);
+        const queryIdx = hash.indexOf("?");
+        if (queryIdx !== -1) {
+          const params = new URLSearchParams(hash.substring(queryIdx));
+          const skId = params.get("skill");
+          const p = params.get("prompt");
+          if (skId) setActiveTestSkillId(skId);
+          if (p) setActiveTestPrompt(p);
+        }
+      } else {
+        setCurrentView("catalog");
+        setIsFavoritesOnly(hash.includes("favoritas=true"));
+      }
+    };
+
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, [suites]);
+
+  // Document Title
+  useEffect(() => {
+    if (currentView === "suite-detail" && selectedSuite) {
+      document.title = `${selectedSuite.name} — Deda Skills`;
+    } else if (currentView === "create") {
+      document.title = "Criar Nova Habilidade — Deda Skills";
+    } else if (currentView === "planned") {
+      document.title = "Próximas Skills & Roadmap — Deda Skills";
+    } else if (currentView === "test") {
+      document.title = "Playground de Testes — Deda Skills";
+    } else if (currentView === "global-sync") {
+      document.title = "Ativação Global de Skills — Deda Skills";
+    } else if (currentView === "mascots") {
+      document.title = "Mascotes Assistentes — Deda Skills";
+    } else if (isFavoritesOnly) {
+      document.title = "Habilidades Favoritas — Deda Skills";
+    } else {
+      document.title = "Deda Skills — Catálogo & Estúdio de Habilidades de IA";
+    }
+  }, [currentView, selectedSuite, isFavoritesOnly]);
+
+  const installedSuites = suites.filter((s) => s.installed);
+  const favoriteCount = suites.filter((s) => s.isFavorite).length;
+
+  // Convert suites to individual AgentSkill list for existing sub-views
+  const allIndividualSkills: AgentSkill[] = suites.map((s) => suiteToAgentSkill(s));
 
   return (
-    <div className="shell client portal-theme">
+    <div className="shell dm-skills-theme">
       {/* Toast Notification */}
       {toastMessage && (
         <div
@@ -160,31 +231,55 @@ export function App() {
         </div>
       )}
 
-      {/* Sidebar de Navegação */}
-      <nav className="side" aria-label="Navegação do Laboratório">
-        <div className="brand brand-portal">
-          <Icon n="beaker" size={26} />
-          <div>
-            Laboratório de Skills
-            <span>Hub & Estúdio de Agentes de IA</span>
+      {/* Sidebar de Navegação (Fiel ao design ChatGPT Plugins / Personalizar) */}
+      <nav className="side" aria-label="Navegação Deda Skills">
+        {/* Brand */}
+        <div className="brand">
+          <div className="brand-icon-wrap" style={{ background: "#202020", borderColor: "#3d3d3d" }}>
+            <DedaLogo size={22} color="#EAEAEA" />
+          </div>
+          <div className="brand-info">
+            <div className="brand-title">Deda Skills</div>
+            <div className="brand-subtitle">Catálogo & Estúdio de Agentes</div>
           </div>
         </div>
 
-        <div className="side-section-title">Laboratório</div>
+        {/* Section: Personalizar */}
+        <div className="side-section-title">Personalizar</div>
 
         <button
           type="button"
-          className={`side-nav-btn ${currentView === "skills-lab" ? "active" : ""}`}
-          onClick={() => navigateToView("skills-lab")}
+          className={`side-nav-btn ${currentView === "catalog" && !isFavoritesOnly ? "active" : ""}`}
+          onClick={() => {
+            setIsFavoritesOnly(false);
+            setCurrentView("catalog");
+            window.location.hash = "#/catalog";
+          }}
         >
           <Icon n="layers" size={16} />
-          <span>Explorar Habilidades ({skills.length})</span>
+          <span>Catálogo de Habilidades ({suites.length})</span>
         </button>
 
         <button
           type="button"
-          className={`side-nav-btn ${currentView === "planned-skills" ? "active" : ""}`}
-          onClick={() => navigateToView("planned-skills")}
+          className={`side-nav-btn ${currentView === "catalog" && isFavoritesOnly ? "active" : ""}`}
+          onClick={() => {
+            setIsFavoritesOnly(true);
+            setCurrentView("catalog");
+            window.location.hash = "#/favoritas";
+          }}
+        >
+          <Icon n="star" size={16} />
+          <span>Favoritas ({favoriteCount})</span>
+        </button>
+
+        <button
+          type="button"
+          className={`side-nav-btn ${currentView === "planned" ? "active" : ""}`}
+          onClick={() => {
+            setCurrentView("planned");
+            window.location.hash = "#/planejadas";
+          }}
         >
           <Icon n="calendar" size={16} />
           <span>Próximas Skills & Roadmap</span>
@@ -192,227 +287,249 @@ export function App() {
 
         <button
           type="button"
-          className={`side-nav-btn ${currentView === "create-skill" ? "active" : ""}`}
+          className={`side-nav-btn ${currentView === "create" ? "active" : ""}`}
           onClick={() => {
             setPlannedSkillToCreate(null);
-            navigateToView("create-skill");
+            setCurrentView("create");
+            window.location.hash = "#/criar";
           }}
         >
-          <Icon n="gear" size={16} />
+          <Icon n="plus" size={16} />
           <span>Criar Nova Habilidade</span>
         </button>
 
         <button
           type="button"
-          className={`side-nav-btn ${currentView === "test-playground" ? "active" : ""}`}
-          onClick={() => navigateToView("test-playground")}
+          className={`side-nav-btn ${currentView === "test" ? "active" : ""}`}
+          onClick={() => {
+            setCurrentView("test");
+            window.location.hash = "#/testar";
+          }}
         >
           <Icon n="play" size={16} />
           <span>Playground de Testes</span>
         </button>
 
-        <div className="side-section-title" style={{ marginTop: 14 }}>
-          Demonstração de Skill
+        <button
+          type="button"
+          className={`side-nav-btn ${currentView === "mascots" ? "active" : ""}`}
+          onClick={() => {
+            setCurrentView("mascots");
+            window.location.hash = "#/mascotes";
+          }}
+          title="Conheça os 4 mascotes assistentes: Carcará, Lobo-Guará, Tatu-Bola e Ararinha-Azul"
+        >
+          <Icon n="users" size={16} />
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+            <span>Mascotes Assistentes</span>
+            <span style={{ fontSize: 10, background: "#2e2e2e", padding: "1px 6px", borderRadius: 10, color: "#EAEAEA", border: "1px solid #3d3d3d" }}>
+              4
+            </span>
+          </div>
+        </button>
+
+        <div className="side-section-title" style={{ marginTop: 10 }}>
+          Agentes & Sistema
         </div>
 
         <button
           type="button"
-          className={`side-nav-btn ${currentView === "status-portal-demo" ? "active" : ""}`}
-          onClick={() => navigateToView("status-portal-demo")}
-          title="Ver o Status Portal em execução como exemplo vivo de uma skill"
+          className={`side-nav-btn ${currentView === "global-sync" ? "active" : ""}`}
+          onClick={() => {
+            setCurrentView("global-sync");
+            window.location.hash = "#/global";
+          }}
+          title="Ativar todas as skills globalmente para Claude Code, Codex, Manus e outros agentes"
         >
-          <Icon n="chart" size={16} />
-          <span>Demo: Status Portal</span>
+          <Icon n="terminal" size={16} />
+          <span>Ativação Global de Skills</span>
         </button>
 
-        {/* Perfil / Role Toggle (visível quando na demo) */}
-        {currentView === "status-portal-demo" && (
-          <div style={{ marginTop: 10, padding: "0 8px" }}>
-            <div className="faint" style={{ fontSize: 11, marginBottom: 4 }}>
-              Papel na Demo do Portal:
-            </div>
-            <div className="role-toggle-bar" style={{ margin: 0 }}>
-              <button
-                type="button"
-                className={`role-btn ${role === "CLIENT_VIEWER" ? "active" : ""}`}
-                onClick={() => setRole("CLIENT_VIEWER")}
-              >
-                Cliente
-              </button>
-              <button
-                type="button"
-                className={`role-btn ${role === "ADMIN" ? "active" : ""}`}
-                onClick={() => setRole("ADMIN")}
-              >
-                Admin
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Section: Instalados (Matching user's ChatGPT Plugins screenshot) */}
+        <div className="side-section-title" style={{ marginTop: 12 }}>
+          Instalados ({installedSuites.length})
+        </div>
 
-        <p className="side-note">
-          {currentView === "status-portal-demo"
-            ? "Exibindo a demonstração da skill status-portal com backlog e timeline de projeto real."
-            : "Laboratório aberto para engenharia, catálogo, teste e publicação de habilidades para Agentes autônomos."}
-        </p>
+        <div className="side-installed-list">
+          {installedSuites.length === 0 ? (
+            <div style={{ fontSize: 11.5, color: "#767676", padding: "6px 8px" }}>
+              Nenhum agente instalado ainda.
+            </div>
+          ) : (
+            installedSuites.map((suite) => {
+              const isCurrent = currentView === "suite-detail" && selectedSuite?.id === suite.id;
+              return (
+                <button
+                  key={suite.id}
+                  type="button"
+                  className={`side-installed-item ${isCurrent ? "active" : ""}`}
+                  onClick={() => openSuiteDetail(suite)}
+                  title={suite.name}
+                >
+                  <div className="side-installed-avatar" style={{ overflow: "hidden" }}>
+                    {suite.coverTheme.imageUrl ? (
+                      <img
+                        src={suite.coverTheme.imageUrl}
+                        alt={suite.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          filter: "contrast(115%)",
+                        }}
+                      />
+                    ) : (
+                      <Icon n={suite.coverTheme.icon || "layers"} size={13} />
+                    )}
+                  </div>
+                  <span
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {suite.name}
+                  </span>
+                </button>
+              );
+            })
+          )}
+        </div>
 
+        {/* Side Footer */}
         <div className="side-foot">
+          <p className="side-note">
+            Repositório oficial Deda Skills: catálogo, testes, empacotamento e ativação global de habilidades para Agentes autônomos.
+          </p>
           <div className="side-update">
-            <Icon n="clock" size={14} />
-            <span>
-              Laboratório Atualizado
-              <br />
-              <b>{fmt(overview.last_update)}</b>
-            </span>
+            <Icon n="check-circle" size={13} />
+            <span>Deda Skills v2.4 • Pronta</span>
           </div>
         </div>
       </nav>
 
       {/* Conteúdo Principal */}
-      <main style={{ minHeight: "100vh", backgroundColor: "#151515" }}>
-        {/* Visualização Principal: Loja e Catálogo de Habilidades (Matching image_6bbb1f03.png) */}
-        {currentView === "skills-lab" && (
-          <SkillsStoreView
-            skills={skills}
-            onSelectSkill={(skill) => setPreviewSkill(skill)}
-            onToggleInstall={(skillId) => {
-              toggleInstallSkill(skillId);
-              const target = skills.find((s) => s.id === skillId);
-              if (target) {
-                showToast(
-                  target.installed
-                    ? `Skill '${target.name}' removida das suas habilidades.`
-                    : `Skill '${target.name}' adicionada com sucesso!`
-                );
-              }
+      <main>
+        {/* Visualização 1: Detalhe do Agente / Plugin (Matching screencapture-chatgpt-plugins...) */}
+        {currentView === "suite-detail" && selectedSuite && (
+          <AgentSuiteDetailView
+            suite={selectedSuite}
+            onBackToCatalog={() => {
+              setCurrentView("catalog");
+              window.location.hash = "#/catalog";
             }}
-            onNavigateCreate={() => {
-              setPlannedSkillToCreate(null);
-              navigateToView("create-skill");
-            }}
-            onNavigatePlanned={() => navigateToView("planned-skills")}
-            onNavigateTest={(skillId) => {
-              if (skillId) setActiveTestSkillId(skillId);
-              navigateToView("test-playground", skillId ? `skill=${skillId}` : "");
-            }}
-            onOpenStatusPortalDemo={() => navigateToView("status-portal-demo")}
+            onToggleInstall={toggleInstallSuite}
+            onToggleFavorite={toggleFavoriteSuite}
+            onTestPrompt={(suiteId, promptText) => openTestPrompt(suiteId, promptText)}
+            onInspectSkillFiles={(suite, skill) => handleInspectFiles(suite, skill)}
           />
         )}
 
-        {/* Visualização: Próximas Skills & Contribuição (Roadmap) */}
-        {currentView === "planned-skills" && (
+        {/* Visualização 2: Loja e Catálogo de Habilidades (Matching image_6bbb1f03.png) */}
+        {currentView === "catalog" && (
+          <SkillStoreView
+            suites={suites}
+            onlyFavorites={isFavoritesOnly}
+            onClearFavoritesFilter={() => {
+              setIsFavoritesOnly(false);
+              window.location.hash = "#/catalog";
+            }}
+            onToggleFavorite={toggleFavoriteSuite}
+            onToggleInstall={toggleInstallSuite}
+            onSelectSuite={openSuiteDetail}
+            onNavigateCreate={() => {
+              setPlannedSkillToCreate(null);
+              setCurrentView("create");
+              window.location.hash = "#/criar";
+            }}
+            onNavigatePlanned={() => {
+              setCurrentView("planned");
+              window.location.hash = "#/planejadas";
+            }}
+            onNavigateTest={(suiteId) => {
+              if (suiteId) setActiveTestSkillId(suiteId);
+              setCurrentView("test");
+              window.location.hash = `#/testar${suiteId ? `?skill=${suiteId}` : ""}`;
+            }}
+            onNavigateGlobalSync={() => {
+              setCurrentView("global-sync");
+              window.location.hash = "#/global";
+            }}
+            onNavigateMascots={() => {
+              setCurrentView("mascots");
+              window.location.hash = "#/mascotes";
+            }}
+          />
+        )}
+
+        {/* Visualização 3: Próximas Skills & Contribuição (Roadmap) */}
+        {currentView === "planned" && (
           <PlannedSkillsView
             onSelectPlannedSkill={(planned) => {
               setPlannedSkillToCreate(planned);
-              navigateToView("create-skill");
+              setCurrentView("create");
+              window.location.hash = "#/criar";
             }}
-            onBackToLab={() => navigateToView("skills-lab")}
+            onBackToLab={() => {
+              setCurrentView("catalog");
+              window.location.hash = "#/catalog";
+            }}
           />
         )}
 
-        {/* Visualização: Formulário de Criação de Habilidade */}
-        {currentView === "create-skill" && (
+        {/* Visualização 4: Ativação Global de Skills para Todos os Agentes */}
+        {currentView === "global-sync" && (
+          <GlobalAgentSyncView
+            skills={allIndividualSkills}
+            onSelectSkill={(skill) => setPreviewSkill(skill)}
+            onBackToCatalog={() => {
+              setCurrentView("catalog");
+              window.location.hash = "#/catalog";
+            }}
+          />
+        )}
+
+        {/* Visualização 5: Formulário de Criação de Habilidade */}
+        {currentView === "create" && (
           <CreateSkillView
             initialData={plannedSkillToCreate}
             onSuccess={(newSkillId) => {
-              showToast("Nova habilidade salva com sucesso no laboratório!");
+              showToast("Nova habilidade criada com sucesso no catálogo!");
               setActiveTestSkillId(newSkillId);
               setPlannedSkillToCreate(null);
-              navigateToView("skills-lab");
+              setCurrentView("catalog");
+              window.location.hash = "#/catalog";
             }}
             onCancel={() => {
               setPlannedSkillToCreate(null);
-              navigateToView("skills-lab");
+              setCurrentView("catalog");
+              window.location.hash = "#/catalog";
             }}
           />
         )}
 
-        {/* Visualização: Playground de Testes */}
-        {currentView === "test-playground" && (
-          <SkillTestPlayground initialSkillId={activeTestSkillId} />
+        {/* Visualização 6: Playground de Testes */}
+        {currentView === "test" && (
+          <SkillTestPlayground
+            initialSkillId={activeTestSkillId}
+            initialPrompt={activeTestPrompt}
+          />
         )}
 
-        {/* Visualização: Demo Interativa da Skill Status Portal */}
-        {currentView === "status-portal-demo" && (
-          <div className="portal portal-theme" style={{ padding: "20px 24px" }}>
-            {/* Banner explicativo de que isto é a demo da skill */}
-            <div
-              style={{
-                background: "#202020",
-                border: "1px solid #545454",
-                borderRadius: 8,
-                padding: "10px 14px",
-                marginBottom: 16,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                flexWrap: "wrap",
-                gap: 10,
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span className="badge info">Demonstração da Skill</span>
-                <span style={{ fontSize: 13, color: "var(--ink)" }}>
-                  Você está visualizando a demonstração ao vivo da skill <b>status-portal</b> (Acompanhamento Executivo de Projeto).
-                </span>
-              </div>
-              <button
-                type="button"
-                className="secondary"
-                onClick={() => navigateToView("skills-lab")}
-                style={{ fontSize: 12, padding: "4px 10px" }}
-              >
-                Voltar ao Catálogo de Skills
-              </button>
-            </div>
-
-            {/* Abas do Acompanhamento do Projeto */}
-            <nav className="tabs" aria-label="Seções do acompanhamento">
-              {PORTAL_TABS.map((t) => (
-                <button
-                  key={t.id}
-                  type="button"
-                  className={portalTab === t.id ? "tab active" : "tab"}
-                  aria-current={portalTab === t.id ? "page" : undefined}
-                  onClick={() => navigatePortalTab(t.id)}
-                >
-                  <Icon n={t.icon} size={15} />
-                  {t.label}
-                </button>
-              ))}
-            </nav>
-
-            {/* Renderização da Aba Selecionada */}
-            {portalTab === "visao" && (
-              <OverviewView
-                onNavigate={navigatePortalTab}
-                onOpenReport={(r) => setActiveReport(r)}
-              />
-            )}
-
-            {portalTab === "planejamento" && (
-              <PlanningView onNavigate={navigatePortalTab} />
-            )}
-
-            {portalTab === "tarefas" && (
-              <TasksView
-                initialTab={tabExtra.tarefas ?? "todas"}
-                focusTaskId={tabExtra.task}
-              />
-            )}
-
-            {portalTab === "processos" && <ProcessesView />}
-
-            {portalTab === "antes-agora" && <BeforeAfterView />}
-
-            {portalTab === "evolucao" && <EvolutionView />}
-
-            {portalTab === "historico" && <HistoryView />}
-
-            {portalTab === "relatorios" && (
-              <ReportsView onOpenReport={(r) => setActiveReport(r)} />
-            )}
-          </div>
+        {/* Visualização 7: 4 Mascotes Assistentes (Inspirado em Cue Bot & Grok Bot) */}
+        {currentView === "mascots" && (
+          <MascotAgentsView
+            onTestPrompt={(skillId, prompt) => openTestPrompt(skillId, prompt)}
+            onNavigateGlobalSync={() => {
+              setCurrentView("global-sync");
+              window.location.hash = "#/global";
+            }}
+            onBackToCatalog={() => {
+              setCurrentView("catalog");
+              window.location.hash = "#/catalog";
+            }}
+          />
         )}
       </main>
 
@@ -424,23 +541,17 @@ export function App() {
           setDetailFileSkill(skill);
           setPreviewSkill(null);
         }}
+        onToggleFavorite={(skillId) => {
+          toggleFavoriteSuite(skillId);
+          setPreviewSkill((prev) => (prev && prev.id === skillId ? { ...prev, isFavorite: !prev.isFavorite } : prev));
+        }}
         onToggleInstall={(skillId) => {
-          toggleInstallSkill(skillId);
-          // Update previewSkill instance state so button toggles live
+          toggleInstallSuite(skillId);
           setPreviewSkill((prev) => (prev && prev.id === skillId ? { ...prev, installed: !prev.installed } : prev));
-          const target = skills.find((s) => s.id === skillId);
-          if (target) {
-            showToast(
-              target.installed
-                ? `Skill removida das suas habilidades.`
-                : `Skill adicionada às suas habilidades!`
-            );
-          }
         }}
         onTestPrompt={(skillId, prompt) => {
-          setActiveTestSkillId(skillId);
           setPreviewSkill(null);
-          navigateToView("test-playground", `skill=${skillId}&prompt=${encodeURIComponent(prompt)}`);
+          openTestPrompt(skillId, prompt);
         }}
       />
 
@@ -449,15 +560,9 @@ export function App() {
         skill={detailFileSkill}
         onClose={() => setDetailFileSkill(null)}
         onBack={() => {
-          setPreviewSkill(detailFileSkill);
+          if (detailFileSkill) setPreviewSkill(detailFileSkill);
           setDetailFileSkill(null);
         }}
-      />
-
-      {/* Modal de Relatório Executivo */}
-      <ReportModal
-        report={activeReport}
-        onClose={() => setActiveReport(null)}
       />
     </div>
   );

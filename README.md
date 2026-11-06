@@ -1,61 +1,93 @@
-# DM Skills & Project Status Portal (React SPA)
+# DM Skills
 
 <p align="center">
   <img src="./assets/banner.svg" alt="DM Skills Banner" width="100%">
 </p>
 
-Universal AI Agent Skills Hub and Executive Project Status Portal rewritten as a modern React single-page application (SPA) powered by Vite and TypeScript.
+Catálogo aberto e profissional de **habilidades de engenharia para Agentes de IA** (Claude Code, OpenAI Codex, Manus, Antigravity, Cursor, Hermes, OpenCode e agentes locais).
+
+Este repositório é dedicado exclusivamente ao desenvolvimento, empacotamento, teste e distribuição de **Skills**. Ele inclui uma interface gráfica integrada para execução local na sua máquina, além de mecanismos automáticos para tornar todas as skills **visíveis globalmente** para qualquer agente configurado no sistema.
 
 ---
 
-## 🚀 Features
+## 📂 Estrutura do Repositório
 
-### 1. Executive Status Portal (Acompanhamento do Projeto)
-- **Visão Geral:** Executive project summary, ring progress indicator, stats chips (Done, In Progress, Next, Waiting, Hours), next-step card, running tasks, and milestone deliverables.
-- **Fases e Planejamento:** Phase tracking with progress bars, objective descriptions, and priority distribution matrix (P0, P1, P2, P3).
-- **Tarefas:** Comprehensive backlog with status tabs (Concluídas, Em execução, Próximas, Aguardando, Todas), filters by phase and priority, text search, and task drawer with acceptance criteria, evidence references, and admin technical details.
-- **Processos e Capacidades:** Process maturity ladder (0–4: Identificada, Em migração, Implementada, Testada, Homologada), automation degree, and domain capability cards.
-- **Antes × Agora:** Comparative analysis of legacy architecture vs new platform, architectural changes with rationale and impact, decisions, and tracked errors.
-- **Evolução e Achados:** Six-dimension evolution tracker (Existed, Identified, Preserved, Rebuilt, Improved, Missing) and security/data audit findings.
-- **Histórico Auditável:** Timeline grouped by date with work hours calculation panel (registered, reconstructed, and task execution hours).
-- **Relatórios Executivos:** Printable/downloadable phase reports and consolidated engineering reports.
-- **Dual Role Mode:** Toggle in real-time between `CLIENT_VIEWER` (client-safe view with masked security details) and `ADMIN` (complete audit view with canonical statuses, evidence filepaths, and raw execution logs).
+```text
+.
+├── skills/                          # Diretório oficial das skills do repositório
+│   ├── devops-delivery/             # Planejamento defensivo de CI/CD e entrega
+│   ├── vibecode-builder/            # Engenharia incremental orientada a TDD
+│   ├── automation-designer/         # Desenho de automações, webhooks e idempotência
+│   ├── security-baseline/           # Análise estática e hardening defensivo
+│   ├── network-server-diagnostics/  # Diagnóstico e triagem de infraestrutura
+│   ├── exact-ui-extraction-transfer/# Extração e replicação de fidelidade visual
+│   ├── status-portal/               # Skill geradora de portal de status executivo
+│   ├── status-portal-registro/      # Registro auditável de progresso e timeline
+│   └── status-portal-publicar/      # Sanitização e publicação para visão cliente
+├── packages/                        # Pacotes compilados (.skill) portáteis
+├── scripts/                         # Automações de empacotamento e link global
+│   ├── install_global_skills.py     # Script para disponibilizar skills para todos os agentes
+│   └── package_skills.py            # Empacotador de diretórios em arquivos .skill
+└── src/                             # Plataforma Web local para exploração e testes de skills
+```
 
-### 2. DM Skills Catalog Hub
-- Interactive explorer for the 9 production-grade agent skills:
-  - `devops-delivery`
-  - `vibecode-builder`
-  - `automation-designer`
-  - `security-baseline`
-  - `network-server-diagnostics`
-  - `exact-ui-extraction-transfer`
-  - `status-portal`
-  - `status-portal-registro`
-  - `status-portal-publicar`
-- Markdown reference documentation viewer (`SKILL.md`).
-- Multi-runtime installer command generator (Claude Code, OpenAI Codex, Manus, Antigravity, Hermes, OpenCode, Local).
+> **Nota sobre o `status-portal`**: O painel de status executivo é exclusivamente uma das habilidades empacotadas (`./skills/status-portal/`). Ele não governa a aplicação nem o repositório — sendo acionado sob demanda apenas quando um agente executa tarefas de relatório executivo.
 
 ---
 
-## 🛠️ Tech Stack
+## 🌐 Ativação Global para Todos os Agentes
 
-- **Framework:** React 18
-- **Bundler:** Vite
-- **Language:** TypeScript
-- **Styling:** CSS variables with executive dark navy theme (`.portal-theme`)
-- **Port:** Dev server on port 3000 (`host: 0.0.0.0`)
+Para que todos os seus agentes de IA (Claude Code, OpenAI Codex, Manus, Antigravity, Cursor, etc.) reconheçam e utilizem imediatamente todas as skills deste repositório no seu computador:
+
+### Via Terminal:
+```bash
+# Sincroniza e cria links globais nos diretórios de agentes do sistema
+npm run skills:global
+
+# Ou diretamente via Python:
+python3 scripts/install_global_skills.py
+```
+
+O script instala e conecta as skills aos seguintes diretórios globais padrão:
+- `~/.agent/skills/` (Agentes Universais / OpenCode / Hermes)
+- `~/.claude/skills/` (Claude Code)
+- `~/.codex/skills/` (OpenAI Codex)
+- `~/.cursor/skills/` (Cursor IDE)
+- `~/.config/agents/skills/` (Configuração do Sistema)
+
+### Via Plataforma Web:
+Abra a plataforma localmente (`npm run dev`) e clique no botão **"Ativação Global de Skills"** na barra lateral para sincronizar ou inspecionar o status com 1 clique.
 
 ---
 
-## 💻 Development
+## 💻 Execução Local da Plataforma de Skills
+
+Para explorar visualmente o catálogo, testar prompts no playground, criar novas skills via formulário ou gerenciar favoritas:
 
 ```bash
-# Install dependencies
+# 1. Instalar dependências
 npm install
 
-# Start development server
+# 2. Iniciar plataforma de visualização local
 npm run dev
 
-# Build production bundle
+# 3. Gerar build de produção da plataforma
 npm run build
 ```
+
+Acesse em: `http://localhost:3000`
+
+---
+
+## 📦 Empacotamento de Novas Skills
+
+```bash
+# Empacota todas as skills de ./skills/ para a pasta ./packages/
+npm run skills:package
+```
+
+---
+
+## 📄 Licença
+
+Distribuído sob licença MIT. Veja `LICENSE` para mais detalhes.

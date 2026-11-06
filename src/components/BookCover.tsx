@@ -9,6 +9,8 @@ interface BookCoverProps {
     icon?: string;
     subtitle?: string;
     logo?: string;
+    imageUrl?: string;
+    cordelArt?: string | { themeName: string; elements: string[]; caption: string; };
   };
   variant?: "thumbnail" | "tilted-3d" | "flat-card";
   className?: string;
@@ -131,6 +133,9 @@ export const BookCover: React.FC<BookCoverProps> = ({
     }
   };
 
+  const cordelImg =
+    theme?.imageUrl || (typeof theme?.cordelArt === "string" ? theme.cordelArt : undefined);
+
   // Thumbnail Variant for list rows (Image 1 style)
   if (variant === "thumbnail") {
     return (
@@ -145,11 +150,11 @@ export const BookCover: React.FC<BookCoverProps> = ({
           overflow: "hidden",
           flexShrink: 0,
           boxShadow: "2px 4px 10px rgba(0,0,0,0.5), inset 3px 0 4px rgba(255,255,255,0.15)",
-          border: "1px solid rgba(255,255,255,0.12)",
+          border: "1px solid rgba(255,255,255,0.18)",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "5px 4px 3px 7px",
+          padding: cordelImg ? 0 : "5px 4px 3px 7px",
         }}
       >
         {/* Book spine line effect */}
@@ -160,60 +165,77 @@ export const BookCover: React.FC<BookCoverProps> = ({
             top: 0,
             bottom: 0,
             width: 4,
-            background: "linear-gradient(to right, rgba(0,0,0,0.6), rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.3))",
-            borderRight: "1px solid rgba(0,0,0,0.4)",
+            background: "linear-gradient(to right, rgba(0,0,0,0.7), rgba(255,255,255,0.15) 50%, rgba(0,0,0,0.4))",
+            borderRight: "1px solid rgba(0,0,0,0.5)",
+            zIndex: 3,
           }}
         />
 
-        {/* Top title text */}
-        <div
-          style={{
-            fontSize: 7.5,
-            fontWeight: 800,
-            color: "#fff",
-            textTransform: "uppercase",
-            letterSpacing: "0.04em",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            paddingLeft: 2,
-            textShadow: "0 1px 2px rgba(0,0,0,0.8)",
-          }}
-        >
-          {title.split(" ")[0]}
-        </div>
+        {cordelImg ? (
+          <img
+            src={cordelImg}
+            alt={title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+              filter: "contrast(1.08)",
+            }}
+          />
+        ) : (
+          <>
+            {/* Top title text */}
+            <div
+              style={{
+                fontSize: 7.5,
+                fontWeight: 800,
+                color: "#fff",
+                textTransform: "uppercase",
+                letterSpacing: "0.04em",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                paddingLeft: 2,
+                textShadow: "0 1px 2px rgba(0,0,0,0.8)",
+              }}
+            >
+              {title.split(" ")[0]}
+            </div>
 
-        {/* Center Logo/Icon Badge */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: accent,
-            margin: "auto 0",
-          }}
-        >
-          {renderIconGraphic(22)}
-        </div>
+            {/* Center Logo/Icon Badge */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: accent,
+                margin: "auto 0",
+              }}
+            >
+              {renderIconGraphic(22)}
+            </div>
 
-        {/* Bottom decorative illustration pattern strip */}
-        <div
-          style={{
-            height: 14,
-            background: "linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.18), rgba(255,255,255,0.06))",
-            borderRadius: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-            padding: "0 2px",
-            borderTop: "1px solid rgba(255,255,255,0.1)",
-          }}
-        >
-          <span style={{ width: 4, height: 6, background: accent, opacity: 0.8, borderRadius: 1 }} />
-          <span style={{ width: 5, height: 8, background: "#ffca28", opacity: 0.9, borderRadius: 1 }} />
-          <span style={{ width: 4, height: 5, background: "#4ade80", opacity: 0.8, borderRadius: 1 }} />
-          <span style={{ width: 5, height: 7, background: "#f87171", opacity: 0.8, borderRadius: 1 }} />
-        </div>
+            {/* Bottom decorative illustration pattern strip */}
+            <div
+              style={{
+                height: 14,
+                background: "linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.18), rgba(255,255,255,0.06))",
+                borderRadius: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+                padding: "0 2px",
+                borderTop: "1px solid rgba(255,255,255,0.1)",
+              }}
+            >
+              <span style={{ width: 4, height: 6, background: accent, opacity: 0.8, borderRadius: 1 }} />
+              <span style={{ width: 5, height: 8, background: "#ffca28", opacity: 0.9, borderRadius: 1 }} />
+              <span style={{ width: 4, height: 5, background: "#4ade80", opacity: 0.8, borderRadius: 1 }} />
+              <span style={{ width: 5, height: 7, background: "#f87171", opacity: 0.8, borderRadius: 1 }} />
+            </div>
+          </>
+        )}
       </div>
     );
   }
@@ -242,7 +264,7 @@ export const BookCover: React.FC<BookCoverProps> = ({
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "12px 10px 8px 16px",
+          padding: cordelImg ? 0 : "12px 10px 8px 16px",
           overflow: "hidden",
         }}
       >
@@ -254,8 +276,9 @@ export const BookCover: React.FC<BookCoverProps> = ({
             top: 0,
             bottom: 0,
             width: 8,
-            background: "linear-gradient(to right, rgba(0,0,0,0.65), rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.4))",
+            background: "linear-gradient(to right, rgba(0,0,0,0.7), rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.4))",
             borderRight: "1px solid rgba(0,0,0,0.5)",
+            zIndex: 4,
           }}
         />
 
@@ -271,78 +294,114 @@ export const BookCover: React.FC<BookCoverProps> = ({
             transform: "rotateY(90deg) translateZ(3px)",
             borderRadius: "0 2px 2px 0",
             opacity: 0.85,
+            zIndex: 4,
           }}
         />
 
-        {/* Top title */}
-        <div>
-          <div
-            style={{
-              fontSize: 13,
-              fontWeight: 800,
-              color: "#ffffff",
-              letterSpacing: "0.03em",
-              lineHeight: 1.2,
-              fontFamily: "'Georgia', serif",
-              textShadow: "0 2px 4px rgba(0,0,0,0.6)",
-            }}
-          >
-            {title}
+        {cordelImg ? (
+          <div style={{ position: "relative", width: "100%", height: "100%" }}>
+            <img
+              src={cordelImg}
+              alt={title}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+                filter: "contrast(1.08)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                background: "linear-gradient(to top, rgba(0,0,0,0.85), transparent)",
+                padding: "16px 8px 6px 12px",
+                fontSize: 10,
+                fontWeight: 700,
+                color: "#EAEAEA",
+                textAlign: "left",
+                letterSpacing: "0.02em",
+              }}
+            >
+              Xilogravura Nordestina
+            </div>
           </div>
-          <div
-            style={{
-              fontSize: 8.5,
-              fontWeight: 600,
-              color: "rgba(255,255,255,0.7)",
-              marginTop: 3,
-              letterSpacing: "0.05em",
-              textTransform: "uppercase",
-            }}
-          >
-            Playbook & Guide
-          </div>
-        </div>
+        ) : (
+          <>
+            {/* Top title */}
+            <div>
+              <div
+                style={{
+                  fontSize: 13,
+                  fontWeight: 800,
+                  color: "#ffffff",
+                  letterSpacing: "0.03em",
+                  lineHeight: 1.2,
+                  fontFamily: "'Georgia', serif",
+                  textShadow: "0 2px 4px rgba(0,0,0,0.6)",
+                }}
+              >
+                {title}
+              </div>
+              <div
+                style={{
+                  fontSize: 8.5,
+                  fontWeight: 600,
+                  color: "rgba(255,255,255,0.7)",
+                  marginTop: 3,
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase",
+                }}
+              >
+                Playbook & Guide
+              </div>
+            </div>
 
-        {/* Center Logo/Icon Feature */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: accent,
-            margin: "auto 0",
-            background: "rgba(0,0,0,0.25)",
-            padding: 10,
-            borderRadius: 8,
-            boxShadow: "inset 0 1px 3px rgba(0,0,0,0.4)",
-          }}
-        >
-          {renderIconGraphic(44)}
-        </div>
+            {/* Center Logo/Icon Feature */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: accent,
+                margin: "auto 0",
+                background: "rgba(0,0,0,0.25)",
+                padding: 10,
+                borderRadius: 8,
+                boxShadow: "inset 0 1px 3px rgba(0,0,0,0.4)",
+              }}
+            >
+              {renderIconGraphic(44)}
+            </div>
 
-        {/* Bottom illustrated banner (folk art / figures style like screenshot) */}
-        <div
-          style={{
-            background: "rgba(0,0,0,0.35)",
-            borderRadius: 4,
-            padding: "5px 6px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            border: "1px solid rgba(255,255,255,0.1)",
-          }}
-        >
-          <div style={{ display: "flex", gap: 3, alignItems: "flex-end" }}>
-            <div style={{ width: 8, height: 16, background: "#f87171", borderRadius: 2 }} />
-            <div style={{ width: 8, height: 20, background: "#60a5fa", borderRadius: 2 }} />
-            <div style={{ width: 8, height: 14, background: "#fbbf24", borderRadius: 2 }} />
-            <div style={{ width: 8, height: 18, background: "#34d399", borderRadius: 2 }} />
-          </div>
-          <div style={{ display: "flex", gap: 2 }}>
-            <div style={{ width: 7, height: 7, background: accent, borderRadius: 1 }} />
-            <div style={{ width: 7, height: 7, background: "#fbbf24", borderRadius: 1 }} />
-          </div>
-        </div>
+            {/* Bottom illustrated banner (folk art / figures style like screenshot) */}
+            <div
+              style={{
+                background: "rgba(0,0,0,0.35)",
+                borderRadius: 4,
+                padding: "5px 6px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                border: "1px solid rgba(255,255,255,0.1)",
+              }}
+            >
+              <div style={{ display: "flex", gap: 3, alignItems: "flex-end" }}>
+                <div style={{ width: 8, height: 16, background: "#f87171", borderRadius: 2 }} />
+                <div style={{ width: 8, height: 20, background: "#60a5fa", borderRadius: 2 }} />
+                <div style={{ width: 8, height: 14, background: "#fbbf24", borderRadius: 2 }} />
+                <div style={{ width: 8, height: 18, background: "#34d399", borderRadius: 2 }} />
+              </div>
+              <div style={{ display: "flex", gap: 2 }}>
+                <div style={{ width: 7, height: 7, background: accent, borderRadius: 1 }} />
+                <div style={{ width: 7, height: 7, background: "#fbbf24", borderRadius: 1 }} />
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

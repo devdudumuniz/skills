@@ -6,9 +6,10 @@ import { SkillTestRunResult } from "../types";
 
 interface SkillTestPlaygroundProps {
   initialSkillId?: string | null;
+  initialPrompt?: string;
 }
 
-export function SkillTestPlayground({ initialSkillId }: SkillTestPlaygroundProps) {
+export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTestPlaygroundProps) {
   const { skills } = useProject();
 
   const [selectedSkillId, setSelectedSkillId] = useState<string>(
@@ -16,7 +17,8 @@ export function SkillTestPlayground({ initialSkillId }: SkillTestPlaygroundProps
   );
   const [selectedRuntime, setSelectedRuntime] = useState<string>("claude");
   const [prompt, setPrompt] = useState<string>(
-    skills.find((s) => s.id === selectedSkillId)?.sampleTestPrompt ||
+    initialPrompt ||
+      skills.find((s) => s.id === (initialSkillId || skills[0]?.id))?.sampleTestPrompt ||
       "Auditar este repositório e preparar plano de entrega com rollback testado."
   );
   const [simulateSecurityIncident, setSimulateSecurityIncident] = useState(false);
@@ -234,7 +236,7 @@ export function SkillTestPlayground({ initialSkillId }: SkillTestPlaygroundProps
 
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <span className={`badge ${currentSkill.isOfficial ? "info" : "ok"}`}>
-                {currentSkill.isOfficial ? "Oficial DM Skills" : "Custom Lab"}
+                {currentSkill.isOfficial ? "Oficial Deda Skills" : "Custom Lab"}
               </span>
               <span className="badge neutral">Modo: {currentSkill.execution_mode}</span>
               <span className="badge neutral">Categoria: {currentSkill.category}</span>

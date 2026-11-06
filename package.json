@@ -1,17 +1,21 @@
 {
-  "name": "dm-skills-portal",
+  "name": "dm-skills",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 3000",
+    "dev": "vite",
     "build": "tsc && vite build",
     "lint": "tsc --noEmit",
-    "preview": "vite preview --port 3000"
+    "preview": "vite preview --port 3000",
+    "skills:global": "python3 scripts/install_global_skills.py",
+    "skills:package": "python3 scripts/package_skills.py"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.3.4"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",
