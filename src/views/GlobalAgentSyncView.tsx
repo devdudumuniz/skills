@@ -216,7 +216,7 @@ export const GlobalAgentSyncView: React.FC<GlobalAgentSyncViewProps> = ({
 
               <button
                 type="button"
-                onClick={() => handleCopy("dm-skills list", "cli-btn")}
+                onClick={() => handleCopy("deda-skills list", "cli-btn")}
                 style={{
                   backgroundColor: "#292929",
                   color: "#C2C2C2",
@@ -231,7 +231,7 @@ export const GlobalAgentSyncView: React.FC<GlobalAgentSyncViewProps> = ({
                 }}
               >
                 <Icon n="terminal" size={13} />
-                {copiedCmd === "cli-btn" ? "Copiado!" : "CLI: dm-skills list"}
+                {copiedCmd === "cli-btn" ? "Copiado!" : "CLI: deda-skills list"}
               </button>
             </div>
           </div>
@@ -353,8 +353,8 @@ export const GlobalAgentSyncView: React.FC<GlobalAgentSyncViewProps> = ({
                   color: "#EAEAEA",
                 }}
               >
-                dm-skills list &nbsp;&nbsp;&nbsp;&nbsp;# lista as skills ativas<br />
-                dm-skills info vibecode-builder
+                deda-skills list &nbsp;&nbsp;&nbsp;&nbsp;# lista as skills ativas<br />
+                deda-skills info vibecode-builder
               </div>
             </div>
           </div>

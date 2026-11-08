@@ -98,9 +98,34 @@ export const MascotDetailModal: React.FC<MascotDetailModalProps> = ({
               <div className="text-xs font-semibold text-[#C2C2C2] mt-0.5">{mascot.title}</div>
               <p className="text-xs text-[#9B9B9B] mt-2 italic">"{mascot.teamQuote}"</p>
 
-              <div className="mt-4 pt-3 border-t border-[#2e2e2e] flex items-center justify-center gap-2 text-xs text-[#767676]">
-                <span className="w-2 h-2 rounded-full bg-[#EAEAEA] animate-pulse"></span>
-                <span>Assistente Autônomo Ativo • Pronto</span>
+              <div className="mt-3 pt-3 border-t border-[#2e2e2e] grid grid-cols-3 gap-1.5 text-xs">
+                <a
+                  href={mascot.mediaKit.svgPath}
+                  download={`deda-mascote-${mascot.id}.svg`}
+                  className="py-1.5 px-1.5 rounded-lg bg-[#262626] hover:bg-[#303030] text-[#00FFA3] border border-[#383838] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer truncate"
+                  title="Baixar SVG"
+                >
+                  <Icon n="download" size={11} />
+                  <span>SVG</span>
+                </a>
+                <a
+                  href={mascot.mediaKit.pngTransparent}
+                  download={`deda-mascote-${mascot.id}-hd.png`}
+                  className="py-1.5 px-1.5 rounded-lg bg-[#262626] hover:bg-[#303030] text-[#EAEAEA] border border-[#383838] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer truncate"
+                  title="Baixar PNG HD"
+                >
+                  <Icon n="image" size={11} />
+                  <span>PNG HD</span>
+                </a>
+                <a
+                  href={mascot.mediaKit.objPath}
+                  download={`deda-mascote-${mascot.id}.obj`}
+                  className="py-1.5 px-1.5 rounded-lg bg-[#262626] hover:bg-[#303030] text-[#00D2FF] border border-[#383838] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer truncate"
+                  title="Baixar Modelo 3D Wavefront OBJ"
+                >
+                  <Icon n="cube" size={11} />
+                  <span>3D OBJ</span>
+                </a>
               </div>
             </div>
 

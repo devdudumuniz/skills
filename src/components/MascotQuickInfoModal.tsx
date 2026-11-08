@@ -73,7 +73,33 @@ export const MascotQuickInfoModal: React.FC<MascotQuickInfoModalProps> = ({
           </div>
         </div>
 
-        {/* Section 1: Estilo de Resolução de Problemas */}
+        {/* Media Formats Strip (Requested: todas as mídias disponíveis) */}
+        <div className="mb-4 p-2.5 rounded-xl bg-[#1c1c1c] border border-[#2a2a2a] flex items-center justify-between gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5 text-[11px] text-[#9B9B9B]">
+            <Icon n="cube" size={12} />
+            <span className="font-semibold text-[#EAEAEA]">Mídias:</span>
+            <span>PNG HD • SVG • 3D OBJ • WebGL</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <a
+              href={mascot.mediaKit.svgPath}
+              download={`deda-${mascot.id}.svg`}
+              className="text-[10.5px] font-semibold text-[#00FFA3] hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <Icon n="download" size={11} />
+              <span>SVG</span>
+            </a>
+            <span className="text-[#444]">•</span>
+            <a
+              href={mascot.mediaKit.objPath}
+              download={`deda-${mascot.id}.obj`}
+              className="text-[10.5px] font-semibold text-[#00D2FF] hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <Icon n="cube" size={11} />
+              <span>3D OBJ</span>
+            </a>
+          </div>
+        </div>
         <div className="mb-5 p-4 rounded-xl bg-[#1f1f1f] border border-[#2e2e2e]">
           <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
             <div className="flex items-center gap-2">

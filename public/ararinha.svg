@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="blueSpix" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <linearGradient id="bluePale" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#BAE6FD" />
+      <stop offset="100%" stop-color="#7DD3FC" />
+    </linearGradient>
+    <linearGradient id="cyberTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F2FE" />
+      <stop offset="100%" stop-color="#4FACFE" />
+    </linearGradient>
+    <radialGradient id="tealGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00F2FE" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#00F2FE" stop-opacity="0" />
+    </radialGradient>
+    <filter id="shadowArara" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Ararinha-Azul Figure (Transparent Cutout - No Background) -->
+  <g filter="url(#shadowArara)">
+    <!-- Wings & Long Spix's Macaw Tail -->
+    <path d="M246 360 L256 430 L266 360 Z" fill="#0369A1" stroke="#075985" stroke-width="2" />
+    <path d="M140 330 C120 280 140 210 180 170 C220 260 220 370 180 390 C150 380 140 360 140 330 Z" fill="url(#blueSpix)" stroke="#075985" stroke-width="2" />
+    <path d="M372 330 C392 280 372 210 332 170 C292 260 292 370 332 390 C362 380 372 360 372 330 Z" fill="url(#blueSpix)" stroke="#075985" stroke-width="2" />
+
+    <!-- Cute Fluffy Round Body -->
+    <ellipse cx="256" cy="315" rx="88" ry="84" fill="url(#blueSpix)" stroke="#075985" stroke-width="2.5" />
+    <!-- Light Blue Chest -->
+    <ellipse cx="256" cy="326" rx="60" ry="64" fill="url(#bluePale)" />
+
+    <!-- Cute Head -->
+    <circle cx="256" cy="205" r="76" fill="url(#blueSpix)" stroke="#075985" stroke-width="2" />
+
+    <!-- Cute Crest Feathers on Crown -->
+    <path d="M236 135 C236 105 250 110 254 135" fill="url(#blueSpix)" stroke="#075985" stroke-width="2" />
+    <path d="M256 130 C260 95 275 105 272 135" fill="url(#blueSpix)" stroke="#075985" stroke-width="2" />
+
+    <!-- Pale Facial Mask (Characteristic of Cyanopsitta spixii) -->
+    <ellipse cx="256" cy="216" rx="64" ry="46" fill="url(#bluePale)" />
+
+    <!-- Studio / DJ Cyber Headphones (UX/UI & Creative Audio) -->
+    <!-- Headband -->
+    <path d="M180 180 C180 110 332 110 332 180" fill="none" stroke="#1E293B" stroke-width="12" stroke-linecap="round" />
+    <path d="M188 180 C188 120 324 120 324 180" fill="none" stroke="url(#cyberTeal)" stroke-width="3.5" stroke-linecap="round" />
+
+    <!-- Left Headphone Cup -->
+    <rect x="160" y="170" width="24" height="48" rx="12" fill="#1E293B" stroke="#0F172A" stroke-width="2" />
+    <circle cx="172" cy="194" r="7" fill="url(#cyberTeal)" />
+
+    <!-- Right Headphone Cup -->
+    <rect x="328" y="170" width="24" height="48" rx="12" fill="#1E293B" stroke="#0F172A" stroke-width="2" />
+    <circle cx="340" cy="194" r="7" fill="url(#cyberTeal)" />
+
+    <!-- Large Sparkly Chibi Eyes -->
+    <!-- Left Eye -->
+    <ellipse cx="220" cy="205" rx="19" ry="22" fill="#0F172A" />
+    <ellipse cx="220" cy="205" rx="15" ry="18" fill="#0369A1" />
+    <circle cx="220" cy="205" r="11" fill="#021B2E" />
+    <!-- Sparkle Stars inside Eye -->
+    <circle cx="214" cy="198" r="6" fill="#FFFFFF" />
+    <circle cx="226" cy="212" r="3" fill="#FFFFFF" />
+
+    <!-- Right Eye -->
+    <ellipse cx="292" cy="205" rx="19" ry="22" fill="#0F172A" />
+    <ellipse cx="292" cy="205" rx="15" ry="18" fill="#0369A1" />
+    <circle cx="292" cy="205" r="11" fill="#021B2E" />
+    <!-- Sparkle Stars inside Eye -->
+    <circle cx="286" cy="198" r="6" fill="#FFFFFF" />
+    <circle cx="298" cy="212" r="3" fill="#FFFFFF" />
+
+    <!-- Cute Curved Dark Gray Macaw Beak -->
+    <path d="M244 216 Q256 216 268 216 Q272 246 260 264 Q256 270 254 274 Q252 270 248 264 Q240 246 244 216 Z" fill="#1E293B" stroke="#0F172A" stroke-width="2" />
+    <!-- Underbeak -->
+    <path d="M248 250 Q256 260 264 250 Z" fill="#0F172A" />
+
+    <!-- Cute Blushing Cheeks -->
+    <ellipse cx="196" cy="226" rx="12" ry="7" fill="#F472B6" opacity="0.45" />
+    <ellipse cx="316" cy="226" rx="12" ry="7" fill="#F472B6" opacity="0.45" />
+
+    <!-- Cyber Audio Waveform / UI Token Palette Emblem on Chest -->
+    <circle cx="256" cy="336" r="22" fill="url(#tealGlow)" />
+    <circle cx="256" cy="336" r="14" fill="#0F172A" stroke="url(#cyberTeal)" stroke-width="2" />
+    <!-- Waveform bars -->
+    <rect x="248" y="332" width="2" height="8" rx="1" fill="#00F2FE" />
+    <rect x="252" y="328" width="2" height="16" rx="1" fill="#00F2FE" />
+    <rect x="256" y="325" width="2" height="22" rx="1" fill="#FFFFFF" />
+    <rect x="260" y="328" width="2" height="16" rx="1" fill="#00F2FE" />
+    <rect x="264" y="332" width="2" height="8" rx="1" fill="#00F2FE" />
+
+    <!-- Cute Perched Feet Base -->
+    <ellipse cx="226" cy="395" rx="14" ry="6" fill="#64748B" />
+    <ellipse cx="286" cy="395" rx="14" ry="6" fill="#64748B" />
+  </g>
+</svg>

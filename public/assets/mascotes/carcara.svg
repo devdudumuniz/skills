@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="featherDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2D2D2D" />
+      <stop offset="100%" stop-color="#151515" />
+    </linearGradient>
+    <linearGradient id="chestFeather" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EAEAEA" />
+      <stop offset="50%" stop-color="#C2C2C2" />
+      <stop offset="100%" stop-color="#8E8E8E" />
+    </linearGradient>
+    <linearGradient id="beakGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFC837" />
+      <stop offset="100%" stop-color="#E67E22" />
+    </linearGradient>
+    <linearGradient id="cyberGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2ECC71" />
+      <stop offset="100%" stop-color="#00FFA3" />
+    </linearGradient>
+    <radialGradient id="cyberGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00FFA3" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#00FFA3" stop-opacity="0" />
+    </radialGradient>
+    <filter id="shadowCar" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Carcará Figure (Transparent Cutout - No Background) -->
+  <g filter="url(#shadowCar)">
+    <!-- Wings & Back Silhouette -->
+    <path d="M120 370 C100 280 150 180 230 140 C280 140 370 210 392 370 C360 410 160 410 120 370 Z" fill="url(#featherDark)" stroke="#3E3E3E" stroke-width="3" />
+
+    <!-- Cute Body / Chest -->
+    <ellipse cx="256" cy="330" rx="95" ry="90" fill="url(#chestFeather)" />
+
+    <!-- Cordel style feather chevrons on chest -->
+    <path d="M220 285 L256 315 L292 285" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round" />
+    <path d="M226 315 L256 342 L286 315" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round" />
+    <path d="M232 345 L256 370 L280 345" fill="none" stroke="#333" stroke-width="3.5" stroke-linecap="round" />
+
+    <!-- Head -->
+    <ellipse cx="256" cy="210" rx="78" ry="74" fill="url(#chestFeather)" stroke="#333" stroke-width="2" />
+
+    <!-- Distinctive Carcará Black Crest (Cute fluffy tuft) -->
+    <path d="M185 185 C180 125 210 95 245 92 C265 90 285 105 295 120 C310 100 335 110 330 145 C325 180 305 195 290 200 C270 205 200 205 185 185 Z" fill="#1C1C1C" stroke="#333" stroke-width="3" />
+
+    <!-- Cute Eyes -->
+    <!-- Left Eye -->
+    <ellipse cx="218" cy="205" rx="19" ry="23" fill="#1A1A1A" />
+    <ellipse cx="218" cy="205" rx="15" ry="19" fill="#2E1C0C" />
+    <circle cx="218" cy="205" r="11" fill="#0D0D0D" />
+    <circle cx="213" cy="198" r="6" fill="#FFFFFF" />
+    <circle cx="223" cy="213" r="2.5" fill="#FFFFFF" />
+
+    <!-- Right Eye (with Cyber Visor HUD) -->
+    <ellipse cx="294" cy="205" rx="19" ry="23" fill="#1A1A1A" />
+    <ellipse cx="294" cy="205" rx="15" ry="19" fill="#2E1C0C" />
+    <circle cx="294" cy="205" r="11" fill="#0D0D0D" />
+    <circle cx="289" cy="198" r="6" fill="#FFFFFF" />
+    <circle cx="299" cy="213" r="2.5" fill="#FFFFFF" />
+
+    <!-- Cyber Headset & Reticle Visor on Right Eye -->
+    <circle cx="294" cy="205" r="32" fill="url(#cyberGlow)" />
+    <circle cx="294" cy="205" r="30" fill="none" stroke="url(#cyberGreen)" stroke-width="2.5" stroke-dasharray="14 6" />
+    <line x1="260" y1="205" x2="272" y2="205" stroke="#00FFA3" stroke-width="2" />
+    <line x1="316" y1="205" x2="328" y2="205" stroke="#00FFA3" stroke-width="2" />
+    <line x1="294" y1="171" x2="294" y2="183" stroke="#00FFA3" stroke-width="2" />
+    <line x1="294" y1="227" x2="294" y2="239" stroke="#00FFA3" stroke-width="2" />
+
+    <!-- Tech Earpiece & Communicator Antenna -->
+    <path d="M328 190 Q342 195 344 212 Q346 230 330 238" fill="none" stroke="#444" stroke-width="5" stroke-linecap="round" />
+    <rect x="338" y="200" width="10" height="18" rx="4" fill="#00FFA3" />
+    <line x1="343" y1="200" x2="352" y2="165" stroke="#00FFA3" stroke-width="2.5" stroke-linecap="round" />
+    <circle cx="353" cy="163" r="3.5" fill="#00FFA3" />
+
+    <!-- Cute Curved Beak -->
+    <path d="M242 220 Q256 220 270 220 Q272 245 264 266 Q256 278 253 282 Q251 278 248 266 Q240 245 242 220 Z" fill="url(#beakGold)" stroke="#D35400" stroke-width="2" />
+    <ellipse cx="256" cy="226" rx="14" ry="4" fill="#E67E22" opacity="0.6" />
+
+    <!-- Cute Red Cheeks / Rosy Blushes -->
+    <circle cx="196" cy="226" r="10" fill="#FF7675" opacity="0.4" />
+    <circle cx="316" cy="226" r="10" fill="#FF7675" opacity="0.4" />
+
+    <!-- Tail & Talons Base -->
+    <rect x="210" y="405" width="28" height="14" rx="6" fill="#F39C12" />
+    <rect x="274" y="405" width="28" height="14" rx="6" fill="#F39C12" />
+  </g>
+</svg>

@@ -12,6 +12,25 @@ export interface ProblemSolvingStyle {
   keyMotto: string;
 }
 
+export interface MascotMediaKit {
+  svgPath: string;
+  pngRender: string;
+  pngTransparent: string;
+  objPath: string;
+  themeColors: {
+    primary: string;
+    secondary: string;
+    accent: string;
+    glow: string;
+  };
+  dimension3D: {
+    particleColor: number;
+    haloColor: number;
+    accentLight: number;
+  };
+  formatBadges: string[];
+}
+
 export interface MascotAgent {
   id: "carcara" | "lobo_guara" | "tatu_bola" | "ararinha";
   name: string;
@@ -33,6 +52,7 @@ export interface MascotAgent {
   samplePrompts: string[];
   suggestedSkillId: string;
   teamQuote: string;
+  mediaKit: MascotMediaKit;
 }
 
 export const MASCOT_AGENTS: MascotAgent[] = [
@@ -95,6 +115,30 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     ],
     suggestedSkillId: "security-diagnostics",
     teamQuote: "Nenhum bug ou brecha de segurança escapa da minha visão aérea.",
+    mediaKit: {
+      svgPath: "/assets/mascotes/carcara.svg",
+      pngRender: "/assets/mascotes/carcara.jpg",
+      pngTransparent: "/assets/mascotes/carcara_hd.png",
+      objPath: "/assets/mascotes/carcara.obj",
+      themeColors: {
+        primary: "#00FFA3",
+        secondary: "#10B981",
+        accent: "#F59E0B",
+        glow: "rgba(0, 255, 163, 0.4)",
+      },
+      dimension3D: {
+        particleColor: 0x00ffa3,
+        haloColor: 0x10b981,
+        accentLight: 0x00ffa3,
+      },
+      formatBadges: [
+        "PNG Transparente HD (1024x1024)",
+        "Vetor SVG Escalável",
+        "Modelo 3D Conceitual (.OBJ)",
+        "WebGL PBR 360°",
+        "JSON Spec",
+      ],
+    },
   },
   {
     id: "lobo_guara",
@@ -155,6 +199,30 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     ],
     suggestedSkillId: "devops-delivery",
     teamQuote: "Caminho longo se faz com passos firmes e arquitetura sólida.",
+    mediaKit: {
+      svgPath: "/assets/mascotes/lobo_guara.svg",
+      pngRender: "/assets/mascotes/lobo_guara.jpg",
+      pngTransparent: "/assets/mascotes/lobo_guara_hd.png",
+      objPath: "/assets/mascotes/lobo_guara.obj",
+      themeColors: {
+        primary: "#00D2FF",
+        secondary: "#E67E22",
+        accent: "#0066FF",
+        glow: "rgba(0, 210, 255, 0.4)",
+      },
+      dimension3D: {
+        particleColor: 0x00d2ff,
+        haloColor: 0xe67e22,
+        accentLight: 0x00d2ff,
+      },
+      formatBadges: [
+        "PNG Transparente HD (1024x1024)",
+        "Vetor SVG Escalável",
+        "Modelo 3D Conceitual (.OBJ)",
+        "WebGL PBR 360°",
+        "JSON Spec",
+      ],
+    },
   },
   {
     id: "tatu_bola",
@@ -215,6 +283,30 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     ],
     suggestedSkillId: "vibecode-engineering",
     teamQuote: "Código sem testes é castelo de areia; código blindado resiste a qualquer temporal.",
+    mediaKit: {
+      svgPath: "/assets/mascotes/tatu_bola.svg",
+      pngRender: "/assets/mascotes/tatu_bola.jpg",
+      pngTransparent: "/assets/mascotes/tatu_bola_hd.png",
+      objPath: "/assets/mascotes/tatu_bola.obj",
+      themeColors: {
+        primary: "#FFD700",
+        secondary: "#BC6C25",
+        accent: "#DDA15E",
+        glow: "rgba(255, 215, 0, 0.4)",
+      },
+      dimension3D: {
+        particleColor: 0xffd700,
+        haloColor: 0xbc6c25,
+        accentLight: 0xffd700,
+      },
+      formatBadges: [
+        "PNG Transparente HD (1024x1024)",
+        "Vetor SVG Escalável",
+        "Modelo 3D Conceitual (.OBJ)",
+        "WebGL PBR 360°",
+        "JSON Spec",
+      ],
+    },
   },
   {
     id: "ararinha",
@@ -275,5 +367,29 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     ],
     suggestedSkillId: "web-design",
     teamQuote: "Software bem feito deve ser tão agradável de usar quanto um vôo livre nas manhãs do sertão.",
+    mediaKit: {
+      svgPath: "/assets/mascotes/ararinha.svg",
+      pngRender: "/assets/mascotes/ararinha.jpg",
+      pngTransparent: "/assets/mascotes/ararinha_hd.png",
+      objPath: "/assets/mascotes/ararinha.obj",
+      themeColors: {
+        primary: "#00F2FE",
+        secondary: "#0284C7",
+        accent: "#F472B6",
+        glow: "rgba(0, 242, 254, 0.4)",
+      },
+      dimension3D: {
+        particleColor: 0x00f2fe,
+        haloColor: 0x0284c7,
+        accentLight: 0x00f2fe,
+      },
+      formatBadges: [
+        "PNG Transparente HD (1024x1024)",
+        "Vetor SVG Escalável",
+        "Modelo 3D Conceitual (.OBJ)",
+        "WebGL PBR 360°",
+        "JSON Spec",
+      ],
+    },
   },
 ];

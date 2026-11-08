@@ -4,6 +4,8 @@ import { Icon } from "../components/Icons";
 import { DedaLogo } from "../components/DedaLogo";
 import { MascotDetailModal } from "../components/MascotDetailModal";
 import { MascotQuickInfoModal } from "../components/MascotQuickInfoModal";
+import { ThreeMascotStudio } from "../components/ThreeMascotStudio";
+import { MascotAssetGallery } from "../components/MascotAssetGallery";
 
 interface MascotAgentsViewProps {
   onTestPrompt: (skillId: string, promptText: string) => void;
@@ -18,9 +20,15 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
 }) => {
   const [selectedMascot, setSelectedMascot] = useState<MascotAgent | null>(null);
   const [quickInfoMascot, setQuickInfoMascot] = useState<MascotAgent | null>(null);
-  const [activeTab, setActiveTab] = useState<"mascots" | "team">("mascots");
+  const [activeTab, setActiveTab] = useState<"mascots" | "studio3d" | "mediahub" | "team">("mascots");
+  const [initial3DMascotId, setInitial3DMascotId] = useState<string>("carcara");
   const [simulatingTeam, setSimulatingTeam] = useState(false);
   const [teamStep, setTeamStep] = useState(0);
+
+  const handleOpen3DForMascot = (mascotId: string) => {
+    setInitial3DMascotId(mascotId);
+    setActiveTab("studio3d");
+  };
 
   const handleRunTeamSimulation = () => {
     if (simulatingTeam) return;
@@ -86,35 +94,61 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
           </div>
 
           <p className="text-sm text-[#C2C2C2] leading-relaxed mt-2">
-            Assistentes fofinhos da fauna brasileira equipados com expertises puras de engenharia. Sem planos ou assinaturas: cada mascote vive em seu ambiente local, conecta-se às suas ferramentas e executa trabalho real com autonomia.
+            Assistentes fofinhos da fauna brasileira equipados com expertises puras de engenharia. Disponíveis em todas as mídias (PNG, SVG, 3D WebGL, JSON) para enriquecer sua experiência local e conectar diretamente aos seus agentes autônomos.
           </p>
 
-          {/* Tab Selector: Cards dos Mascotes vs Equipe Colaborativa */}
-          <div className="flex items-center gap-2.5 mt-6 pt-4 border-t border-[#333333]">
+          {/* Tab Selector: 4 Tabs */}
+          <div className="flex items-center gap-2 mt-6 pt-4 border-t border-[#333333] flex-wrap">
             <button
               type="button"
               onClick={() => setActiveTab("mascots")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
                 activeTab === "mascots"
                   ? "bg-[#EAEAEA] text-[#151515] shadow-lg"
                   : "bg-[#252525] text-[#9B9B9B] hover:text-[#EAEAEA] border border-[#383838]"
               }`}
             >
               <Icon n="users" size={14} />
-              <span>Galeria dos 4 Mascotes</span>
+              <span>Galeria & Especialidades</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab("studio3d")}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                activeTab === "studio3d"
+                  ? "bg-[#EAEAEA] text-[#151515] shadow-lg"
+                  : "bg-[#252525] text-[#9B9B9B] hover:text-[#EAEAEA] border border-[#383838]"
+              }`}
+            >
+              <Icon n="cube" size={14} />
+              <span>Estúdio 3D Interativo</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab("mediahub")}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                activeTab === "mediahub"
+                  ? "bg-[#EAEAEA] text-[#151515] shadow-lg"
+                  : "bg-[#252525] text-[#9B9B9B] hover:text-[#EAEAEA] border border-[#383838]"
+              }`}
+            >
+              <Icon n="download" size={14} />
+              <span>Central de Mídias (PNG, SVG, 3D)</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("team")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
                 activeTab === "team"
                   ? "bg-[#EAEAEA] text-[#151515] shadow-lg"
                   : "bg-[#252525] text-[#9B9B9B] hover:text-[#EAEAEA] border border-[#383838]"
               }`}
             >
               <Icon n="activity" size={14} />
-              <span>Modo Equipe Colaborativa (Estilo Cue)</span>
+              <span>Equipe Colaborativa (Cue)</span>
             </button>
           </div>
         </div>
@@ -287,7 +321,26 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
         </div>
       )}
 
-      {/* View Mode 2: Team Collaboration Arena (Inspirado em Cue Bot - image_9671a91c.png) */}
+      {/* View Mode 2: Interactive 3D WebGL Studio */}
+      {activeTab === "studio3d" && (
+        <div className="space-y-4">
+          <ThreeMascotStudio
+            initialMascotId={initial3DMascotId}
+            onOpenQuickInfo={(m) => setQuickInfoMascot(m)}
+            onTestPrompt={onTestPrompt}
+          />
+        </div>
+      )}
+
+      {/* View Mode 3: Media Hub & Mascot Asset Gallery (PNG, SVG, 3D OBJ) */}
+      {activeTab === "mediahub" && (
+        <MascotAssetGallery
+          onOpenQuickInfo={(m) => setQuickInfoMascot(m)}
+          onOpen3DStudio={handleOpen3DForMascot}
+        />
+      )}
+
+      {/* View Mode 4: Team Collaboration Arena (Inspirado em Cue Bot - image_9671a91c.png) */}
       {activeTab === "team" && (
         <div className="space-y-6">
           {/* Team Explanation Card */}

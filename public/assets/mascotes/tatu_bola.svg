@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="shellGolden" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4A373" />
+      <stop offset="50%" stop-color="#BC6C25" />
+      <stop offset="100%" stop-color="#8C4F18" />
+    </linearGradient>
+    <linearGradient id="skinSoft" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FAEDCD" />
+      <stop offset="100%" stop-color="#DDB892" />
+    </linearGradient>
+    <linearGradient id="cyberGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700" />
+      <stop offset="100%" stop-color="#FF8C00" />
+    </linearGradient>
+    <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0" />
+    </radialGradient>
+    <filter id="shadowTatu" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Tatu-Bola Figure (Transparent Cutout - No Background) -->
+  <g filter="url(#shadowTatu)">
+    <!-- Spherical Armored Outer Shell (The 3 Bands of Tolypeutes tricinctus) -->
+    <path d="M140 260 C130 150 200 90 256 90 C312 90 382 150 372 260 C372 380 140 380 140 260 Z" fill="url(#shellGolden)" stroke="#4A2E16" stroke-width="4" />
+
+    <!-- 3 Articulated Middle Armor Bands (Characteristic of Tatu-Bola) -->
+    <path d="M142 180 Q256 160 370 180 Q256 200 142 180 Z" fill="#99582A" stroke="#4A2E16" stroke-width="2.5" />
+    <path d="M136 210 Q256 190 376 210 Q256 230 136 210 Z" fill="#A76634" stroke="#4A2E16" stroke-width="2.5" />
+    <path d="M134 240 Q256 220 378 240 Q256 260 134 240 Z" fill="#BB7B42" stroke="#4A2E16" stroke-width="2.5" />
+
+    <!-- Hexagonal Scales Pattern on Top Shell -->
+    <g fill="none" stroke="#6F3D17" stroke-width="2" opacity="0.65">
+      <polygon points="256,105 270,113 270,129 256,137 242,129 242,113" />
+      <polygon points="220,120 234,128 234,144 220,152 206,144 206,128" />
+      <polygon points="292,120 306,128 306,144 292,152 278,144 278,128" />
+      <polygon points="256,145 270,153 270,169 256,177 242,169 242,153" />
+    </g>
+
+    <!-- Cute Round Body & Belly -->
+    <ellipse cx="256" cy="320" rx="92" ry="76" fill="url(#skinSoft)" stroke="#8C4F18" stroke-width="2.5" />
+
+    <!-- Cute Head with Forehead Armor Plate -->
+    <ellipse cx="256" cy="250" rx="68" ry="60" fill="url(#skinSoft)" />
+
+    <!-- Triangular Forehead Armor Shield -->
+    <path d="M228 206 Q256 194 284 206 L278 232 Q256 244 234 232 Z" fill="#BC6C25" stroke="#5E3514" stroke-width="2" />
+
+    <!-- Cute Small Ears -->
+    <ellipse cx="196" cy="216" rx="12" ry="16" fill="#DDB892" stroke="#8C4F18" stroke-width="2" />
+    <ellipse cx="196" cy="216" rx="7" ry="10" fill="#FFC8DD" opacity="0.8" />
+    <ellipse cx="316" cy="216" rx="12" ry="16" fill="#DDB892" stroke="#8C4F18" stroke-width="2" />
+    <ellipse cx="316" cy="216" rx="7" ry="10" fill="#FFC8DD" opacity="0.8" />
+
+    <!-- Cute Big Shiny Eyes -->
+    <!-- Left Eye -->
+    <ellipse cx="226" cy="254" rx="16" ry="18" fill="#1C1C1C" />
+    <ellipse cx="226" cy="254" rx="12" ry="14" fill="#4A2810" />
+    <circle cx="226" cy="254" r="8" fill="#0D0D0D" />
+    <circle cx="222" cy="248" r="4.5" fill="#FFFFFF" />
+    <circle cx="230" cy="258" r="2" fill="#FFFFFF" />
+
+    <!-- Right Eye -->
+    <ellipse cx="286" cy="254" rx="16" ry="18" fill="#1C1C1C" />
+    <ellipse cx="286" cy="254" rx="12" ry="14" fill="#4A2810" />
+    <circle cx="286" cy="254" r="8" fill="#0D0D0D" />
+    <circle cx="282" cy="248" r="4.5" fill="#FFFFFF" />
+    <circle cx="290" cy="258" r="2" fill="#FFFFFF" />
+
+    <!-- Snout & Nose -->
+    <ellipse cx="256" cy="276" rx="20" ry="13" fill="#DDB892" />
+    <ellipse cx="256" cy="271" rx="8" ry="5" fill="#4A2810" />
+    <path d="M256 276 Q256 282 256 282" stroke="#4A2810" stroke-width="2" stroke-linecap="round" />
+    <path d="M250 282 Q256 286 262 282" fill="none" stroke="#4A2810" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Blushing Pink Cheeks -->
+    <circle cx="206" cy="270" r="9" fill="#FF7675" opacity="0.4" />
+    <circle cx="306" cy="270" r="9" fill="#FF7675" opacity="0.4" />
+
+    <!-- Cute Folded Front Claws / Paws -->
+    <path d="M194 330 C194 360 216 360 220 334 Z" fill="#DDB892" stroke="#8C4F18" stroke-width="2" />
+    <path d="M318 330 C318 360 296 360 292 334 Z" fill="#DDB892" stroke="#8C4F18" stroke-width="2" />
+
+    <!-- Cyber Armor Plate (TDD Shield Core) in Belly -->
+    <circle cx="256" cy="340" r="28" fill="url(#goldGlow)" />
+    <path d="M242 322 L270 322 L274 345 L256 360 L238 345 Z" fill="#201A15" stroke="url(#cyberGold)" stroke-width="2.5" />
+    <!-- TDD Checkmark Icon -->
+    <path d="M248 340 L254 346 L265 334" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Small Tail Base with Ring Bands -->
+    <path d="M248 385 L256 415 L264 385 Z" fill="#BC6C25" stroke="#5E3514" stroke-width="2" />
+    <line x1="250" y1="395" x2="262" y2="395" stroke="#5E3514" stroke-width="2" />
+    <line x1="252" y1="405" x2="260" y2="405" stroke="#5E3514" stroke-width="2" />
+  </g>
+</svg>

@@ -205,7 +205,7 @@ export function App() {
   const allIndividualSkills: AgentSkill[] = suites.map((s) => suiteToAgentSkill(s));
 
   return (
-    <div className="shell dm-skills-theme">
+    <div className="shell deda-skills-theme">
       {/* Toast Notification */}
       {toastMessage && (
         <div
