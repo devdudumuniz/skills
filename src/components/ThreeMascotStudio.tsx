@@ -468,27 +468,27 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
   };
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-[#333333] bg-[#121212] shadow-2xl select-none">
+    <div className="relative w-full rounded-2xl overflow-hidden border border-[#383129] bg-[#191613] shadow-2xl select-none">
       {/* 3D WebGL Canvas Container */}
       <div
         ref={mountRef}
-        className="w-full h-[520px] sm:h-[600px] cursor-grab active:cursor-grabbing"
+        className="w-full h-[540px] sm:h-[600px] cursor-grab active:cursor-grabbing"
       />
 
-      {/* Top Header Badge Overlay (Minimal Title & Spec Badge - Zero Center Occlusion) */}
-      <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-        <div className="flex items-center gap-3 bg-[#181818]/90 border border-[#383838] px-3.5 py-2 rounded-xl backdrop-blur-md pointer-events-auto shadow-lg">
-          <div className="w-8 h-8 rounded-lg bg-[#242424] border border-[#3d3d3d] flex items-center justify-center text-[#EAEAEA]">
-            <DedaLogo size={18} color="#EAEAEA" />
+      {/* Top Header Badge Overlay */}
+      <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+        <div className="flex items-center gap-2.5 bg-[#24201D]/90 border border-[#483E34] px-3 py-2 rounded-xl backdrop-blur-md pointer-events-auto shadow-lg">
+          <div className="w-8 h-8 rounded-lg bg-[#32231C] border border-[#D97757]/40 flex items-center justify-center">
+            <DedaLogo size={18} color="#D97757" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-[#EAEAEA]">{activeMascot.name}</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#292929] border border-[#3d3d3d] text-[#9B9B9B]">
+              <span className="text-xs font-bold text-[#F5F2EB]">{activeMascot.name}</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#32231C] border border-[#D97757]/40 text-[#E28768]">
                 {activeMascot.nickname}
               </span>
             </div>
-            <div className="text-[10px] text-[#767676]">{activeMascot.title} • WebGL PBR</div>
+            <div className="text-[10px] text-[#A39889]">{activeMascot.title} • WebGL PBR</div>
           </div>
         </div>
 
@@ -496,7 +496,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
           <a
             href={activeMascot.mediaKit.objPath}
             download={`deda-mascote-${activeMascot.id}.obj`}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#242424] hover:bg-[#2e2e2e] text-[#00D2FF] text-xs font-bold border border-[#3d3d3d] transition-all shadow-md cursor-pointer active:scale-95"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#2A241F] hover:bg-[#332C26] text-[#E28768] text-xs font-bold border border-[#483E34] transition-all shadow-md cursor-pointer active:scale-95"
             title="Baixar arquivo 3D Wavefront .OBJ"
           >
             <Icon n="cube" size={13} />
@@ -506,7 +506,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
           <button
             type="button"
             onClick={handleCaptureSnapshot}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#242424] hover:bg-[#2e2e2e] text-[#EAEAEA] text-xs font-bold border border-[#3d3d3d] transition-all shadow-md cursor-pointer active:scale-95"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#2A241F] hover:bg-[#332C26] text-[#F5F2EB] text-xs font-bold border border-[#483E34] transition-all shadow-md cursor-pointer active:scale-95"
             title="Capturar foto PNG da cena 3D atual"
           >
             <Icon n="download" size={13} />
@@ -518,7 +518,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
           <button
             type="button"
             onClick={() => onOpenQuickInfo(activeMascot)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#EAEAEA] hover:bg-white text-[#151515] text-xs font-bold transition-all shadow-md cursor-pointer active:scale-95"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white text-xs font-bold transition-all shadow-md cursor-pointer active:scale-95"
           >
             <Icon n="zap" size={13} />
             <span>Ver Estilo</span>
@@ -526,8 +526,8 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
         </div>
       </div>
 
-      {/* Mascot Switcher Pills (Top Center) */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-[#181818]/90 border border-[#383838] p-1.5 rounded-2xl shadow-xl pointer-events-auto max-w-[94vw] overflow-x-auto">
+      {/* Mascot Switcher Pills */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-[#24201D]/90 border border-[#483E34] p-1.5 rounded-2xl shadow-xl pointer-events-auto max-w-[92%] overflow-x-auto">
         {MASCOT_AGENTS.map((m) => {
           const isSelected = m.id === activeMascotId;
           return (
@@ -537,14 +537,14 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
               onClick={() => setActiveMascotId(m.id)}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
                 isSelected
-                  ? "bg-[#EAEAEA] text-[#151515] shadow-md"
-                  : "bg-[#222222] text-[#9B9B9B] hover:text-[#EAEAEA] hover:bg-[#2a2a2a]"
+                  ? "bg-[#D97757] text-white shadow-md"
+                  : "bg-[#2A241F] text-[#D4CDC3] hover:text-[#F5F2EB] hover:bg-[#332C26]"
               }`}
             >
               <img
                 src={m.avatar}
                 alt={m.name}
-                className="w-5 h-5 rounded-full object-cover border border-[#444]"
+                className="w-5 h-5 rounded-full object-cover border border-[#483E34]"
               />
               <span>{m.name}</span>
             </button>
@@ -552,14 +552,14 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
         })}
       </div>
 
-      {/* Unified Bottom Control Dock (Zero Viewport Occlusion - Directive 5) */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-3xl pointer-events-auto transition-transform duration-300">
+      {/* Unified Bottom Control Dock */}
+      <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 w-[94%] max-w-3xl pointer-events-auto transition-transform duration-300">
         {/* Collapse / Expand Toggle Button */}
         <div className="flex justify-center mb-1.5">
           <button
             type="button"
             onClick={() => setIsHudCollapsed(!isHudCollapsed)}
-            className="px-3 py-1 rounded-full bg-[#1e1e1e] border border-[#383838] hover:border-[#555] text-[11px] font-semibold text-[#9B9B9B] hover:text-[#EAEAEA] transition-colors cursor-pointer shadow-md flex items-center gap-1"
+            className="px-3 py-1 rounded-full bg-[#24201D] border border-[#483E34] hover:border-[#D97757]/60 text-[11px] font-semibold text-[#D4CDC3] hover:text-[#F5F2EB] transition-colors cursor-pointer shadow-md flex items-center gap-1"
           >
             <Icon n="chevron" size={12} className={isHudCollapsed ? "rotate-180" : ""} />
             <span>{isHudCollapsed ? "Mostrar Controles 3D" : "Ocultar Controles"}</span>
@@ -568,11 +568,11 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
 
         {/* The Dock Card */}
         {!isHudCollapsed && (
-          <div className="bg-[#181818]/95 border border-[#333333] rounded-2xl p-3 sm:p-4 shadow-2xl backdrop-blur-md">
+          <div className="bg-[#24201D]/95 border border-[#383129] rounded-2xl p-3 sm:p-4 shadow-2xl backdrop-blur-md">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center text-xs">
               {/* Lighting Presets */}
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#767676] block mb-1.5">
+                <span className="text-[10px] uppercase font-bold text-[#A39889] block mb-1.5">
                   Iluminação do Estúdio
                 </span>
                 <div className="grid grid-cols-4 gap-1">
@@ -583,8 +583,8 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
                       onClick={() => setLightingPreset(preset)}
                       className={`py-1 px-1.5 rounded-lg text-[10.5px] font-semibold capitalize transition-all cursor-pointer truncate ${
                         lightingPreset === preset
-                          ? "bg-[#333333] text-[#EAEAEA] border border-[#555]"
-                          : "bg-[#222222] text-[#888] hover:text-[#C2C2C2]"
+                          ? "bg-[#32231C] text-[#F5F2EB] border border-[#D97757]/60"
+                          : "bg-[#1E1A17] text-[#A39889] hover:text-[#F5F2EB]"
                       }`}
                     >
                       {preset === "cyber" ? "Cyber" : preset === "studio" ? "Studio" : preset === "neon" ? "Neon" : "Sertão"}
@@ -595,35 +595,35 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
 
               {/* Camera Angle Presets */}
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#767676] block mb-1.5">
+                <span className="text-[10px] uppercase font-bold text-[#A39889] block mb-1.5">
                   Ângulo da Câmera
                 </span>
                 <div className="grid grid-cols-4 gap-1">
                   <button
                     type="button"
                     onClick={() => setCameraView("front")}
-                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#222222] hover:bg-[#2b2b2b] text-[#C2C2C2] text-center cursor-pointer truncate"
+                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] text-center cursor-pointer truncate"
                   >
                     Frente
                   </button>
                   <button
                     type="button"
                     onClick={() => setCameraView("iso")}
-                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#222222] hover:bg-[#2b2b2b] text-[#C2C2C2] text-center cursor-pointer truncate"
+                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] text-center cursor-pointer truncate"
                   >
                     3/4 Iso
                   </button>
                   <button
                     type="button"
                     onClick={() => setCameraView("closeup")}
-                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#222222] hover:bg-[#2b2b2b] text-[#C2C2C2] text-center cursor-pointer truncate"
+                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] text-center cursor-pointer truncate"
                   >
                     Close
                   </button>
                   <button
                     type="button"
                     onClick={() => setCameraView("top")}
-                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#222222] hover:bg-[#2b2b2b] text-[#C2C2C2] text-center cursor-pointer truncate"
+                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] text-center cursor-pointer truncate"
                   >
                     Topo
                   </button>
@@ -632,7 +632,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
 
               {/* Viewport Toggles & Quick Actions */}
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#767676] block mb-1.5">
+                <span className="text-[10px] uppercase font-bold text-[#A39889] block mb-1.5">
                   Interatividade & Modo
                 </span>
                 <div className="flex items-center gap-2">
@@ -641,8 +641,8 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
                     onClick={() => setIsAutoRotating(!isAutoRotating)}
                     className={`flex-1 py-1 px-2 rounded-lg text-[10.5px] font-semibold transition-all cursor-pointer ${
                       isAutoRotating
-                        ? "bg-[#2e2e2e] text-[#00FFA3] border border-[#00FFA3]/40"
-                        : "bg-[#222222] text-[#888]"
+                        ? "bg-[#32231C] text-[#E28768] border border-[#D97757]/50"
+                        : "bg-[#1E1A17] text-[#A39889]"
                     }`}
                   >
                     {isAutoRotating ? "Auto-Giro: Ligado" : "Auto-Giro: Pausado"}
@@ -653,8 +653,8 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
                     onClick={() => setIsWireframe(!isWireframe)}
                     className={`py-1 px-2.5 rounded-lg text-[10.5px] font-semibold transition-all cursor-pointer ${
                       isWireframe
-                        ? "bg-[#2e2e2e] text-[#FFD700] border border-[#FFD700]/40"
-                        : "bg-[#222222] text-[#888]"
+                        ? "bg-[#32231C] text-[#FFD700] border border-[#FFD700]/40"
+                        : "bg-[#1E1A17] text-[#A39889]"
                     }`}
                     title="Alternar modo Wireframe / PBR"
                   >
@@ -664,7 +664,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
                   <button
                     type="button"
                     onClick={() => onTestPrompt(activeMascot.suggestedSkillId, activeMascot.samplePrompts[0])}
-                    className="py-1 px-3 rounded-lg bg-[#EAEAEA] hover:bg-white text-[#151515] text-[10.5px] font-bold transition-all shadow-sm cursor-pointer shrink-0"
+                    className="py-1 px-3 rounded-lg bg-[#D97757] hover:bg-[#E28768] text-white text-[10.5px] font-bold transition-all shadow-sm cursor-pointer shrink-0"
                     title="Testar prompt do mascote"
                   >
                     Testar

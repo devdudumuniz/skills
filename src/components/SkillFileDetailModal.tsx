@@ -273,7 +273,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
             style={{
               fontSize: 13.5,
               lineHeight: 1.6,
-              color: "#cbd5e1",
+              color: "#D4CDC3",
               paddingLeft: 14,
               marginBottom: 6,
               display: "flex",
@@ -281,7 +281,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
               gap: 8,
             }}
           >
-            <span style={{ color: "#38bdf8", marginTop: 2 }}>•</span>
+            <span style={{ color: "#D97757", marginTop: 2 }}>•</span>
             <span>{line.replace("- ", "")}</span>
           </div>
         );
@@ -344,18 +344,18 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
         </div>
       )}
 
-      {/* Main Dialog matching image_355289d7.png */}
+      {/* Main Dialog */}
       <div
         className="skill-file-detail-dialog"
         onClick={(e) => e.stopPropagation()}
         style={{
           width: "100%",
           maxWidth: 940,
-          backgroundColor: "#151515",
+          backgroundColor: "#24201D",
           borderRadius: 16,
-          border: "1px solid #333333",
+          border: "1px solid #483E34",
           boxShadow: "0 24px 60px rgba(0, 0, 0, 0.85)",
-          color: "#EAEAEA",
+          color: "#F5F2EB",
           display: "flex",
           flexDirection: "column",
           maxHeight: "88vh",
@@ -365,8 +365,8 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
         {/* Top Header Bar */}
         <div
           style={{
-            padding: "16px 24px",
-            borderBottom: "1px solid #333333",
+            padding: "14px 20px",
+            borderBottom: "1px solid #383129",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -470,24 +470,17 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
           </div>
         </div>
 
-        {/* 2-Column Body Layout */}
-        <div style={{ display: "flex", flex: 1, minHeight: 460, overflow: "hidden" }}>
+        {/* 2-Column Body Layout (stacks on mobile) */}
+        <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
           {/* Left Column: Arquivos / File Tree */}
           <div
-            style={{
-              width: 220,
-              flexShrink: 0,
-              borderRight: "1px solid #333333",
-              padding: "16px 14px",
-              overflowY: "auto",
-              backgroundColor: "#191919",
-            }}
+            className="w-full md:w-[220px] shrink-0 border-b md:border-b-0 md:border-r border-[#383129] p-3.5 overflow-y-auto max-h-40 md:max-h-none bg-[#191613]"
           >
             <div
               style={{
                 fontSize: 12,
                 fontWeight: 600,
-                color: "#767676",
+                color: "#A39889",
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
                 marginBottom: 10,
@@ -510,12 +503,12 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                       gap: 6,
                       padding: "5px 10px",
                       borderRadius: 6,
-                      backgroundColor: "#333333",
-                      color: "#EAEAEA",
+                      backgroundColor: "#302A24",
+                      color: "#F5F2EB",
                       fontSize: 12.5,
                       fontWeight: 600,
                       cursor: "pointer",
-                      border: "1px solid #545454",
+                      border: "1px solid #483E34",
                     }}
                   >
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -530,19 +523,13 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
           </div>
 
           {/* Right Column: YAML frontmatter box + Rendered content */}
-          <div
-            style={{
-              flex: 1,
-              padding: "20px 28px",
-              overflowY: "auto",
-            }}
-          >
-            {/* YAML Code Box matching image_355289d7.png */}
+          <div className="flex-1 min-w-0 p-4 sm:p-6 overflow-y-auto">
+            {/* YAML Code Box */}
             {yaml && (
               <div
                 style={{
-                  backgroundColor: "#1c1c1c",
-                  border: "1px solid #333333",
+                  backgroundColor: "#191613",
+                  border: "1px solid #383129",
                   borderRadius: 10,
                   padding: "14px 18px",
                   marginBottom: 24,
@@ -550,6 +537,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                   fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
                   fontSize: 12.5,
                   lineHeight: 1.5,
+                  overflowX: "auto",
                 }}
               >
                 {/* YAML top label and Copy button */}
@@ -559,11 +547,11 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                     justifyContent: "space-between",
                     alignItems: "center",
                     marginBottom: 10,
-                    borderBottom: "1px solid #292929",
+                    borderBottom: "1px solid #383129",
                     paddingBottom: 6,
                   }}
                 >
-                  <span style={{ color: "#9B9B9B", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em" }}>
+                  <span style={{ color: "#D97757", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em" }}>
                     YAML
                   </span>
 

@@ -2,5 +2,6 @@
   "name": "DM Skills",
   "description": "Catálogo e laboratório de habilidades para agentes autônomos de IA.",
   "permissions": [],
-  "capabilities": []
+  "capabilities": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

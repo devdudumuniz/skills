@@ -205,26 +205,38 @@ export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTest
   };
 
   return (
-    <section className="panel">
+    <section className="panel min-w-0 w-full max-w-6xl mx-auto">
       <SectionHead icon="play" title="Playground & Laboratório de Testes de Skills" />
-      <p className="faint lead">
+      <p className="faint lead" style={{ color: "#A39889", marginTop: 4, marginBottom: 20 }}>
         Simule a ativação, enforcement de segurança, geração de plano operacional e gates de autorização em tempo real para qualquer skill.
       </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.25fr)", gap: 20 }}>
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start min-w-0">
         {/* Painel de Configuração do Teste */}
-        <div style={{ display: "grid", gap: 14 }}>
-          <div style={{ background: "var(--panel-2)", border: "1px solid var(--line)", borderRadius: 8, padding: 16, display: "grid", gap: 12 }}>
-            <h3 style={{ margin: 0, fontSize: 14, color: "var(--ink)", display: "flex", alignItems: "center", gap: 6 }}>
+        <div className="xl:col-span-5 flex flex-col gap-3.5 min-w-0 w-full">
+          <div
+            className="min-w-0 w-full overflow-hidden"
+            style={{
+              background: "#24201D",
+              border: "1px solid #383129",
+              borderRadius: 12,
+              padding: 18,
+              display: "flex",
+              flexDirection: "column",
+              gap: 14,
+            }}
+          >
+            <h3 style={{ margin: 0, fontSize: 14, color: "#F5F2EB", display: "flex", alignItems: "center", gap: 6 }}>
               <Icon n="target" size={16} />
-              Configuração da Sessão de Teste
+              <span>Configuração da Sessão de Teste</span>
             </h3>
 
-            <label style={{ display: "flex", flexDirection: "column", gap: 4, fontSize: 12, color: "var(--muted)" }}>
-              Skill a Testar
+            <label className="flex flex-col gap-1.5 text-xs min-w-0 w-full" style={{ color: "#A39889" }}>
+              <span>Skill a Testar</span>
               <select
                 value={selectedSkillId}
                 onChange={(e) => handleSkillChange(e.target.value)}
+                className="w-full max-w-full min-w-0"
               >
                 {skills.map((s) => (
                   <option key={s.id} value={s.id}>
@@ -234,7 +246,7 @@ export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTest
               </select>
             </label>
 
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div className="flex gap-2 flex-wrap">
               <span className={`badge ${currentSkill.isOfficial ? "info" : "ok"}`}>
                 {currentSkill.isOfficial ? "Oficial Deda Skills" : "Custom Lab"}
               </span>
@@ -242,11 +254,12 @@ export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTest
               <span className="badge neutral">Categoria: {currentSkill.category}</span>
             </div>
 
-            <label style={{ display: "flex", flexDirection: "column", gap: 4, fontSize: 12, color: "var(--muted)" }}>
-              Runtime Simulado
+            <label className="flex flex-col gap-1.5 text-xs min-w-0 w-full" style={{ color: "#A39889" }}>
+              <span>Runtime Simulado</span>
               <select
                 value={selectedRuntime}
                 onChange={(e) => setSelectedRuntime(e.target.value)}
+                className="w-full max-w-full min-w-0"
               >
                 <option value="claude">Claude Code (Anthropic)</option>
                 <option value="codex">OpenAI Codex</option>
@@ -259,27 +272,29 @@ export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTest
               </select>
             </label>
 
-            <label style={{ display: "flex", flexDirection: "column", gap: 4, fontSize: 12, color: "var(--muted)" }}>
-              Prompt / Instrução de Entrada para o Agente
+            <label className="flex flex-col gap-1.5 text-xs min-w-0 w-full" style={{ color: "#A39889" }}>
+              <span>Prompt / Instrução de Entrada para o Agente</span>
               <textarea
                 rows={3}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Descreva o comando ou demanda do usuário..."
+                className="w-full max-w-full min-w-0"
               />
             </label>
 
             {/* Simulação de incidentes de segurança */}
-            <div style={{ background: "#222222", border: "1px solid #545454", borderRadius: 6, padding: 10 }}>
-              <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#EAEAEA", cursor: "pointer", fontWeight: 600 }}>
+            <div style={{ background: "#1E1A17", border: "1px solid #383129", borderRadius: 10, padding: 12 }}>
+              <label style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 12, color: "#F5F2EB", cursor: "pointer", fontWeight: 600 }}>
                 <input
                   type="checkbox"
                   checked={simulateSecurityIncident}
                   onChange={(e) => setSimulateSecurityIncident(e.target.checked)}
+                  style={{ marginTop: 2, flexShrink: 0 }}
                 />
-                Simular violação de segurança (ex: vazamento de secret em texto plano)
+                <span>Simular violação de segurança (ex: vazamento de secret em texto plano)</span>
               </label>
-              <div className="faint" style={{ fontSize: 11, marginTop: 4, color: "#9B9B9B" }}>
+              <div className="faint" style={{ fontSize: 11, marginTop: 6, color: "#A39889", lineHeight: 1.45 }}>
                 Testa a capacidade da skill de ativar guardrails de recusa (fail-closed) e bloquear a execução.
               </div>
             </div>
@@ -288,21 +303,35 @@ export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTest
               type="button"
               disabled={isRunning}
               onClick={runSimulation}
-              style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, padding: "8px 16px" }}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 8,
+                padding: "10px 16px",
+                backgroundColor: "#D97757",
+                color: "#FFFFFF",
+                fontWeight: 700,
+                borderRadius: 8,
+                border: "1px solid #D97757",
+                cursor: "pointer",
+                boxShadow: "0 2px 10px rgba(217, 119, 87, 0.35)",
+                width: "100%",
+              }}
             >
               <Icon n="play" size={16} />
-              {isRunning ? "Simulando Execução..." : "Executar Teste no Laboratório"}
+              <span>{isRunning ? "Simulando Execução..." : "Executar Teste no Laboratório"}</span>
             </button>
           </div>
         </div>
 
         {/* Console de Execução & Resultados */}
-        <div style={{ display: "grid", gap: 14 }}>
-          <div style={{ background: "#151515", border: "1px solid #383838", borderRadius: 8, padding: 16 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#EAEAEA", display: "flex", alignItems: "center", gap: 6 }}>
+        <div className="xl:col-span-7 flex flex-col gap-3.5 min-w-0 w-full">
+          <div style={{ background: "#191613", border: "1px solid #383129", borderRadius: 12, padding: 18 }} className="min-w-0 w-full">
+            <div className="flex flex-wrap justify-between items-center gap-2 mb-3 pb-2.5 border-b border-[#322B24]">
+              <span style={{ fontSize: 13.5, fontWeight: 700, color: "#F5F2EB", display: "flex", alignItems: "center", gap: 6 }}>
                 <Icon n="terminal" size={16} />
-                Console de Execução do Agente
+                <span>Console de Execução do Agente</span>
               </span>
               {testResult && (
                 <span
@@ -325,32 +354,25 @@ export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTest
             </div>
 
             {testResult ? (
-              <div style={{ display: "grid", gap: 8 }}>
+              <div style={{ display: "grid", gap: 8 }} className="min-w-0">
                 {testResult.logs.map((log, idx) => (
                   <div
                     key={idx}
+                    className="font-mono text-xs flex flex-col sm:grid sm:grid-cols-[72px_auto_1fr] gap-1 sm:gap-2 items-start py-1.5 border-b border-[#2C2620] min-w-0 break-words"
                     style={{
-                      fontFamily: "ui-monospace, monospace",
-                      fontSize: 12,
-                      display: "grid",
-                      gridTemplateColumns: "68px auto 1fr",
-                      gap: 8,
-                      alignItems: "start",
-                      padding: "4px 0",
-                      borderBottom: "1px solid #262626",
                       color:
                         log.level === "success"
-                          ? "#EAEAEA"
+                          ? "#F5F2EB"
                           : log.level === "warn"
-                          ? "#C2C2C2"
+                          ? "#E09F3E"
                           : log.level === "error"
-                          ? "#EAEAEA"
-                          : "#9B9B9B",
+                          ? "#D97757"
+                          : "#A39889",
                     }}
                   >
-                    <span className="faint">{log.timestamp}</span>
-                    <b style={{ color: "#767676" }}>[{log.step}]</b>
-                    <span>{log.detail}</span>
+                    <span className="text-[11px] text-[#766B5E] shrink-0">{log.timestamp}</span>
+                    <b className="text-[#D97757] shrink-0">[{log.step}]</b>
+                    <span className="min-w-0 break-words">{log.detail}</span>
                   </div>
                 ))}
 
@@ -359,24 +381,31 @@ export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTest
                   <div
                     style={{
                       marginTop: 12,
-                      background: "#222222",
-                      border: "1px solid #545454",
-                      borderRadius: 6,
-                      padding: 12,
+                      background: "#27221E",
+                      border: "1px solid #D97757",
+                      borderRadius: 10,
+                      padding: 14,
                     }}
                   >
-                    <div style={{ fontWeight: 700, color: "#EAEAEA", fontSize: 13, marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}>
+                    <div style={{ fontWeight: 700, color: "#F5F2EB", fontSize: 13, marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}>
                       <Icon n="hourglass" size={16} />
-                      Gate de Autorização Humana Requerido (Plan-First)
+                      <span>Gate de Autorização Humana Requerido (Plan-First)</span>
                     </div>
-                    <p style={{ margin: "0 0 10px", fontSize: 12, color: "#C2C2C2" }}>
+                    <p style={{ margin: "0 0 12px", fontSize: 12, color: "#D4CDC3" }}>
                       A skill gerou o plano com sucesso. Como a operação requer governança, você autoriza a emissão do artefato?
                     </p>
-                    <div style={{ display: "flex", gap: 8 }}>
+                    <div className="flex flex-wrap gap-2">
                       <button
                         type="button"
                         onClick={handleApproveGate}
-                        style={{ fontSize: 12, padding: "5px 12px" }}
+                        style={{
+                          fontSize: 12,
+                          padding: "6px 14px",
+                          backgroundColor: "#D97757",
+                          color: "#FFFFFF",
+                          border: "1px solid #D97757",
+                          borderRadius: 8,
+                        }}
                       >
                         Aprovar Execução
                       </button>
@@ -384,7 +413,14 @@ export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTest
                         type="button"
                         className="secondary"
                         onClick={handleRejectGate}
-                        style={{ fontSize: 12, padding: "5px 12px" }}
+                        style={{
+                          fontSize: 12,
+                          padding: "6px 14px",
+                          backgroundColor: "#2A241F",
+                          color: "#F5F2EB",
+                          border: "1px solid #443A30",
+                          borderRadius: 8,
+                        }}
                       >
                         Recusar / Abortar
                       </button>
@@ -394,24 +430,24 @@ export function SkillTestPlayground({ initialSkillId, initialPrompt }: SkillTest
 
                 {/* Plano e Evidências */}
                 {testResult.plan && (
-                  <div style={{ marginTop: 12, background: "rgba(255,255,255,.02)", border: "1px solid var(--line)", borderRadius: 6, padding: 12 }}>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: "var(--accent)", marginBottom: 6 }}>
+                  <div style={{ marginTop: 12, background: "#24201D", border: "1px solid #383129", borderRadius: 10, padding: 12 }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: "#D97757", marginBottom: 6 }}>
                       Plano Estruturado Emitido:
                     </div>
-                    <pre style={{ margin: 0, fontSize: 11.5, maxHeight: 180 }}>{testResult.plan}</pre>
+                    <pre style={{ margin: 0, fontSize: 11.5, maxHeight: 200 }}>{testResult.plan}</pre>
                   </div>
                 )}
 
                 {testResult.evidence && (
-                  <div style={{ marginTop: 6, fontSize: 12, color: "var(--ok)", display: "flex", alignItems: "center", gap: 6 }}>
+                  <div className="mt-2 text-xs text-[#D4CDC3] flex flex-wrap items-center gap-1.5">
                     <Icon n="check-circle" size={14} />
-                    <b>Evidência Auditável:</b> <code>{testResult.evidence}</code>
+                    <b>Evidência Auditável:</b> <code className="text-[#D97757] break-all">{testResult.evidence}</code>
                   </div>
                 )}
               </div>
             ) : (
-              <div style={{ padding: "30px 10px", textAlign: "center", color: "var(--muted)", fontSize: 13 }}>
-                Selecione uma skill e clique em <b>"Executar Teste no Laboratório"</b> para simular a esteira completa de execução do agente.
+              <div style={{ padding: "36px 12px", textAlign: "center", color: "#A39889", fontSize: 13 }}>
+                Selecione uma skill e clique em <b style={{ color: "#F5F2EB" }}>"Executar Teste no Laboratório"</b> para simular a esteira completa de execução do agente.
               </div>
             )}
           </div>

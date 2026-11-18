@@ -1,6 +1,6 @@
-# Contributing to DM Skills
+# Contributing to Deda Skills
 
-We welcome contributions to expand the **DM Skills** catalog with high-quality, production-ready AI agent capabilities.
+We welcome contributions to expand the **Deda Skills** catalog with high-quality, production-ready AI agent capabilities.
 
 ---
 

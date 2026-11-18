@@ -5,8 +5,11 @@ import { BookCover } from "../components/BookCover";
 import { Icon } from "../components/Icons";
 import { DedaLogo } from "../components/DedaLogo";
 
+import { AISkillInterviewCreator } from "../components/AISkillInterviewCreator";
+import { estimateTokens, formatTokens } from "../utils/tokenUtils";
+
 interface CreateSkillViewProps {
-  onSuccess: (skillId: string) => void;
+  onSuccess: (skillOrId: AgentSkill | string) => void;
   onCancel: () => void;
   initialData?: {
     name?: string;
@@ -90,6 +93,7 @@ const CATEGORIES = [
 
 export function CreateSkillView({ onSuccess, onCancel, initialData }: CreateSkillViewProps) {
   const { addSkill } = useProject();
+  const [creationMode, setCreationMode] = useState<"ai-interview" | "manual">("ai-interview");
 
   const [name, setName] = useState(initialData?.name || "");
   const [id, setId] = useState(initialData?.id || "");
@@ -139,8 +143,8 @@ export function CreateSkillView({ onSuccess, onCancel, initialData }: CreateSkil
 
   const getCoverTheme = () => {
     return {
-      bg: "linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 60%, #151515 100%)",
-      accent: "#EAEAEA",
+      bg: "linear-gradient(155deg, #322A24 0%, #24201D 60%, #191613 100%)",
+      accent: "#D97757",
       icon: coverIcon,
       subtitle: coverSubtitle.trim() || `${name || "Habilidade"} • Xilogravura`,
       imageUrl: activeCordel.image,
@@ -302,40 +306,90 @@ ${steps.join("\n")}
     };
 
     addSkill(newSkill);
-    onSuccess(newSkill.id);
+    onSuccess(newSkill);
   };
 
+  if (creationMode === "ai-interview") {
+    return (
+      <div className="w-full">
+        <AISkillInterviewCreator
+          onSkillCreated={(skill) => {
+            addSkill(skill);
+            onSuccess(skill);
+          }}
+          onCancel={onCancel}
+          initialPrompt={initialData?.whyNeeded || initialData?.description || ""}
+          onSwitchToManual={() => setCreationMode("manual")}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 pb-20 text-[#EAEAEA]">
+    <div className="max-w-6xl mx-auto px-3 sm:px-6 py-5 pb-20 text-[#F5F2EB] min-w-0">
+      {/* Mode Switcher */}
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-[#383129]">
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#24201D] border border-[#383129]">
+          <button
+            type="button"
+            onClick={() => setCreationMode("ai-interview")}
+            className="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#A39889] hover:text-[#F5F2EB] transition-colors flex items-center gap-1.5 cursor-pointer"
+          >
+            <Icon n="sparkles" size={12} />
+            <span>Entrevista com IA</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setCreationMode("manual")}
+            className="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#D97757] text-white shadow-sm flex items-center gap-1.5 cursor-pointer"
+          >
+            <Icon n="file-text" size={12} />
+            <span>Formulário Manual</span>
+          </button>
+        </div>
+      </div>
+
       {/* Top Header Bar */}
-      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-[#2e2e2e]">
-        <div className="flex items-start sm:items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#202020] border border-[#383838] flex items-center justify-center shrink-0">
-            <DedaLogo size={24} color="#EAEAEA" />
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-[#383129]">
+        <div className="flex items-start sm:items-center gap-3 min-w-0">
+          <div className="w-10 h-10 rounded-xl bg-[#27221E] border border-[#483E34] flex items-center justify-center shrink-0">
+            <DedaLogo size={24} color="#D97757" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-wider font-semibold text-[#9B9B9B]">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#A39889]">
                 Deda Skills • Estúdio de Autoria
               </span>
-              <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#292929] text-[#C2C2C2] border border-[#3d3d3d]">
+              <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#32231C] text-[#E28768] border border-[#D97757]/40">
                 Padrão Universal
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-[#EAEAEA] mt-0.5">
+            <h1 className="text-xl sm:text-2xl font-bold text-[#F5F2EB] mt-0.5">
               Criar Nova Habilidade para Agentes
             </h1>
-            <p className="text-xs sm:text-sm text-[#9B9B9B] mt-0.5">
+            <p className="text-xs sm:text-sm text-[#D4CDC3] mt-0.5">
               Defina competências auditáveis com capa 3D, arte de xilogravura nordestina e especificação SKILL.md.
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5 shrink-0">
+        <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+          {/* Live Context Footprint Counter */}
+          <div
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#24201D] border border-[#383129] text-xs"
+            title={`Consumo estimado de contexto: ${estimateTokens(generatedMarkdown)} tokens`}
+          >
+            <span className="w-2 h-2 rounded-full bg-[#D97757] animate-pulse"></span>
+            <span className="text-[11px] text-[#A39889]">Contexto:</span>
+            <span className="font-mono text-xs font-bold text-[#F5F2EB]">
+              {formatTokens(estimateTokens(generatedMarkdown))}
+            </span>
+          </div>
+
           <button
             type="button"
             onClick={handleFillTemplate}
-            className="px-3.5 py-2 rounded-lg text-xs font-medium text-[#C2C2C2] hover:text-[#EAEAEA] bg-[#202020] hover:bg-[#292929] border border-[#383838] transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-lg text-xs font-medium text-[#D4CDC3] hover:text-[#F5F2EB] bg-[#24201D] hover:bg-[#2F2721] border border-[#383129] transition-colors flex items-center gap-1.5 cursor-pointer"
             title="Preencher com exemplo de habilidade de auditoria"
           >
             <Icon n="sparkles" size={14} />
@@ -344,7 +398,7 @@ ${steps.join("\n")}
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 rounded-lg text-xs font-medium text-[#C2C2C2] hover:text-[#EAEAEA] bg-[#202020] hover:bg-[#292929] border border-[#383838] transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 rounded-lg text-xs font-medium text-[#D4CDC3] hover:text-[#F5F2EB] bg-[#24201D] hover:bg-[#2F2721] border border-[#383129] transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <Icon n="arrow-left" size={14} />
             <span>Voltar ao Catálogo</span>
@@ -354,23 +408,23 @@ ${steps.join("\n")}
 
       {/* Main 2-Column Grid */}
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start min-w-0">
           {/* Left Column: Form Cards (7 cols) */}
-          <div className="lg:col-span-7 flex flex-col gap-6">
+          <div className="lg:col-span-7 flex flex-col gap-6 min-w-0">
             {/* Card 1: Identificação Básica */}
-            <section className="bg-[#1c1c1c] border border-[#2e2e2e] rounded-xl p-5 shadow-sm">
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#2e2e2e]">
-                <div className="w-6 h-6 rounded-md bg-[#292929] border border-[#3d3d3d] flex items-center justify-center text-[#EAEAEA]">
+            <section className="bg-[#24201D] border border-[#383129] rounded-xl p-5 shadow-sm">
+              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#383129]">
+                <div className="w-6 h-6 rounded-md bg-[#32231C] border border-[#D97757]/40 flex items-center justify-center text-[#D97757]">
                   <Icon n="layers" size={13} />
                 </div>
-                <h2 className="text-sm font-semibold text-[#EAEAEA] uppercase tracking-wide">
+                <h2 className="text-sm font-semibold text-[#F5F2EB] uppercase tracking-wide">
                   1. Identificação Básica
                 </h2>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                <div className="min-w-0">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Nome da Habilidade *
                   </label>
                   <input
@@ -379,12 +433,12 @@ ${steps.join("\n")}
                     placeholder="Ex: Manus para Notion"
                     value={name}
                     onChange={(e) => handleNameChange(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                <div className="min-w-0">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Identificador (Slug) *
                   </label>
                   <input
@@ -396,48 +450,48 @@ ${steps.join("\n")}
                       setIdTouched(true);
                       setId(e.target.value);
                     }}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors font-mono"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors font-mono"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                <div className="min-w-0">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Categoria
                   </label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value as AgentSkill["category"])}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] transition-colors cursor-pointer"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] transition-colors cursor-pointer"
                   >
                     {CATEGORIES.map((c) => (
-                      <option key={c.id} value={c.id} className="bg-[#1c1c1c] text-[#EAEAEA]">
+                      <option key={c.id} value={c.id} className="bg-[#24201D] text-[#F5F2EB]">
                         {c.label}
                       </option>
                     ))}
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                <div className="min-w-0">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Modo de Execução
                   </label>
                   <select
                     value={executionMode}
                     onChange={(e) => setExecutionMode(e.target.value as AgentSkill["execution_mode"])}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] transition-colors cursor-pointer"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] transition-colors cursor-pointer"
                   >
-                    <option value="plan-first" className="bg-[#1c1c1c] text-[#EAEAEA]">
+                    <option value="plan-first" className="bg-[#24201D] text-[#F5F2EB]">
                       plan-first (Elaborar plano antes de mutações)
                     </option>
-                    <option value="iterative-tdd" className="bg-[#1c1c1c] text-[#EAEAEA]">
+                    <option value="iterative-tdd" className="bg-[#24201D] text-[#F5F2EB]">
                       iterative-tdd (Ciclos de testes e scaffolding)
                     </option>
-                    <option value="read-only" className="bg-[#1c1c1c] text-[#EAEAEA]">
+                    <option value="read-only" className="bg-[#24201D] text-[#F5F2EB]">
                       read-only (Auditoria e diagnóstico seguro)
                     </option>
-                    <option value="agent-loop" className="bg-[#1c1c1c] text-[#EAEAEA]">
+                    <option value="agent-loop" className="bg-[#24201D] text-[#F5F2EB]">
                       agent-loop (Loop autônomo com feedback)
                     </option>
                   </select>
@@ -445,32 +499,32 @@ ${steps.join("\n")}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-                <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                <div className="min-w-0">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Autor
                   </label>
                   <input
                     type="text"
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] transition-colors"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] transition-colors"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                <div className="min-w-0">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Versão
                   </label>
                   <input
                     type="text"
                     value={version}
                     onChange={(e) => setVersion(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] transition-colors font-mono"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] transition-colors font-mono"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                <div className="min-w-0">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Tags (separadas por vírgula)
                   </label>
                   <input
@@ -478,33 +532,33 @@ ${steps.join("\n")}
                     value={tagsInput}
                     onChange={(e) => setTagsInput(e.target.value)}
                     placeholder="notion, produtividade, agente"
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors"
                   />
                 </div>
               </div>
             </section>
 
             {/* Card 2: Arte de Xilogravura Nordestina */}
-            <section className="bg-[#1c1c1c] border border-[#2e2e2e] rounded-xl p-5 shadow-sm">
-              <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#2e2e2e]">
+            <section className="bg-[#24201D] border border-[#383129] rounded-xl p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#383129]">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-md bg-[#292929] border border-[#3d3d3d] flex items-center justify-center text-[#EAEAEA]">
+                  <div className="w-6 h-6 rounded-md bg-[#32231C] border border-[#D97757]/40 flex items-center justify-center text-[#D97757]">
                     <Icon n="image" size={13} />
                   </div>
-                  <h2 className="text-sm font-semibold text-[#EAEAEA] uppercase tracking-wide">
+                  <h2 className="text-sm font-semibold text-[#F5F2EB] uppercase tracking-wide">
                     2. Arte de Capa • Xilogravura de Cordel
                   </h2>
                 </div>
-                <span className="text-[11px] text-[#9B9B9B] hidden sm:inline">
+                <span className="text-[11px] text-[#A39889] hidden sm:inline">
                   Estilo clássico em preto e branco
                 </span>
               </div>
 
-              <p className="text-xs text-[#9B9B9B] mb-3.5">
+              <p className="text-xs text-[#D4CDC3] mb-3.5">
                 Selecione a matriz de xilogravura nordestina que melhor representa a alma e o domínio desta habilidade:
               </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-56 overflow-y-auto pr-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 max-h-56 overflow-y-auto pr-1">
                 {CORDEL_OPTIONS.map((opt) => {
                   const isSelected = selectedCordel === opt.id;
                   return (
@@ -519,20 +573,20 @@ ${steps.join("\n")}
                       }}
                       className={`flex items-center gap-2.5 p-2 rounded-lg text-left transition-all border cursor-pointer ${
                         isSelected
-                          ? "bg-[#292929] border-[#EAEAEA] shadow-sm"
-                          : "bg-[#151515] border-[#333333] hover:border-[#545454] hover:bg-[#1f1f1f]"
+                          ? "bg-[#32231C] border-[#D97757] shadow-sm"
+                          : "bg-[#191613] border-[#383129] hover:border-[#483E34] hover:bg-[#27221E]"
                       }`}
                     >
                       <img
                         src={opt.image}
                         alt={opt.name}
-                        className="w-10 h-10 rounded-md object-cover border border-[#3d3d3d] shrink-0 filter contrast-110"
+                        className="w-10 h-10 rounded-md object-cover border border-[#483E34] shrink-0 filter contrast-110"
                       />
-                      <div className="overflow-hidden">
-                        <div className="text-xs font-semibold text-[#EAEAEA] truncate">
+                      <div className="overflow-hidden min-w-0">
+                        <div className="text-xs font-semibold text-[#F5F2EB] truncate">
                           {opt.name}
                         </div>
-                        <div className="text-[10.5px] text-[#9B9B9B] truncate">
+                        <div className={`text-[10.5px] truncate ${isSelected ? "text-[#E28768]" : "text-[#A39889]"}`}>
                           {isSelected ? "Selecionada" : "Usar gravura"}
                         </div>
                       </div>
@@ -541,9 +595,9 @@ ${steps.join("\n")}
                 })}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-3 border-t border-[#2e2e2e]">
-                <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-3 border-t border-[#383129]">
+                <div className="min-w-0">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Subtítulo da Capa
                   </label>
                   <input
@@ -551,18 +605,18 @@ ${steps.join("\n")}
                     value={coverSubtitle}
                     onChange={(e) => setCoverSubtitle(e.target.value)}
                     placeholder="Ex: Engenharia & Entrega • Xilogravura"
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                <div className="min-w-0">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Ícone Complementar
                   </label>
                   <select
                     value={coverIcon}
                     onChange={(e) => setCoverIcon(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] transition-colors cursor-pointer"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] transition-colors cursor-pointer"
                   >
                     <option value="code">Código / Engenharia</option>
                     <option value="shield">Segurança / Defesa</option>
@@ -576,19 +630,19 @@ ${steps.join("\n")}
             </section>
 
             {/* Card 3: Escopo & Regras de Ativação */}
-            <section className="bg-[#1c1c1c] border border-[#2e2e2e] rounded-xl p-5 shadow-sm">
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#2e2e2e]">
-                <div className="w-6 h-6 rounded-md bg-[#292929] border border-[#3d3d3d] flex items-center justify-center text-[#EAEAEA]">
+            <section className="bg-[#24201D] border border-[#383129] rounded-xl p-5 shadow-sm">
+              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#383129]">
+                <div className="w-6 h-6 rounded-md bg-[#32231C] border border-[#D97757]/40 flex items-center justify-center text-[#D97757]">
                   <Icon n="file-text" size={13} />
                 </div>
-                <h2 className="text-sm font-semibold text-[#EAEAEA] uppercase tracking-wide">
+                <h2 className="text-sm font-semibold text-[#F5F2EB] uppercase tracking-wide">
                   3. Escopo & Regras de Ativação
                 </h2>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Descrição da Competência *
                   </label>
                   <textarea
@@ -597,12 +651,12 @@ ${steps.join("\n")}
                     placeholder="Descreva de forma concisa o que o agente é capaz de resolver com esta habilidade..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2.5 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors resize-y"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2.5 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors resize-y"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Quando Usar (Trigger conditions)
                   </label>
                   <textarea
@@ -610,12 +664,12 @@ ${steps.join("\n")}
                     placeholder="Indique as solicitações do usuário ou contextos específicos que devem disparar esta habilidade..."
                     value={whenToUse}
                     onChange={(e) => setWhenToUse(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2.5 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors resize-y"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2.5 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors resize-y"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Quando NÃO Usar (Recusas & Limites)
                   </label>
                   <textarea
@@ -623,32 +677,32 @@ ${steps.join("\n")}
                     placeholder="Contraindicações expressas, limites de autoridade e recusas automáticas para segurança..."
                     value={whenNotToUse}
                     onChange={(e) => setWhenNotToUse(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2.5 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors resize-y"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2.5 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors resize-y"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1.5">
                     Pré-condições & Permissões
                   </label>
                   <input
                     type="text"
                     value={preconditions}
                     onChange={(e) => setPreconditions(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] transition-colors"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] transition-colors"
                   />
                 </div>
               </div>
             </section>
 
             {/* Card 4: Procedimento Passo a Passo */}
-            <section className="bg-[#1c1c1c] border border-[#2e2e2e] rounded-xl p-5 shadow-sm">
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#2e2e2e]">
+            <section className="bg-[#24201D] border border-[#383129] rounded-xl p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#383129]">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-md bg-[#292929] border border-[#3d3d3d] flex items-center justify-center text-[#EAEAEA]">
+                  <div className="w-6 h-6 rounded-md bg-[#32231C] border border-[#D97757]/40 flex items-center justify-center text-[#D97757]">
                     <Icon n="check-circle" size={13} />
                   </div>
-                  <h2 className="text-sm font-semibold text-[#EAEAEA] uppercase tracking-wide">
+                  <h2 className="text-sm font-semibold text-[#F5F2EB] uppercase tracking-wide">
                     4. Procedimento de Execução ({steps.length} etapas)
                   </h2>
                 </div>
@@ -658,13 +712,13 @@ ${steps.join("\n")}
                 {steps.map((st, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between gap-3 p-2.5 rounded-lg bg-[#151515] border border-[#333333]"
+                    className="flex items-center justify-between gap-3 p-2.5 rounded-lg bg-[#191613] border border-[#383129]"
                   >
-                    <span className="text-xs text-[#EAEAEA]">{st}</span>
+                    <span className="text-xs text-[#F5F2EB] break-words min-w-0">{st}</span>
                     <button
                       type="button"
                       onClick={() => removeProcedureStep(idx)}
-                      className="text-[#767676] hover:text-[#EAEAEA] p-1 transition-colors cursor-pointer"
+                      className="text-[#A39889] hover:text-[#F5F2EB] p-1 transition-colors cursor-pointer shrink-0"
                       title="Remover etapa"
                     >
                       <Icon n="x" size={13} />
@@ -673,7 +727,7 @@ ${steps.join("\n")}
                 ))}
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   placeholder="Adicionar nova etapa do procedimento..."
@@ -685,12 +739,12 @@ ${steps.join("\n")}
                       addProcedureStep();
                     }
                   }}
-                  className="flex-1 bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors"
+                  className="flex-1 min-w-0 bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors"
                 />
                 <button
                   type="button"
                   onClick={addProcedureStep}
-                  className="px-4 py-2 rounded-lg bg-[#292929] hover:bg-[#333333] text-[#EAEAEA] border border-[#3d3d3d] text-xs font-semibold transition-colors cursor-pointer shrink-0"
+                  className="px-4 py-2 rounded-lg bg-[#2A241F] hover:bg-[#332C26] text-[#F5F2EB] border border-[#483E34] text-xs font-semibold transition-colors cursor-pointer shrink-0"
                 >
                   Adicionar
                 </button>
@@ -698,52 +752,52 @@ ${steps.join("\n")}
             </section>
 
             {/* Card 5: Prompts Sugeridos */}
-            <section className="bg-[#1c1c1c] border border-[#2e2e2e] rounded-xl p-5 shadow-sm">
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#2e2e2e]">
-                <div className="w-6 h-6 rounded-md bg-[#292929] border border-[#3d3d3d] flex items-center justify-center text-[#EAEAEA]">
+            <section className="bg-[#24201D] border border-[#383129] rounded-xl p-5 shadow-sm">
+              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#383129]">
+                <div className="w-6 h-6 rounded-md bg-[#32231C] border border-[#D97757]/40 flex items-center justify-center text-[#D97757]">
                   <Icon n="terminal" size={13} />
                 </div>
-                <h2 className="text-sm font-semibold text-[#EAEAEA] uppercase tracking-wide">
+                <h2 className="text-sm font-semibold text-[#F5F2EB] uppercase tracking-wide">
                   5. Sugestões de Prompt para Testes
                 </h2>
               </div>
 
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs text-[#9B9B9B] mb-1">Prompt 1 (Comando principal)</label>
+                  <label className="block text-xs text-[#A39889] mb-1">Prompt 1 (Comando principal)</label>
                   <input
                     type="text"
                     placeholder={`Planeje a execução de ${name || "esta habilidade"} para o meu repositório.`}
                     value={prompt1}
                     onChange={(e) => setPrompt1(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#9B9B9B] mb-1">Prompt 2 (Configuração / Modelo)</label>
+                  <label className="block text-xs text-[#A39889] mb-1">Prompt 2 (Configuração / Modelo)</label>
                   <input
                     type="text"
                     placeholder={`Gere um modelo estruturado e verifique os artefatos para ${name || "a skill"}.`}
                     value={prompt2}
                     onChange={(e) => setPrompt2(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#9B9B9B] mb-1">Prompt 3 (Auditoria & Validação)</label>
+                  <label className="block text-xs text-[#A39889] mb-1">Prompt 3 (Auditoria & Validação)</label>
                   <input
                     type="text"
                     placeholder="Audite a conformidade dos dados e emita um relatório estruturado."
                     value={prompt3}
                     onChange={(e) => setPrompt3(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors"
                   />
                 </div>
 
-                <div className="pt-2 border-t border-[#2e2e2e]">
-                  <label className="block text-xs font-semibold text-[#C2C2C2] uppercase tracking-wider mb-1">
+                <div className="pt-2 border-t border-[#383129]">
+                  <label className="block text-xs font-semibold text-[#D4CDC3] uppercase tracking-wider mb-1">
                     Prompt Padrão para o Playground
                   </label>
                   <input
@@ -751,7 +805,7 @@ ${steps.join("\n")}
                     placeholder={`Executar e testar a habilidade ${name || "esta skill"} com segurança.`}
                     value={sampleTestPrompt}
                     onChange={(e) => setSampleTestPrompt(e.target.value)}
-                    className="w-full bg-[#151515] border border-[#333333] focus:border-[#EAEAEA] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#EAEAEA] placeholder-[#767676] transition-colors"
+                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] focus:outline-none rounded-lg px-3.5 py-2 text-sm text-[#F5F2EB] placeholder-[#766B5E] transition-colors"
                   />
                 </div>
               </div>
@@ -759,18 +813,18 @@ ${steps.join("\n")}
           </div>
 
           {/* Right Column: Sticky Live Preview & Actions (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-5 lg:sticky lg:top-6">
+          <div className="lg:col-span-5 flex flex-col gap-5 lg:sticky lg:top-6 min-w-0">
             {/* Preview Container */}
-            <div className="bg-[#1c1c1c] border border-[#2e2e2e] rounded-xl overflow-hidden shadow-lg">
+            <div className="bg-[#24201D] border border-[#383129] rounded-xl overflow-hidden shadow-lg">
               {/* Tab Selector */}
-              <div className="flex border-b border-[#2e2e2e] bg-[#171717]">
+              <div className="flex border-b border-[#383129] bg-[#1E1A17]">
                 <button
                   type="button"
                   onClick={() => setActivePreviewTab("book")}
-                  className={`flex-1 py-3 px-3 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
+                  className={`flex-1 py-3 px-2 sm:px-3 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
                     activePreviewTab === "book"
-                      ? "text-[#EAEAEA] border-b-2 border-[#EAEAEA] bg-[#1c1c1c]"
-                      : "text-[#9B9B9B] hover:text-[#C2C2C2]"
+                      ? "text-[#F5F2EB] border-b-2 border-[#D97757] bg-[#24201D]"
+                      : "text-[#A39889] hover:text-[#D4CDC3]"
                   }`}
                 >
                   <Icon n="image" size={13} />
@@ -780,10 +834,10 @@ ${steps.join("\n")}
                 <button
                   type="button"
                   onClick={() => setActivePreviewTab("card")}
-                  className={`flex-1 py-3 px-3 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
+                  className={`flex-1 py-3 px-2 sm:px-3 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
                     activePreviewTab === "card"
-                      ? "text-[#EAEAEA] border-b-2 border-[#EAEAEA] bg-[#1c1c1c]"
-                      : "text-[#9B9B9B] hover:text-[#C2C2C2]"
+                      ? "text-[#F5F2EB] border-b-2 border-[#D97757] bg-[#24201D]"
+                      : "text-[#A39889] hover:text-[#D4CDC3]"
                   }`}
                 >
                   <Icon n="layers" size={13} />
@@ -793,10 +847,10 @@ ${steps.join("\n")}
                 <button
                   type="button"
                   onClick={() => setActivePreviewTab("markdown")}
-                  className={`flex-1 py-3 px-3 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
+                  className={`flex-1 py-3 px-2 sm:px-3 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
                     activePreviewTab === "markdown"
-                      ? "text-[#EAEAEA] border-b-2 border-[#EAEAEA] bg-[#1c1c1c]"
-                      : "text-[#9B9B9B] hover:text-[#C2C2C2]"
+                      ? "text-[#F5F2EB] border-b-2 border-[#D97757] bg-[#24201D]"
+                      : "text-[#A39889] hover:text-[#D4CDC3]"
                   }`}
                 >
                   <Icon n="file-text" size={13} />
@@ -816,10 +870,10 @@ ${steps.join("\n")}
                       />
                     </div>
                     <div className="text-center mt-2">
-                      <div className="text-xs uppercase tracking-wider font-semibold text-[#C2C2C2]">
+                      <div className="text-xs uppercase tracking-wider font-semibold text-[#D4CDC3]">
                         {activeCordel.name}
                       </div>
-                      <div className="text-[11px] text-[#9B9B9B] mt-0.5 max-w-xs">
+                      <div className="text-[11px] text-[#A39889] mt-0.5 max-w-xs">
                         {activeCordel.description}
                       </div>
                     </div>
@@ -827,25 +881,25 @@ ${steps.join("\n")}
                 )}
 
                 {activePreviewTab === "card" && (
-                  <div className="p-3 bg-[#151515] border border-[#2e2e2e] rounded-xl flex items-center gap-3">
+                  <div className="p-3 bg-[#191613] border border-[#383129] rounded-xl flex items-center gap-3">
                     <img
                       src={activeCordel.image}
                       alt={name || "Nova Habilidade"}
-                      className="w-14 h-14 rounded-lg object-cover border border-[#383838] shrink-0 filter contrast-110"
+                      className="w-14 h-14 rounded-lg object-cover border border-[#483E34] shrink-0 filter contrast-110"
                     />
-                    <div className="overflow-hidden flex-1">
+                    <div className="overflow-hidden flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h4 className="text-sm font-semibold text-[#EAEAEA] truncate">
+                        <h4 className="text-sm font-semibold text-[#F5F2EB] truncate">
                           {name || "Nova Habilidade"}
                         </h4>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#292929] text-[#C2C2C2] border border-[#3d3d3d] shrink-0">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#32231C] text-[#E28768] border border-[#D97757]/40 shrink-0">
                           {executionMode}
                         </span>
                       </div>
-                      <p className="text-xs text-[#9B9B9B] line-clamp-2 mt-0.5">
+                      <p className="text-xs text-[#A39889] line-clamp-2 mt-0.5">
                         {description || "Descrição resumida da competência..."}
                       </p>
-                      <div className="text-[11px] text-[#767676] mt-1 flex items-center gap-2">
+                      <div className="text-[11px] text-[#766B5E] mt-1 flex items-center gap-2">
                         <span>Por {author}</span>
                         <span>•</span>
                         <span>v{version}</span>
@@ -859,12 +913,12 @@ ${steps.join("\n")}
                     <button
                       type="button"
                       onClick={copyMarkdownToClipboard}
-                      className="absolute top-2 right-2 px-2.5 py-1 rounded bg-[#292929] hover:bg-[#333333] text-[11px] text-[#EAEAEA] border border-[#3d3d3d] transition-colors cursor-pointer flex items-center gap-1 z-10"
+                      className="absolute top-2 right-2 px-2.5 py-1 rounded bg-[#2A241F] hover:bg-[#332C26] text-[11px] text-[#F5F2EB] border border-[#483E34] transition-colors cursor-pointer flex items-center gap-1 z-10"
                     >
                       <Icon n={copiedMarkdown ? "check" : "clipboard"} size={12} />
                       <span>{copiedMarkdown ? "Copiado!" : "Copiar"}</span>
                     </button>
-                    <pre className="text-xs bg-[#151515] border border-[#2e2e2e] rounded-lg p-3 text-[#C2C2C2] overflow-x-auto max-h-72 font-mono whitespace-pre-wrap">
+                    <pre className="text-xs bg-[#191613] border border-[#383129] rounded-lg p-3 text-[#D4CDC3] overflow-x-auto max-h-72 font-mono whitespace-pre-wrap">
                       {generatedMarkdown}
                     </pre>
                   </div>
@@ -873,10 +927,10 @@ ${steps.join("\n")}
             </div>
 
             {/* Publishing Action Box */}
-            <div className="bg-[#1c1c1c] border border-[#2e2e2e] rounded-xl p-5 shadow-sm space-y-3">
+            <div className="bg-[#24201D] border border-[#383129] rounded-xl p-5 shadow-sm space-y-3">
               <button
                 type="submit"
-                className="w-full bg-[#EAEAEA] hover:bg-[#ffffff] text-[#151515] font-bold py-3 px-4 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
+                className="w-full bg-[#D97757] hover:bg-[#E28768] text-white font-bold py-3 px-4 rounded-xl text-sm transition-all shadow-[0_2px_10px_rgba(217,119,87,0.35)] flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
               >
                 <Icon n="plus" size={16} />
                 <span>Publicar Habilidade no Deda Skills</span>
@@ -885,13 +939,13 @@ ${steps.join("\n")}
               <button
                 type="button"
                 onClick={onCancel}
-                className="w-full bg-[#242424] hover:bg-[#2a2a2a] text-[#C2C2C2] hover:text-[#EAEAEA] border border-[#383838] py-2.5 px-4 rounded-xl text-xs font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#383129] py-2.5 px-4 rounded-xl text-xs font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 Cancelar e Voltar
               </button>
 
-              <div className="pt-2 text-center text-[11px] text-[#767676]">
-                Salva localmente com persistência em cache e exportável como pacote universal <code className="text-[#9B9B9B]">.skill</code>.
+              <div className="pt-2 text-center text-[11px] text-[#766B5E]">
+                Salva localmente com persistência em cache e exportável como pacote universal <code className="text-[#A39889]">.skill</code>.
               </div>
             </div>
           </div>

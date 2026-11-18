@@ -1,10 +1,11 @@
 {
-  "name": "dm-skills",
+  "name": "deda-skills",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "tsx server.ts",
+    "start": "node server.ts",
     "build": "tsc && vite build",
     "lint": "tsc --noEmit",
     "preview": "vite preview --port 3000",
@@ -12,12 +13,17 @@
     "skills:package": "python3 scripts/package_skills.py"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.1",
+    "@google/genai": "^3.0.0",
     "@tailwindcss/vite": "^4.3.4",
+    "@types/express": "^5.0.6",
     "@types/three": "^0.187.0",
+    "express": "^5.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^4.3.4",
-    "three": "^0.187.0"
+    "three": "^0.187.0",
+    "tsx": "^4.23.15"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",

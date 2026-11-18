@@ -31,8 +31,10 @@ export interface MascotMediaKit {
   formatBadges: string[];
 }
 
+export type MascotId = "carcara" | "lobo_guara" | "tatu_bola" | "ararinha" | "sagui" | "onca_pintada";
+
 export interface MascotAgent {
-  id: "carcara" | "lobo_guara" | "tatu_bola" | "ararinha";
+  id: MascotId;
   name: string;
   nickname: string;
   title: string;
@@ -62,7 +64,7 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     nickname: "O Sentinela",
     title: "O Falcão Vigilante do Sertão",
     species: "Caracara plancus • Caatinga & Sertão",
-    avatar: "/assets/mascotes/carcara.jpg",
+    avatar: "/assets/aistudio/Caracar_-do-sul_em_pose_vigilante-5_6ce0eade.png",
     accentColor: "#EAEAEA",
     role: "Auditor de Segurança, Vulnerabilidades & Sentinela de Código",
     tagline: "Visão aguçada para encontrar riscos e vulnerabilidades antes que virem incidentes.",
@@ -117,19 +119,19 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     teamQuote: "Nenhum bug ou brecha de segurança escapa da minha visão aérea.",
     mediaKit: {
       svgPath: "/assets/mascotes/carcara.svg",
-      pngRender: "/assets/mascotes/carcara.jpg",
-      pngTransparent: "/assets/mascotes/carcara_hd.png",
+      pngRender: "/assets/aistudio/Caracar_-do-sul_em_pose_vigilante-5_6ce0eade.png",
+      pngTransparent: "/assets/aistudio/Caracar_-do-sul_em_pose_vigilante-5_6ce0eade.png",
       objPath: "/assets/mascotes/carcara.obj",
       themeColors: {
-        primary: "#00FFA3",
-        secondary: "#10B981",
-        accent: "#F59E0B",
-        glow: "rgba(0, 255, 163, 0.4)",
+        primary: "#D97757",
+        secondary: "#C05E3C",
+        accent: "#E09F3E",
+        glow: "rgba(217, 119, 87, 0.4)",
       },
       dimension3D: {
-        particleColor: 0x00ffa3,
-        haloColor: 0x10b981,
-        accentLight: 0x00ffa3,
+        particleColor: 0xd97757,
+        haloColor: 0xc05e3c,
+        accentLight: 0xd97757,
       },
       formatBadges: [
         "PNG Transparente HD (1024x1024)",
@@ -146,7 +148,7 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     nickname: "O Estrategista",
     title: "O Guia Estrategista do Cerrado",
     species: "Chrysocyon brachyurus • Cerrado & Savanas",
-    avatar: "/assets/mascotes/lobo_guara.jpg",
+    avatar: "/assets/aistudio/Lobo-guar__alerta_em_estilo_vetorial-3_464a316b.png",
     accentColor: "#EAEAEA",
     role: "Arquiteto de Sistemas, DevOps & Orquestrador de Entregas",
     tagline: "Passos firmes e visão panorâmica para guiar o projeto pelo caminho mais resiliente.",
@@ -201,8 +203,8 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     teamQuote: "Caminho longo se faz com passos firmes e arquitetura sólida.",
     mediaKit: {
       svgPath: "/assets/mascotes/lobo_guara.svg",
-      pngRender: "/assets/mascotes/lobo_guara.jpg",
-      pngTransparent: "/assets/mascotes/lobo_guara_hd.png",
+      pngRender: "/assets/aistudio/Lobo-guar__alerta_em_estilo_vetorial-3_464a316b.png",
+      pngTransparent: "/assets/aistudio/Lobo-guar__alerta_em_estilo_vetorial-3_464a316b.png",
       objPath: "/assets/mascotes/lobo_guara.obj",
       themeColors: {
         primary: "#00D2FF",
@@ -230,7 +232,7 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     nickname: "O Blindado",
     title: "O Mestre Blindado da Caatinga",
     species: "Tolypeutes tricinctus • Caatinga & Nordeste",
-    avatar: "/assets/mascotes/tatu_bola.jpg",
+    avatar: "/assets/aistudio/Tatu-bola_brasileiro_de_tr_s_faixas-2_911213eb.png",
     accentColor: "#EAEAEA",
     role: "Engenheiro de TDD, Testes Automatizados & Scaffolding",
     tagline: "Blindagem de testes para código modular que nunca quebra em produção.",
@@ -285,8 +287,8 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     teamQuote: "Código sem testes é castelo de areia; código blindado resiste a qualquer temporal.",
     mediaKit: {
       svgPath: "/assets/mascotes/tatu_bola.svg",
-      pngRender: "/assets/mascotes/tatu_bola.jpg",
-      pngTransparent: "/assets/mascotes/tatu_bola_hd.png",
+      pngRender: "/assets/aistudio/Tatu-bola_brasileiro_de_tr_s_faixas-2_911213eb.png",
+      pngTransparent: "/assets/aistudio/Tatu-bola_brasileiro_de_tr_s_faixas-2_911213eb.png",
       objPath: "/assets/mascotes/tatu_bola.obj",
       themeColors: {
         primary: "#FFD700",
@@ -314,7 +316,7 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     nickname: "A Criativa",
     title: "A Criativa Encantadora dos Céus",
     species: "Cyanopsitta spixii • Sertão & Caatinga",
-    avatar: "/assets/mascotes/ararinha.jpg",
+    avatar: "/assets/aistudio/Ararinha-azul_de_Spix_em_pose_serena-4_fbe33291.png",
     accentColor: "#EAEAEA",
     role: "Especialista em UI/UX, Design Systems & Copywriting",
     tagline: "Transformando lógica em experiências visuais memoráveis e interfaces encantadoras.",
@@ -369,8 +371,8 @@ export const MASCOT_AGENTS: MascotAgent[] = [
     teamQuote: "Software bem feito deve ser tão agradável de usar quanto um vôo livre nas manhãs do sertão.",
     mediaKit: {
       svgPath: "/assets/mascotes/ararinha.svg",
-      pngRender: "/assets/mascotes/ararinha.jpg",
-      pngTransparent: "/assets/mascotes/ararinha_hd.png",
+      pngRender: "/assets/aistudio/Ararinha-azul_de_Spix_em_pose_serena-4_fbe33291.png",
+      pngTransparent: "/assets/aistudio/Ararinha-azul_de_Spix_em_pose_serena-4_fbe33291.png",
       objPath: "/assets/mascotes/ararinha.obj",
       themeColors: {
         primary: "#00F2FE",
@@ -385,6 +387,174 @@ export const MASCOT_AGENTS: MascotAgent[] = [
       },
       formatBadges: [
         "PNG Transparente HD (1024x1024)",
+        "Vetor SVG Escalável",
+        "Modelo 3D Conceitual (.OBJ)",
+        "WebGL PBR 360°",
+        "JSON Spec",
+      ],
+    },
+  },
+  {
+    id: "sagui",
+    name: "Sagui",
+    nickname: "O Ágil",
+    title: "O Explorador Ágil das Matas",
+    species: "Callithrix jacchus • Caatinga & Mata Atlântica",
+    avatar: "/assets/aistudio/Sagui-de-tufo-branco_em_pose__gil-1_921b9391.png",
+    accentColor: "#EAEAEA",
+    role: "Engenheiro de Automação Rápida, Scripts & Integrações de APIs",
+    tagline: "Agilidade felina e saltos precisos para conectar ferramentas, scripts e APIs em segundos.",
+    description:
+      "Curioso, veloz e destemido, o Sagui salta de galho em galho entre ecossistemas de software. Especialista em automações pragmáticas, scripts em bash/python e integrações webhook, ele elimina tarefas manuais repetitivas com leveza e precisão.",
+    collaborationStep: 5,
+    collaborationRole: "Automação Ágil & Conectores de APIs",
+    collaborationAction: "Desenvolve scripts rápidos, orquestra webhooks e automatiza tarefas repetitivas sem fricção.",
+    problemSolvingStyle: {
+      headline: "Velocidade, Automação & Pragmatismo",
+      description:
+        "Não tolera retrabalho manual: transforma rotinas cansativas em automações limpas e executáveis em um clique. Prefere abordagens diretas, ferramentas nativas e scripts modulares sem dependências desnecessárias.",
+      approach: "Automação enxuta, pragmatismo operacional e integrações modulares sem overhead.",
+      badge: "Agilidade & Automação Enxuta",
+      keyMotto: "Se pode ser automatizado em um script limpo, não gaste tempo repetindo manualmente.",
+    },
+    uniqueSpecialties: [
+      "Automação instantânea de tarefas com scripts Bash, Node.js e Python enxutos",
+      "Integração contínua de Webhooks, REST APIs, GraphQL e serviços em nuvem",
+      "Extração, limpeza e pipelines ágeis de transformação de dados (ETL local)",
+      "Criação de CLIs e atalhos de produtividade para desenvolvimento acelerado",
+    ],
+    expertises: [
+      {
+        title: "Scripts de Automação & CLIs",
+        description: "Automatiza processos manuais com scripts rápidos, seguros e auditáveis.",
+        icon: "zap",
+      },
+      {
+        title: "Conexão de APIs & Webhooks",
+        description: "Integra serviços de terceiros, sincroniza dados e gerencia fluxos de mensageria.",
+        icon: "repeat",
+      },
+      {
+        title: "Tarefas em Segundo Plano & Cron",
+        description: "Configura agendamentos confiáveis, workers e rotinas de manutenção preventiva.",
+        icon: "clock",
+      },
+      {
+        title: "Pipelines de Dados Leves",
+        description: "Transforma arquivos JSON, CSV e bancos de dados locais sem dependências pesadas.",
+        icon: "layers",
+      },
+    ],
+    tools: ["Node.js / tsx", "Python", "Bash / Shell", "curl", "REST / Webhooks", "Cron"],
+    samplePrompts: [
+      "Sagui, automatize a extração e sincronização desses dados com um script limpo e idempotente.",
+      "Sagui, integre essa API externa ao nosso fluxo de notificações via webhook seguro.",
+      "Sagui, crie um comando de CLI personalizado para rodar as rotinas diárias com um só comando.",
+    ],
+    suggestedSkillId: "automation-workflow",
+    teamQuote: "Saltando de galho em galho, conecto sistemas em segundos sem deixar rastro de lentidão.",
+    mediaKit: {
+      svgPath: "/assets/mascotes/sagui.svg",
+      pngRender: "/assets/aistudio/Sagui-de-tufo-branco_em_pose__gil-1_921b9391.png",
+      pngTransparent: "/assets/aistudio/Sagui-de-tufo-branco_em_pose__gil-1_921b9391.png",
+      objPath: "/assets/mascotes/sagui.obj",
+      themeColors: {
+        primary: "#F59E0B",
+        secondary: "#D97706",
+        accent: "#FDE68A",
+        glow: "rgba(245, 158, 11, 0.4)",
+      },
+      dimension3D: {
+        particleColor: 0xf59e0b,
+        haloColor: 0xd97706,
+        accentLight: 0xf59e0b,
+      },
+      formatBadges: [
+        "PNG Transparente HD (1254x1254)",
+        "Vetor SVG Escalável",
+        "Modelo 3D Conceitual (.OBJ)",
+        "WebGL PBR 360°",
+        "JSON Spec",
+      ],
+    },
+  },
+  {
+    id: "onca_pintada",
+    name: "Onça-Pintada",
+    nickname: "A Soberana",
+    title: "A Guardiã Soberana do Pantanal",
+    species: "Panthera onca • Pantanal & Florestas Brasileiras",
+    avatar: "/assets/aistudio/On_a-pintada_dourada_em_pose_confiante_c60bbd3b.png",
+    accentColor: "#EAEAEA",
+    role: "Especialista em Alta Performance, Banco de Dados & Otimização Extrema",
+    tagline: "Força bruta controlada e precisão milimétrica para triturar gargalos de performance.",
+    description:
+      "Majestosa, imponente e dona de uma força inigualável, a Onça-Pintada domina o território da alta performance. Ela caça gargalos de CPU, otimiza consultas em bancos de dados relacionais e noSQL, e audita índices para garantir que o sistema processe volumes maciços na velocidade da luz.",
+    collaborationStep: 6,
+    collaborationRole: "Benchmarking & Otimização Crítica",
+    collaborationAction: "Executa testes de carga, otimiza queries de banco de dados e tritura vazamentos de memória.",
+    problemSolvingStyle: {
+      headline: "Poder de Processamento & Precisão Milimétrica",
+      description:
+        "Analisa o perfil de execução (profiling) em profundidade. Não aceita latência desnecessária: reorganiza consultas de SQL, implementa cache multinível em memória e ajusta a concorrência para obter a máxima taxa de transferência.",
+      approach: "Perfis de execução reais, benchmarking antes e depois, e zero tolerância a desperdício computacional.",
+      badge: "Alta Performance & Escalabilidade",
+      keyMotto: "Performance não é sorte: é força concentrada no ponto exato de impacto.",
+    },
+    uniqueSpecialties: [
+      "Profiling aprofundado de memória e CPU com identificação cirúrgica de gargalos",
+      "Otimização extrema de queries SQL/NoSQL, planos de execução (EXPLAIN) e índices compostos",
+      "Arquitetura de cache resiliente multinível com Redis e estratégias de invalidação",
+      "Testes de estresse e benchmarking comparativo sob alta concorrência",
+    ],
+    expertises: [
+      {
+        title: "Benchmarking & Profiling de CPU",
+        description: "Mapeia gargalos em loops quentes e otimiza rotinas com benchmark antes e depois.",
+        icon: "chart",
+      },
+      {
+        title: "Otimização de Bancos de Dados & SQL",
+        description: "Refatora queries lentas, desenha índices de cobertura e calibra pools de conexão.",
+        icon: "server",
+      },
+      {
+        title: "Prevenção de Memory Leaks",
+        description: "Audita heap snapshots, streams e ciclo de vida de objetos para evitar vazamentos.",
+        icon: "shield-check",
+      },
+      {
+        title: "Estratégias de Cache Multinível",
+        description: "Desenha políticas de cache near-cache, stale-while-revalidate e invalidação atômica.",
+        icon: "zap",
+      },
+    ],
+    tools: ["Node.js Profiler", "PostgreSQL", "Redis", "Flamegraphs", "k6", "Chrome DevTools"],
+    samplePrompts: [
+      "Onça-Pintada, analise o plano de execução dessa consulta e otimize os índices para latência < 10ms.",
+      "Onça-Pintada, faça um profiling do processamento em lote e reduza o consumo de memória pela metade.",
+      "Onça-Pintada, projete a estratégia de cache em memória para suportar 50.000 requisições simultâneas.",
+    ],
+    suggestedSkillId: "performance-benchmark",
+    teamQuote: "Gargalos de código não sobrevivem à minha mira: performance absoluta é o único padrão aceitável.",
+    mediaKit: {
+      svgPath: "/assets/mascotes/onca.svg",
+      pngRender: "/assets/aistudio/On_a-pintada_dourada_em_pose_confiante_c60bbd3b.png",
+      pngTransparent: "/assets/aistudio/On_a-pintada_dourada_em_pose_confiante_c60bbd3b.png",
+      objPath: "/assets/mascotes/onca.obj",
+      themeColors: {
+        primary: "#FFB800",
+        secondary: "#D97706",
+        accent: "#F59E0B",
+        glow: "rgba(255, 184, 0, 0.45)",
+      },
+      dimension3D: {
+        particleColor: 0xffb800,
+        haloColor: 0xd97706,
+        accentLight: 0xffb800,
+      },
+      formatBadges: [
+        "PNG Transparente HD (1254x1254)",
         "Vetor SVG Escalável",
         "Modelo 3D Conceitual (.OBJ)",
         "WebGL PBR 360°",

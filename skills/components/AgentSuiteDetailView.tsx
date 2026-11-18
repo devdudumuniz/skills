@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AgentSkillSuite, BundledSkill } from "../types";
 import { Icon } from "../../src/components/Icons";
+import { calculateSkillTokenProfile } from "../../src/utils/tokenUtils";
 
 interface AgentSuiteDetailViewProps {
   suite: AgentSkillSuite;
@@ -9,6 +10,7 @@ interface AgentSuiteDetailViewProps {
   onToggleFavorite: (suiteId: string) => void;
   onTestPrompt: (suiteId: string, promptText: string) => void;
   onInspectSkillFiles: (suite: AgentSkillSuite, skill?: BundledSkill) => void;
+  onOpenDiagramStudio?: (promptText?: string) => void;
 }
 
 export function AgentSuiteDetailView({
@@ -18,6 +20,7 @@ export function AgentSuiteDetailView({
   onToggleFavorite,
   onTestPrompt,
   onInspectSkillFiles,
+  onOpenDiagramStudio,
 }: AgentSuiteDetailViewProps) {
   const [showCopiedToast, setShowCopiedToast] = useState(false);
   const [showArtModal, setShowArtModal] = useState(false);
@@ -31,7 +34,7 @@ export function AgentSuiteDetailView({
   };
 
   return (
-    <div style={{ maxWidth: 1040, margin: "0 auto", padding: "10px 0 60px" }}>
+    <div style={{ maxWidth: 1040, margin: "0 auto", padding: "16px 16px 60px" }}>
       {/* Toast */}
       {showCopiedToast && (
         <div
@@ -39,9 +42,9 @@ export function AgentSuiteDetailView({
             position: "fixed",
             bottom: 24,
             right: 24,
-            background: "#202020",
-            border: "1px solid #545454",
-            color: "#EAEAEA",
+            background: "#2A241F",
+            border: "1px solid #483E34",
+            color: "#F5F2EB",
             padding: "10px 18px",
             borderRadius: 8,
             boxShadow: "0 8px 24px rgba(0,0,0,.7)",
@@ -57,14 +60,15 @@ export function AgentSuiteDetailView({
         </div>
       )}
 
-      {/* Breadcrumb Navigation (Matching ChatGPT plugins layout) */}
+      {/* Breadcrumb Navigation */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
+          flexWrap: "wrap",
           gap: 8,
           fontSize: 13,
-          color: "#9B9B9B",
+          color: "#A39889",
           marginBottom: 24,
         }}
       >
@@ -74,7 +78,7 @@ export function AgentSuiteDetailView({
           style={{
             background: "none",
             border: "none",
-            color: "#9B9B9B",
+            color: "#A39889",
             cursor: "pointer",
             padding: 0,
             display: "flex",
@@ -82,13 +86,13 @@ export function AgentSuiteDetailView({
             gap: 6,
             fontSize: 13,
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "#EAEAEA")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "#9B9B9B")}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "#F5F2EB")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "#A39889")}
         >
           <span>Habilidades</span>
         </button>
-        <span style={{ color: "#545454" }}>&gt;</span>
-        <span style={{ color: "#EAEAEA", fontWeight: 500 }}>{suite.name}</span>
+        <span style={{ color: "#50463B" }}>&gt;</span>
+        <span style={{ color: "#F5F2EB", fontWeight: 500 }}>{suite.name}</span>
       </div>
 
       {/* Top Header Card */}
@@ -209,16 +213,16 @@ export function AgentSuiteDetailView({
         </div>
 
         {/* Right: Actions (Gerenciar, Testar no Chat, Share, More) */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
           {suite.coverTheme.imageUrl && (
             <button
               type="button"
               onClick={() => setShowArtModal(true)}
               title="Ver xilogravura de cordel em alta resolução"
               style={{
-                background: "#222222",
-                border: "1px solid #383838",
-                color: "#C2C2C2",
+                background: "#27221E",
+                border: "1px solid #3D352D",
+                color: "#D4CDC3",
                 padding: "8px 12px",
                 borderRadius: 8,
                 fontSize: 13,
@@ -228,8 +232,8 @@ export function AgentSuiteDetailView({
                 gap: 6,
                 cursor: "pointer",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#2a2a2a")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#222222")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#302A24")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#27221E")}
             >
               <Icon n="eye" size={15} />
               <span>Ver Xilogravura</span>
@@ -241,9 +245,9 @@ export function AgentSuiteDetailView({
             onClick={handleShare}
             title="Compartilhar habilidade"
             style={{
-              background: "#222222",
-              border: "1px solid #383838",
-              color: "#C2C2C2",
+              background: "#27221E",
+              border: "1px solid #3D352D",
+              color: "#D4CDC3",
               width: 38,
               height: 38,
               borderRadius: 8,
@@ -261,9 +265,9 @@ export function AgentSuiteDetailView({
             onClick={() => onInspectSkillFiles(suite)}
             title="Inspecionar código e arquivos da skill"
             style={{
-              background: "#222222",
-              border: "1px solid #383838",
-              color: "#C2C2C2",
+              background: "#27221E",
+              border: "1px solid #3D352D",
+              color: "#D4CDC3",
               padding: "8px 14px",
               borderRadius: 8,
               fontSize: 13,
@@ -273,8 +277,8 @@ export function AgentSuiteDetailView({
               gap: 6,
               cursor: "pointer",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#2a2a2a")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#222222")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#302A24")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#27221E")}
           >
             <Icon n="code" size={15} />
           </button>
@@ -283,17 +287,18 @@ export function AgentSuiteDetailView({
             type="button"
             onClick={() => onToggleInstall(suite.id)}
             style={{
-              background: suite.installed ? "#282828" : "#EAEAEA",
-              border: `1px solid ${suite.installed ? "#545454" : "#EAEAEA"}`,
-              color: suite.installed ? "#EAEAEA" : "#151515",
+              background: suite.installed ? "#2A241F" : "#D97757",
+              border: `1px solid ${suite.installed ? "#483E34" : "#D97757"}`,
+              color: suite.installed ? "#F5F2EB" : "#FFFFFF",
               padding: "8px 16px",
               borderRadius: 8,
               fontSize: 13,
-              fontWeight: 600,
+              fontWeight: 700,
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 6,
+              boxShadow: suite.installed ? "none" : "0 2px 10px rgba(217,119,87,0.35)",
               transition: "all 0.15s ease",
             }}
           >
@@ -301,13 +306,38 @@ export function AgentSuiteDetailView({
             <span>{suite.installed ? "Gerenciar" : "Adicionar às minhas habilidades"}</span>
           </button>
 
+          {(suite.id === "excalidraw-diagram-generator" || suite.id === "canvas-diagram-studio") &&
+            onOpenDiagramStudio && (
+              <button
+                type="button"
+                onClick={() => onOpenDiagramStudio(suite.prompts[0] || "")}
+                style={{
+                  background: "#D97757",
+                  border: "1px solid #D97757",
+                  color: "#FFFFFF",
+                  padding: "8px 16px",
+                  borderRadius: 8,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  boxShadow: "0 2px 10px rgba(217,119,87,0.35)",
+                }}
+              >
+                <Icon n="pen-tool" size={15} />
+                <span>Abrir Estúdio Excalidraw</span>
+              </button>
+            )}
+
           <button
             type="button"
             onClick={() => onTestPrompt(suite.id, suite.prompts[0] || "")}
             style={{
-              background: "#333333",
-              border: "1px solid #545454",
-              color: "#EAEAEA",
+              background: "#302A24",
+              border: "1px solid #483E34",
+              color: "#F5F2EB",
               padding: "8px 18px",
               borderRadius: 8,
               fontSize: 13,
@@ -318,8 +348,8 @@ export function AgentSuiteDetailView({
               gap: 8,
               boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#3c3c3c")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#333333")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#3B332D")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#302A24")}
           >
             <Icon n="message-square" size={15} />
             <span>Testar no chat</span>
@@ -327,15 +357,15 @@ export function AgentSuiteDetailView({
         </div>
       </div>
 
-      {/* Hero Banner with Prompt Pills (Matching ChatGPT Plugins screen) */}
+      {/* Hero Banner with Prompt Pills */}
       <div
         style={{
-          background: "linear-gradient(180deg, #1f1f1f 0%, #262626 100%)",
-          border: "1px solid #383838",
+          background: "linear-gradient(180deg, #24201D 0%, #2A241F 100%)",
+          border: "1px solid #383129",
           borderRadius: 16,
-          padding: "24px 28px",
+          padding: "20px",
           marginBottom: 24,
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 24px rgba(0,0,0,0.3)",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.3)",
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -343,31 +373,35 @@ export function AgentSuiteDetailView({
             <button
               key={idx}
               type="button"
-              onClick={() => onTestPrompt(suite.id, promptText)}
+              onClick={() =>
+                suite.id === "excalidraw-diagram-generator" && onOpenDiagramStudio
+                  ? onOpenDiagramStudio(promptText)
+                  : onTestPrompt(suite.id, promptText)
+              }
               style={{
                 width: "100%",
-                background: "rgba(32, 32, 32, 0.75)",
+                background: "rgba(30, 26, 23, 0.78)",
                 backdropFilter: "blur(4px)",
-                border: "1px solid #3c3c3c",
+                border: "1px solid #3D352D",
                 borderRadius: 12,
-                padding: "12px 18px",
+                padding: "12px 16px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                gap: 16,
-                color: "#EAEAEA",
+                gap: 14,
+                color: "#F5F2EB",
                 cursor: "pointer",
                 textAlign: "left",
                 transition: "all 0.15s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#333333";
-                e.currentTarget.style.borderColor = "#545454";
+                e.currentTarget.style.background = "#332B25";
+                e.currentTarget.style.borderColor = "#D97757";
                 e.currentTarget.style.transform = "translateX(2px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(32, 32, 32, 0.75)";
-                e.currentTarget.style.borderColor = "#3c3c3c";
+                e.currentTarget.style.background = "rgba(30, 26, 23, 0.78)";
+                e.currentTarget.style.borderColor = "#3D352D";
                 e.currentTarget.style.transform = "translateX(0px)";
               }}
             >
@@ -380,8 +414,8 @@ export function AgentSuiteDetailView({
                     width: 24,
                     height: 24,
                     borderRadius: 6,
-                    background: "#2a2a2a",
-                    color: "#C2C2C2",
+                    background: "#302A24",
+                    color: "#D97757",
                     flexShrink: 0,
                   }}
                 >
@@ -390,17 +424,17 @@ export function AgentSuiteDetailView({
                 <span
                   style={{
                     fontSize: 13.5,
-                    color: "#EAEAEA",
+                    color: "#D4CDC3",
                     lineHeight: 1.4,
                   }}
                 >
-                  <strong style={{ color: "#FFFFFF", marginRight: 6 }}>{suite.name}:</strong>
+                  <strong style={{ color: "#F5F2EB", marginRight: 6 }}>{suite.name}:</strong>
                   {promptText}
                 </span>
               </div>
               <div
                 style={{
-                  color: "#9B9B9B",
+                  color: "#A39889",
                   flexShrink: 0,
                   display: "flex",
                   alignItems: "center",
@@ -419,22 +453,119 @@ export function AgentSuiteDetailView({
           fontSize: 14,
           lineHeight: 1.65,
           color: "#C2C2C2",
-          marginBottom: 36,
+          marginBottom: 20,
           padding: "0 4px",
         }}
       >
         <p style={{ margin: 0 }}>{suite.description}</p>
       </div>
 
-      {/* Habilidades Section Heading (Matching screenshot: "Habilidades 10" or "Habilidades 4") */}
+      {/* Context Footprint & Token Counter Card */}
+      {(() => {
+        const tokenProfile = calculateSkillTokenProfile(suite);
+        return (
+          <div
+            style={{
+              backgroundColor: "#24201D",
+              border: "1px solid #383129",
+              borderRadius: 12,
+              padding: "16px 20px",
+              marginBottom: 32,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 16,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 8,
+                  backgroundColor: "#2F2823",
+                  border: `1px solid ${tokenProfile.categoryColor}40`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: tokenProfile.categoryColor,
+                }}
+              >
+                <Icon n="zap" size={18} />
+              </div>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "#F5F2EB" }}>
+                    Pegada de Contexto & Tokens da Habilidade
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      padding: "1px 7px",
+                      borderRadius: 4,
+                      backgroundColor: "rgba(217, 119, 87, 0.14)",
+                      border: `1px solid ${tokenProfile.categoryColor}40`,
+                      color: tokenProfile.categoryColor,
+                      fontWeight: 700,
+                    }}
+                  >
+                    {tokenProfile.categoryLabel}
+                  </span>
+                </div>
+                <div style={{ fontSize: 12, color: "#A39889", marginTop: 2 }}>
+                  Consumo estimado de memória na janela de contexto de agentes de IA
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+              <div>
+                <div style={{ fontSize: 10.5, color: "#766B5E", textTransform: "uppercase", fontWeight: 700 }}>
+                  Tokens Totais
+                </div>
+                <div style={{ fontSize: 15, fontFamily: "monospace", fontWeight: 800, color: "#D97757" }}>
+                  {tokenProfile.formatted}
+                </div>
+              </div>
+
+              <div style={{ width: 1, height: 28, backgroundColor: "#383129" }} />
+
+              <div>
+                <div style={{ fontSize: 10.5, color: "#766B5E", textTransform: "uppercase", fontWeight: 700 }}>
+                  Janela 128k (GPT/Gemini)
+                </div>
+                <div style={{ fontSize: 15, fontFamily: "monospace", fontWeight: 800, color: "#F5F2EB" }}>
+                  {tokenProfile.percent128k}%
+                </div>
+              </div>
+
+              <div style={{ width: 1, height: 28, backgroundColor: "#383129" }} />
+
+              <div>
+                <div style={{ fontSize: 10.5, color: "#766B5E", textTransform: "uppercase", fontWeight: 700 }}>
+                  Janela 200k (Claude)
+                </div>
+                <div style={{ fontSize: 15, fontFamily: "monospace", fontWeight: 800, color: "#E28768" }}>
+                  {tokenProfile.percentClaude200k}%
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* Habilidades Section Heading */}
       <div
         style={{
-          borderBottom: "1px solid #333333",
+          borderBottom: "1px solid #383129",
           paddingBottom: 14,
           marginBottom: 16,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 8,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -442,7 +573,7 @@ export function AgentSuiteDetailView({
             style={{
               fontSize: 18,
               fontWeight: 650,
-              color: "#EAEAEA",
+              color: "#F5F2EB",
               margin: 0,
             }}
           >
@@ -452,20 +583,20 @@ export function AgentSuiteDetailView({
             style={{
               fontSize: 14,
               fontWeight: 600,
-              color: "#9B9B9B",
+              color: "#A39889",
             }}
           >
             {suite.skills.length}
           </span>
         </div>
 
-        <span style={{ fontSize: 12, color: "#767676" }}>
+        <span style={{ fontSize: 12, color: "#A39889" }}>
           Todas as capacidades ativadas juntas neste agente
         </span>
       </div>
 
-      {/* Bundled Sub-Skills List (Clean vertical list with icons, titles and descriptions) */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      {/* Bundled Sub-Skills List */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {suite.skills.map((skill, index) => (
           <div
             key={skill.id || index}
@@ -473,34 +604,35 @@ export function AgentSuiteDetailView({
               display: "flex",
               alignItems: "flex-start",
               justifyContent: "space-between",
-              gap: 16,
+              flexWrap: "wrap",
+              gap: 14,
               padding: "16px 18px",
               borderRadius: 10,
-              background: "#1c1c1c",
-              border: "1px solid #2e2e2e",
+              background: "#24201D",
+              border: "1px solid #383129",
               transition: "background 0.15s ease, border-color 0.15s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#232323";
-              e.currentTarget.style.borderColor = "#3d3d3d";
+              e.currentTarget.style.background = "#2C2520";
+              e.currentTarget.style.borderColor = "#483E34";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#1c1c1c";
-              e.currentTarget.style.borderColor = "#2e2e2e";
+              e.currentTarget.style.background = "#24201D";
+              e.currentTarget.style.borderColor = "#383129";
             }}
           >
-            <div style={{ display: "flex", alignItems: "flex-start", gap: 14, minWidth: 0 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 14, minWidth: 220, flex: 1 }}>
               <div
                 style={{
                   width: 38,
                   height: 38,
                   borderRadius: 10,
-                  background: "#282828",
-                  border: "1px solid #383838",
+                  background: "#2F2823",
+                  border: "1px solid #483E34",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#EAEAEA",
+                  color: "#D97757",
                   flexShrink: 0,
                   marginTop: 2,
                 }}
@@ -508,12 +640,12 @@ export function AgentSuiteDetailView({
                 <Icon n={skill.icon || "check-circle"} size={18} />
               </div>
 
-              <div>
+              <div style={{ minWidth: 0, flex: 1 }}>
                 <h3
                   style={{
                     fontSize: 14.5,
                     fontWeight: 600,
-                    color: "#EAEAEA",
+                    color: "#F5F2EB",
                     margin: "0 0 4px",
                   }}
                 >
@@ -522,7 +654,7 @@ export function AgentSuiteDetailView({
                 <p
                   style={{
                     fontSize: 13,
-                    color: "#9B9B9B",
+                    color: "#D4CDC3",
                     margin: 0,
                     lineHeight: 1.5,
                   }}
@@ -544,9 +676,9 @@ export function AgentSuiteDetailView({
                         key={sIdx}
                         style={{
                           fontSize: 11,
-                          color: "#C2C2C2",
-                          background: "#282828",
-                          border: "1px solid #383838",
+                          color: "#D4CDC3",
+                          background: "#2E2722",
+                          border: "1px solid #443A30",
                           borderRadius: 4,
                           padding: "2px 8px",
                         }}
@@ -559,15 +691,15 @@ export function AgentSuiteDetailView({
               </div>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0, marginLeft: "auto" }}>
               <button
                 type="button"
                 onClick={() => onInspectSkillFiles(suite, skill)}
                 title="Ver documentação e código desta habilidade"
                 style={{
-                  background: "#282828",
-                  border: "1px solid #383838",
-                  color: "#C2C2C2",
+                  background: "#2A241F",
+                  border: "1px solid #3D352D",
+                  color: "#D4CDC3",
                   padding: "6px 12px",
                   borderRadius: 6,
                   fontSize: 12,
@@ -578,12 +710,12 @@ export function AgentSuiteDetailView({
                   gap: 6,
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#333333";
-                  e.currentTarget.style.color = "#EAEAEA";
+                  e.currentTarget.style.background = "#332B25";
+                  e.currentTarget.style.color = "#F5F2EB";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#282828";
-                  e.currentTarget.style.color = "#C2C2C2";
+                  e.currentTarget.style.background = "#2A241F";
+                  e.currentTarget.style.color = "#D4CDC3";
                 }}
               >
                 <Icon n="file-text" size={13} />
@@ -595,9 +727,9 @@ export function AgentSuiteDetailView({
                 onClick={() => onTestPrompt(suite.id, `Executar habilidade: ${skill.name}`)}
                 title="Testar esta habilidade no playground"
                 style={{
-                  background: "#333333",
-                  border: "1px solid #545454",
-                  color: "#EAEAEA",
+                  background: "#D97757",
+                  border: "1px solid #D97757",
+                  color: "#FFFFFF",
                   padding: "6px 12px",
                   borderRadius: 6,
                   fontSize: 12,
@@ -607,8 +739,8 @@ export function AgentSuiteDetailView({
                   alignItems: "center",
                   gap: 6,
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "#3e3e3e")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "#333333")}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "#E28768")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "#D97757")}
               >
                 <Icon n="play" size={13} />
                 <span>Testar</span>
@@ -626,7 +758,7 @@ export function AgentSuiteDetailView({
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0, 0, 0, 0.88)",
+            background: "rgba(18, 15, 13, 0.88)",
             backdropFilter: "blur(6px)",
             display: "flex",
             alignItems: "center",
@@ -638,30 +770,30 @@ export function AgentSuiteDetailView({
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: "#181818",
-              border: "1px solid #3d3d3d",
+              background: "#24201D",
+              border: "1px solid #483E34",
               borderRadius: 16,
               maxWidth: 580,
               width: "100%",
               overflow: "hidden",
               boxShadow: "0 24px 60px rgba(0,0,0,0.9)",
-              color: "#EAEAEA",
+              color: "#F5F2EB",
             }}
           >
             <div
               style={{
                 padding: "16px 20px",
-                borderBottom: "1px solid #2e2e2e",
+                borderBottom: "1px solid #383129",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
             >
               <div>
-                <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", color: "#9B9B9B", fontWeight: 700 }}>
+                <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", color: "#D97757", fontWeight: 700 }}>
                   Xilogravura Nordestina • Literatura de Cordel
                 </div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: "#EAEAEA" }}>
+                <div style={{ fontSize: 16, fontWeight: 700, color: "#F5F2EB" }}>
                   {suite.name}
                 </div>
               </div>
@@ -671,7 +803,7 @@ export function AgentSuiteDetailView({
                 style={{
                   background: "transparent",
                   border: "none",
-                  color: "#9B9B9B",
+                  color: "#A39889",
                   cursor: "pointer",
                   padding: 4,
                 }}
@@ -680,7 +812,7 @@ export function AgentSuiteDetailView({
               </button>
             </div>
 
-            <div style={{ padding: 20, textAlign: "center", background: "#141414" }}>
+            <div style={{ padding: 20, textAlign: "center", background: "#191613" }}>
               <img
                 src={suite.coverTheme.imageUrl}
                 alt={suite.name}
@@ -689,14 +821,14 @@ export function AgentSuiteDetailView({
                   maxHeight: 460,
                   objectFit: "contain",
                   borderRadius: 8,
-                  border: "2px solid #333333",
+                  border: "2px solid #383129",
                   boxShadow: "0 8px 30px rgba(0,0,0,0.7)",
                 }}
               />
               <p
                 style={{
                   fontSize: 12.5,
-                  color: "#9B9B9B",
+                  color: "#A39889",
                   lineHeight: 1.5,
                   margin: "14px auto 0",
                   maxWidth: 500,
@@ -709,22 +841,22 @@ export function AgentSuiteDetailView({
             <div
               style={{
                 padding: "12px 20px",
-                borderTop: "1px solid #2e2e2e",
+                borderTop: "1px solid #383129",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
             >
-              <span style={{ fontSize: 12, color: "#767676" }}>
+              <span style={{ fontSize: 12, color: "#766B5E" }}>
                 Referência visual: Xilogravura de Cordel
               </span>
               <button
                 type="button"
                 onClick={() => setShowArtModal(false)}
                 style={{
-                  background: "#333333",
-                  border: "1px solid #545454",
-                  color: "#EAEAEA",
+                  background: "#2A241F",
+                  border: "1px solid #483E34",
+                  color: "#F5F2EB",
                   padding: "8px 16px",
                   borderRadius: 8,
                   fontSize: 13,

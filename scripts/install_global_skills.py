@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DM Skills - Global Agent Installer
+Deda Skills - Global Agent Installer
 Instala e vincula todas as skills do repositório para ficarem disponíveis
 globalmente para todos os agentes de IA (Claude Code, OpenAI Codex, Manus,
 Antigravity, Cursor, Hermes, OpenCode e ferramentas locais).
@@ -85,10 +85,10 @@ def link_or_copy(src: Path, dst: Path):
         return "copy"
 
 def install_cli_helper():
-    """Cria o helper CLI 'dm-skills' em ~/.local/bin para execução global no terminal."""
+    """Cria o helper CLI 'deda-skills' em ~/.local/bin para execução global no terminal."""
     local_bin = Path.home() / ".local" / "bin"
     local_bin.mkdir(parents=True, exist_ok=True)
-    cli_path = local_bin / "dm-skills"
+    cli_path = local_bin / "deda-skills"
 
     cli_content = f"""#!/usr/bin/env python3
 import sys
@@ -101,17 +101,17 @@ SKILLS_DIR = REPO / "skills"
 def main():
     args = sys.argv[1:]
     if not args or args[0] in ("-h", "--help", "help"):
-        print("DM Skills CLI - Habilidades de IA Globais")
+        print("Deda Skills CLI - Habilidades de IA Globais")
         print("Comandos:")
-        print("  dm-skills list           Listar todas as skills disponíveis")
-        print("  dm-skills info <id>      Exibir detalhes e instruções de uma skill")
-        print("  dm-skills path <id>      Obter caminho do diretório da skill")
-        print("  dm-skills sync           Re-sincronizar skills globalmente")
+        print("  deda-skills list           Listar todas as skills disponíveis")
+        print("  deda-skills info <id>      Exibir detalhes e instruções de uma skill")
+        print("  deda-skills path <id>      Obter caminho do diretório da skill")
+        print("  deda-skills sync           Re-sincronizar skills globalmente")
         return
 
     cmd = args[0]
     if cmd == "list":
-        print("=== DM Skills Globais Disponíveis ===")
+        print("=== Deda Skills Globais Disponíveis ===")
         for d in sorted(SKILLS_DIR.iterdir()):
             if d.is_dir() and (d / "SKILL.md").exists():
                 print(f"  • {{d.name:<30}} [{{d / 'SKILL.md'}}]")
@@ -131,7 +131,7 @@ def main():
         import subprocess
         subprocess.run([sys.executable, str(REPO / "scripts" / "install_global_skills.py")])
     else:
-        print(f"Comando desconhecido: {{cmd}}. Use 'dm-skills --help'")
+        print(f"Comando desconhecido: {{cmd}}. Use 'deda-skills --help'")
 
 if __name__ == "__main__":
     main()
@@ -145,7 +145,7 @@ if __name__ == "__main__":
 
 def main():
     print("======================================================")
-    print(" ⚡ DM Skills - Ativação Global para Agentes de IA    ")
+    print(" ⚡ Deda Skills - Ativação Global para Agentes de IA  ")
     print("======================================================")
     print(f"Repositório: {REPO_ROOT}")
     print(f"Diretório de skills: {SKILLS_DIR}\n")
@@ -173,7 +173,7 @@ def main():
                 success_count += 1
 
             # Cria manifesto local do agente
-            agent_manifest = target_dir / "dm-skills-catalog.json"
+            agent_manifest = target_dir / "deda-skills-catalog.json"
             with open(agent_manifest, "w", encoding="utf-8") as f:
                 json.dump({
                     "version": "1.0.0",
@@ -186,7 +186,7 @@ def main():
         except Exception as e:
             print(f"  ⚠ Não foi possível configurar {target_dir}: {e}")
 
-    # Instala o helper CLI dm-skills
+    # Instala o helper CLI deda-skills
     cli_result = install_cli_helper()
     print(f"\n🚀 Helper CLI global: {cli_result}")
 
@@ -198,7 +198,7 @@ def main():
     for s in skills:
         print(f"  • {s['id']}")
     print("\nPara verificar a qualquer momento no terminal, execute:")
-    print("  dm-skills list")
+    print("  deda-skills list")
     print("======================================================\n")
 
 if __name__ == "__main__":

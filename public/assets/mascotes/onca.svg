@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="furWarm" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E67E22" />
+      <stop offset="100%" stop-color="#D35400" />
+    </linearGradient>
+    <linearGradient id="furChest" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E0D2C7" />
+    </linearGradient>
+    <linearGradient id="cyberCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D2FF" />
+      <stop offset="100%" stop-color="#0066FF" />
+    </linearGradient>
+    <radialGradient id="cyanGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00D2FF" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#00D2FF" stop-opacity="0" />
+    </radialGradient>
+    <filter id="shadowGuara" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Lobo-Guará Figure (Transparent Cutout - No Background) -->
+  <g filter="url(#shadowGuara)">
+    <!-- Tall Alert Ears (Iconic Lobo-Guará Feature) -->
+    <!-- Left Ear -->
+    <path d="M190 190 C150 130 140 70 170 50 C200 40 215 110 225 180 Z" fill="#1C1C1C" />
+    <path d="M188 180 C158 130 152 82 173 66 C195 55 208 110 216 170 Z" fill="url(#furWarm)" />
+    <path d="M185 170 C168 135 165 95 178 82 C192 75 198 115 204 160 Z" fill="#FFF8F0" />
+
+    <!-- Right Ear -->
+    <path d="M322 190 C362 130 372 70 342 50 C312 40 297 110 287 180 Z" fill="#1C1C1C" />
+    <path d="M324 180 C354 130 360 82 339 66 C317 55 304 110 296 170 Z" fill="url(#furWarm)" />
+    <path d="M327 170 C344 135 347 95 334 82 C320 75 314 115 308 160 Z" fill="#FFF8F0" />
+
+    <!-- Main Head -->
+    <ellipse cx="256" cy="225" rx="88" ry="82" fill="url(#furWarm)" />
+
+    <!-- Cute Fluffy Cheeks -->
+    <path d="M170 230 C150 240 145 260 162 275 C170 282 185 285 198 280 Z" fill="url(#furWarm)" />
+    <path d="M342 230 C362 240 367 260 350 275 C342 282 327 285 314 280 Z" fill="url(#furWarm)" />
+
+    <!-- Body & Back Mane (Iconic Dark Mane) -->
+    <path d="M165 330 C150 360 140 410 140 420 C180 430 332 430 372 420 C372 410 362 360 347 330 Z" fill="#241B15" />
+    <path d="M180 325 C170 365 175 415 256 420 C337 415 342 365 332 325 Z" fill="url(#furWarm)" />
+    <!-- White Chest Bib -->
+    <path d="M216 310 C216 370 230 405 256 410 C282 405 296 370 296 310 C280 330 232 330 216 310 Z" fill="url(#furChest)" />
+
+    <!-- Cute White Muzzle -->
+    <ellipse cx="256" cy="254" rx="46" ry="34" fill="#FFFFFF" />
+
+    <!-- Dark Nose Tip -->
+    <path d="M246 236 C250 234 262 234 266 236 C270 242 265 248 256 250 C247 248 242 242 246 236 Z" fill="#1C1C1C" />
+
+    <!-- Gentle Mouth -->
+    <path d="M256 250 L256 262" stroke="#1C1C1C" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M244 262 Q256 270 268 262" fill="none" stroke="#1C1C1C" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- Cute Rosy Cheeks -->
+    <ellipse cx="198" cy="256" rx="14" ry="9" fill="#FF7675" opacity="0.35" />
+    <ellipse cx="314" cy="256" rx="14" ry="9" fill="#FF7675" opacity="0.35" />
+
+    <!-- Cute Expressive Eyes -->
+    <!-- Left Eye -->
+    <ellipse cx="218" cy="208" rx="18" ry="21" fill="#1A1A1A" />
+    <ellipse cx="218" cy="208" rx="14" ry="17" fill="#78350F" />
+    <circle cx="218" cy="208" r="10" fill="#0F0F0F" />
+    <circle cx="213" cy="202" r="5.5" fill="#FFFFFF" />
+    <circle cx="223" cy="214" r="2.5" fill="#FFFFFF" />
+
+    <!-- Right Eye -->
+    <ellipse cx="294" cy="208" rx="18" ry="21" fill="#1A1A1A" />
+    <ellipse cx="294" cy="208" rx="14" ry="17" fill="#78350F" />
+    <circle cx="294" cy="208" r="10" fill="#0F0F0F" />
+    <circle cx="289" cy="202" r="5.5" fill="#FFFFFF" />
+    <circle cx="299" cy="214" r="2.5" fill="#FFFFFF" />
+
+    <!-- Cyber High-Tech Collar with Glowing Core (DevOps & Architecture Node) -->
+    <path d="M192 300 Q256 324 320 300 L322 316 Q256 340 190 316 Z" fill="#202020" stroke="#383838" stroke-width="2" />
+    <circle cx="256" cy="324" r="24" fill="url(#cyanGlow)" />
+    <circle cx="256" cy="324" r="14" fill="#151515" stroke="url(#cyberCyan)" stroke-width="2.5" />
+    <circle cx="256" cy="324" r="6" fill="#00D2FF" />
+    <!-- Circuit traces on collar -->
+    <line x1="210" y1="308" x2="236" y2="318" stroke="#00D2FF" stroke-width="1.8" stroke-dasharray="3 3" />
+    <line x1="302" y1="308" x2="276" y2="318" stroke="#00D2FF" stroke-width="1.8" stroke-dasharray="3 3" />
+  </g>
+</svg>

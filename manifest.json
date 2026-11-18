@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/devdudumuniz/skills/main/manifest.schema.json",
-  "name": "dm-skills",
+  "name": "deda-skills",
   "version": "1.0.0",
   "description": "Universal open catalog of production-grade AI agent skills for software engineering, devops, security, systems diagnosis, exact UI replication, and engineering status governance.",
   "homepage": "https://github.com/devdudumuniz/skills",
@@ -113,6 +113,50 @@
       "package": "packages/status-portal-publicar.skill",
       "execution_mode": "read-only-publish",
       "tags": ["deployment", "docker", "reverse-proxy", "sanitization", "privacy", "client-portal"]
+    },
+    {
+      "id": "design-intelligence-studio",
+      "name": "Design Intelligence & UX Architect",
+      "category": "design",
+      "description": "Arquiteta design systems completos, tokens W3C DTCG/CSS, direcoes esteticas calibraveis, auditoria WCAG e crosswalk multi-stack sem depender de scripts ou CSVs proprietarios.",
+      "path": "skills/design-intelligence-studio",
+      "entrypoint": "SKILL.md",
+      "package": "packages/design-intelligence-studio.skill",
+      "execution_mode": "plan-first",
+      "tags": ["design-system", "ui-ux", "wcag", "tokens", "tailwind", "accessibility"]
+    },
+    {
+      "id": "canvas-diagram-studio",
+      "name": "Canvas Diagram Studio (Excalidraw)",
+      "category": "design",
+      "description": "Gera diagramas Excalidraw (.excalidraw JSON v2) com vinculacao nativa de texto (containerId/boundElements), setas ancoradas, layout anti-colisao e validador de schema sem dependencias.",
+      "path": "skills/canvas-diagram-studio",
+      "entrypoint": "SKILL.md",
+      "package": "packages/canvas-diagram-studio.skill",
+      "execution_mode": "iterative-tdd",
+      "tags": ["excalidraw", "diagram", "flowchart", "mindmap", "architecture", "canvas"]
+    },
+    {
+      "id": "architecture-diagram-engine",
+      "name": "Architecture Diagram Engine (Draw.io)",
+      "category": "engineering",
+      "description": "Gera e valida diagramas tecnicos Draw.io / mxGraph XML (.drawio e .drawio.svg) para C4, ER crow's foot, sequencia UML e nuvem com descoberta previa do repositorio.",
+      "path": "skills/architecture-diagram-engine",
+      "entrypoint": "SKILL.md",
+      "package": "packages/architecture-diagram-engine.skill",
+      "execution_mode": "plan-first",
+      "tags": ["drawio", "mxgraph", "c4-model", "er-diagram", "uml", "architecture"]
+    },
+    {
+      "id": "excalidraw-diagram-generator",
+      "name": "Gerador de Diagramas Excalidraw",
+      "category": "design",
+      "description": "Gera diagramas arquiteturais e fluxos de sistemas via prompts em linguagem natural com renderizacao interativa Excalidraw diretamente na interface e exportacao .excalidraw / SVG / PNG.",
+      "path": "skills/excalidraw-diagram-generator",
+      "entrypoint": "SKILL.md",
+      "package": "packages/excalidraw-diagram-generator.skill",
+      "execution_mode": "iterative-tdd",
+      "tags": ["excalidraw", "architecture", "system-flow", "prompt-to-diagram", "interactive-canvas"]
     }
   ]
 }

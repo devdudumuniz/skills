@@ -2,7 +2,10 @@ export type IconName = string;
 
 const PATHS: Record<string, string> = {
   home: "M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z",
+  menu: "M3 6h18M3 12h18M3 18h18",
+  database: "M12 3c-4.97 0-9 1.34-9 3v12c0 1.66 4.03 3 9 3s9-1.34 9-3V6c0-1.66-4.03-3-9-3zM3 12c0 1.66 4.03 3 9 3s9-1.34 9-3M3 6c0 1.66 4.03 3 9 3s9-1.34 9-3",
   list: "M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01",
+  grid: "M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z",
   "check-square": "M9 11l3 3 8-8M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h11",
   layers: "M12 3 2 8l10 5 10-5zM2 13l10 5 10-5M2 18l10 5 10-5",
   trend: "M3 17l6-6 4 4 8-8M15 7h6v6",
@@ -27,6 +30,7 @@ const PATHS: Record<string, string> = {
   "arrow-right": "M5 12h14M12 5l7 7-7 7",
   chevron: "M6 9l6 6 6-6",
   download: "M12 3v12M7 10l5 5 5-5M5 21h14",
+  upload: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12",
   eye: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
   calendar: "M4 5h16v16H4zM4 9h16M8 3v4M16 3v4",
   scale: "M12 3v18M5 21h14M6 7h12M6 7l-3 7a3 3 0 0 0 6 0zM18 7l-3 7a3 3 0 0 0 6 0z",

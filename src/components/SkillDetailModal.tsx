@@ -259,7 +259,7 @@ export function SkillDetailModal({
               onClose();
               onTestSkill(skill.id);
             }}
-            style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#D97757] hover:bg-[#E28768] text-white font-semibold text-sm border border-[#D97757] cursor-pointer"
           >
             <Icon n="play" size={14} />
             Testar no Laboratório

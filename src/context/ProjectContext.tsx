@@ -21,16 +21,18 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
   const [role, setRole] = useState<Role>("ADMIN");
   const [skills, setSkills] = useState<AgentSkill[]>(() => {
     try {
-      const rawFavs = localStorage.getItem("dm_skills_favorites");
-      if (rawFavs) {
-        const favIds = new Set<string>(JSON.parse(rawFavs));
-        return AGENT_SKILLS.map((s) => ({
-          ...s,
-          isFavorite: favIds.has(s.id),
-        }));
-      }
+      const rawFavs = localStorage.getItem("deda_skills_favorites") ?? localStorage.getItem("dm_skills_favorites");
+      const rawInst = localStorage.getItem("deda_skills_installed") ?? localStorage.getItem("dm_skills_installed");
+      const favIds = rawFavs ? new Set<string>(JSON.parse(rawFavs)) : null;
+      const instIds = rawInst !== null ? new Set<string>(JSON.parse(rawInst)) : null;
+
+      return AGENT_SKILLS.map((s) => ({
+        ...s,
+        isFavorite: favIds !== null ? favIds.has(s.id) : (s.id === "discord-playbooks" || s.id === "devops-delivery"),
+        installed: instIds !== null ? instIds.has(s.id) : s.installed,
+      }));
     } catch (e) {
-      console.error(e);
+      console.error("Erro ao carregar skills no ProjectContext do LocalStorage:", e);
     }
     return AGENT_SKILLS.map((s) => ({
       ...s,
@@ -41,17 +43,42 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
   const [activeTestSkillId, setActiveTestSkillId] = useState<string | null>("web-design");
 
   const addSkill = (newSkill: AgentSkill) => {
-    setSkills((prev) => [newSkill, ...prev]);
+    setSkills((prev) => {
+      const updated = [newSkill, ...prev];
+      try {
+        const instIds = updated.filter((s) => s.installed).map((s) => s.id);
+        localStorage.setItem("deda_skills_installed", JSON.stringify(instIds));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
   };
 
   const deleteSkill = (id: string) => {
-    setSkills((prev) => prev.filter((s) => s.id !== id));
+    setSkills((prev) => {
+      const updated = prev.filter((s) => s.id !== id);
+      try {
+        const instIds = updated.filter((s) => s.installed).map((s) => s.id);
+        localStorage.setItem("deda_skills_installed", JSON.stringify(instIds));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
   };
 
   const toggleInstallSkill = (id: string) => {
-    setSkills((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, installed: !s.installed } : s))
-    );
+    setSkills((prev) => {
+      const updated = prev.map((s) => (s.id === id ? { ...s, installed: !s.installed } : s));
+      try {
+        const instIds = updated.filter((s) => s.installed).map((s) => s.id);
+        localStorage.setItem("deda_skills_installed", JSON.stringify(instIds));
+      } catch (e) {
+        console.error("Erro ao salvar skill instalada no LocalStorage:", e);
+      }
+      return updated;
+    });
   };
 
   const toggleFavoriteSkill = (id: string) => {
@@ -59,7 +86,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
       const updated = prev.map((s) => (s.id === id ? { ...s, isFavorite: !s.isFavorite } : s));
       try {
         const favIds = updated.filter((s) => s.isFavorite).map((s) => s.id);
-        localStorage.setItem("dm_skills_favorites", JSON.stringify(favIds));
+        localStorage.setItem("deda_skills_favorites", JSON.stringify(favIds));
       } catch (e) {
         console.error(e);
       }
@@ -68,7 +95,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
   };
 
   const recordEvent = (action: string) => {
-    console.log(`[DM Skills] ${action}`);
+    console.log(`[Deda Skills] ${action}`);
   };
 
   return (

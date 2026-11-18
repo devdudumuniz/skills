@@ -23,17 +23,19 @@ interface SkillsContextType {
 const SkillsContext = createContext<SkillsContextType | undefined>(undefined);
 
 export function SkillsProvider({ children }: { children: ReactNode }) {
-  // Load favorites from local storage
+  // Load favorites & installed from local storage
   const [suites, setSuites] = useState<AgentSkillSuite[]>(() => {
     try {
-      const rawFavs = localStorage.getItem("dm_skills_favorites_suites");
-      if (rawFavs) {
-        const favIds = new Set<string>(JSON.parse(rawFavs));
-        return AGENT_SUITES.map((s) => ({
-          ...s,
-          isFavorite: favIds.has(s.id),
-        }));
-      }
+      const rawFavs = localStorage.getItem("deda_skills_favorites_suites") ?? localStorage.getItem("dm_skills_favorites_suites");
+      const rawInstalled = localStorage.getItem("deda_skills_installed_suites") ?? localStorage.getItem("dm_skills_installed_suites");
+      const favIds = rawFavs ? new Set<string>(JSON.parse(rawFavs)) : null;
+      const installedIds = rawInstalled !== null ? new Set<string>(JSON.parse(rawInstalled)) : null;
+
+      return AGENT_SUITES.map((s) => ({
+        ...s,
+        isFavorite: favIds !== null ? favIds.has(s.id) : (s.isFavorite ?? false),
+        installed: installedIds !== null ? installedIds.has(s.id) : s.installed,
+      }));
     } catch (e) {
       console.error(e);
     }
@@ -42,14 +44,16 @@ export function SkillsProvider({ children }: { children: ReactNode }) {
 
   const [skills, setSkills] = useState<AgentSkill[]>(() => {
     try {
-      const rawFavs = localStorage.getItem("dm_skills_favorites");
-      if (rawFavs) {
-        const favIds = new Set<string>(JSON.parse(rawFavs));
-        return AGENT_SKILLS.map((s) => ({
-          ...s,
-          isFavorite: favIds.has(s.id),
-        }));
-      }
+      const rawFavs = localStorage.getItem("deda_skills_favorites") ?? localStorage.getItem("dm_skills_favorites");
+      const rawInst = localStorage.getItem("deda_skills_installed") ?? localStorage.getItem("dm_skills_installed");
+      const favIds = rawFavs ? new Set<string>(JSON.parse(rawFavs)) : null;
+      const instIds = rawInst !== null ? new Set<string>(JSON.parse(rawInst)) : null;
+
+      return AGENT_SKILLS.map((s) => ({
+        ...s,
+        isFavorite: favIds !== null ? favIds.has(s.id) : (s.id === "discord-playbooks" || s.id === "devops-delivery"),
+        installed: instIds !== null ? instIds.has(s.id) : s.installed,
+      }));
     } catch (e) {
       console.error(e);
     }
@@ -63,9 +67,16 @@ export function SkillsProvider({ children }: { children: ReactNode }) {
   const [activeTestSkillId, setActiveTestSkillId] = useState<string | null>("web-design");
 
   const toggleInstallSuite = (suiteId: string) => {
-    setSuites((prev) =>
-      prev.map((s) => (s.id === suiteId ? { ...s, installed: !s.installed } : s))
-    );
+    setSuites((prev) => {
+      const updated = prev.map((s) => (s.id === suiteId ? { ...s, installed: !s.installed } : s));
+      try {
+        const installedIds = updated.filter((s) => s.installed).map((s) => s.id);
+        localStorage.setItem("deda_skills_installed_suites", JSON.stringify(installedIds));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
     if (selectedSuite && selectedSuite.id === suiteId) {
       setSelectedSuite((prev) => (prev ? { ...prev, installed: !prev.installed } : null));
     }
@@ -76,7 +87,7 @@ export function SkillsProvider({ children }: { children: ReactNode }) {
       const updated = prev.map((s) => (s.id === suiteId ? { ...s, isFavorite: !s.isFavorite } : s));
       try {
         const favIds = updated.filter((s) => s.isFavorite).map((s) => s.id);
-        localStorage.setItem("dm_skills_favorites_suites", JSON.stringify(favIds));
+        localStorage.setItem("deda_skills_favorites_suites", JSON.stringify(favIds));
       } catch (e) {
         console.error(e);
       }
@@ -88,9 +99,16 @@ export function SkillsProvider({ children }: { children: ReactNode }) {
   };
 
   const toggleInstallSkill = (skillId: string) => {
-    setSkills((prev) =>
-      prev.map((s) => (s.id === skillId ? { ...s, installed: !s.installed } : s))
-    );
+    setSkills((prev) => {
+      const updated = prev.map((s) => (s.id === skillId ? { ...s, installed: !s.installed } : s));
+      try {
+        const instIds = updated.filter((s) => s.installed).map((s) => s.id);
+        localStorage.setItem("deda_skills_installed", JSON.stringify(instIds));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
   };
 
   const toggleFavoriteSkill = (skillId: string) => {
@@ -98,7 +116,7 @@ export function SkillsProvider({ children }: { children: ReactNode }) {
       const updated = prev.map((s) => (s.id === skillId ? { ...s, isFavorite: !s.isFavorite } : s));
       try {
         const favIds = updated.filter((s) => s.isFavorite).map((s) => s.id);
-        localStorage.setItem("dm_skills_favorites", JSON.stringify(favIds));
+        localStorage.setItem("deda_skills_favorites", JSON.stringify(favIds));
       } catch (e) {
         console.error(e);
       }

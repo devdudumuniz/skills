@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DM Skills - Packager
+Deda Skills - Packager
 Compacta os diretórios de ./skills/ em arquivos portáteis .skill em ./packages/
 """
 

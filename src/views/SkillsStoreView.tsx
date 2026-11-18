@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AgentSkill } from "../types";
 import { BookCover } from "../components/BookCover";
 import { Icon } from "../components/Icons";
+import { calculateSkillTokenProfile, formatTokens } from "../utils/tokenUtils";
 
 interface SkillsStoreViewProps {
   skills: AgentSkill[];
@@ -36,16 +37,73 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
   const isFilteringFavorites = onlyFavorites || localFavoritesOnly;
 
   const categories = [
-    { id: "todos", label: "Todos" },
-    { id: "programacao", label: "Programação" },
-    { id: "dados", label: "Dados" },
-    { id: "automacao", label: "Automação" },
-    { id: "negocios", label: "Negócios" },
-    { id: "design", label: "Design" },
-    { id: "midia", label: "Mídia" },
-    { id: "conteudo", label: "Conteúdo" },
-    { id: "aplicativos", label: "Aplicativos" },
+    { id: "todos", label: "Todos", icon: "layers" },
+    { id: "codificacao", label: "Codificação", icon: "code" },
+    { id: "dados", label: "Análise de Dados", icon: "database" },
+    { id: "design", label: "Design", icon: "layout" },
+    { id: "escrita", label: "Escrita", icon: "file-text" },
   ];
+
+  const isSkillInTopic = (skill: AgentSkill, topicId: string): boolean => {
+    if (topicId === "todos") return true;
+    const cat = (skill.category || "").toLowerCase();
+    const name = skill.name.toLowerCase();
+    const desc = skill.description.toLowerCase();
+
+    if (topicId === "codificacao") {
+      return (
+        cat === "programacao" ||
+        cat === "devops" ||
+        cat === "automacao" ||
+        cat === "engineering" ||
+        name.includes("devops") ||
+        name.includes("código") ||
+        name.includes("refatoração") ||
+        desc.includes("tdd") ||
+        desc.includes("pipeline")
+      );
+    }
+
+    if (topicId === "dados") {
+      return (
+        cat === "dados" ||
+        cat === "security" ||
+        cat === "diagnostics" ||
+        cat === "governance" ||
+        name.includes("segurança") ||
+        name.includes("auditoria") ||
+        name.includes("dados") ||
+        name.includes("governança") ||
+        desc.includes("vulnerabilidades")
+      );
+    }
+
+    if (topicId === "design") {
+      return (
+        cat === "design" ||
+        cat === "frontend" ||
+        cat === "midia" ||
+        name.includes("design") ||
+        name.includes("ui") ||
+        name.includes("layout") ||
+        name.includes("mídia")
+      );
+    }
+
+    if (topicId === "escrita") {
+      return (
+        cat === "conteudo" ||
+        cat === "negocios" ||
+        cat === "copywriting" ||
+        name.includes("conteúdo") ||
+        name.includes("copywriting") ||
+        name.includes("redação") ||
+        desc.includes("documentação")
+      );
+    }
+
+    return false;
+  };
 
   const filteredSkills = skills.filter((skill) => {
     // Favorites filter
@@ -55,17 +113,8 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
     if (installedOnly && !skill.installed) return false;
 
     // Category filter
-    if (activeCategory !== "todos") {
-      const cat = skill.category?.toLowerCase() || "";
-      const matchesCategory =
-        cat === activeCategory ||
-        (activeCategory === "programacao" && (cat === "devops" || cat === "engineering" || cat === "frontend")) ||
-        (activeCategory === "dados" && (cat === "security" || cat === "diagnostics" || cat === "data")) ||
-        (activeCategory === "negocios" && cat === "governance") ||
-        (activeCategory === "automacao" && cat === "automation") ||
-        (activeCategory === "aplicativos" && (skill.id.includes("discord") || skill.id.includes("audacity") || cat === "aplicativos"));
-
-      if (!matchesCategory) return false;
+    if (activeCategory !== "todos" && !isSkillInTopic(skill, activeCategory)) {
+      return false;
     }
 
     // Search query: allows filtering by name, category, description or tags
@@ -275,26 +324,33 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
             Testar no Playground
           </button>
 
-          {/* + Criar Habilidade Button */}
+          {/* + Criar Habilidade Button (Highlighted in Cyber Orange #D97757) */}
           <button
             type="button"
             onClick={onNavigateCreate}
             style={{
-              backgroundColor: "#EAEAEA",
+              backgroundColor: "#D97757",
               color: "#151515",
               border: "none",
               borderRadius: 8,
-              padding: "6px 14px",
+              padding: "7px 16px",
               fontSize: 12.5,
               fontWeight: 700,
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 6,
-              transition: "background 0.15s ease",
+              boxShadow: "0 2px 10px rgba(255, 107, 0, 0.35)",
+              transition: "all 0.15s ease",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#C2C2C2")}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#EAEAEA")}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "#E28768";
+              e.currentTarget.style.boxShadow = "0 4px 14px rgba(255, 107, 0, 0.5)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "#D97757";
+              e.currentTarget.style.boxShadow = "0 2px 10px rgba(255, 107, 0, 0.35)";
+            }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="12" y1="5" x2="12" y2="19" />
@@ -509,27 +565,7 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
             <div
               key={skill.id}
               onClick={() => onSelectSkill(skill)}
-              style={{
-                position: "relative",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 18,
-                backgroundColor: "#202020",
-                border: "1px solid #383838",
-                borderRadius: 14,
-                padding: "16px 20px",
-                cursor: "pointer",
-                transition: "background-color 0.15s, border-color 0.15s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#262626";
-                e.currentTarget.style.borderColor = "#545454";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#202020";
-                e.currentTarget.style.borderColor = "#383838";
-              }}
+              className="group relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-[#202020] border border-[#383838] hover:border-[#545454] transition-all cursor-pointer shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               {/* Favorite Toggle Button in top-right corner */}
               <button
@@ -547,130 +583,104 @@ export const SkillsStoreView: React.FC<SkillsStoreViewProps> = ({
                   background: skill.isFavorite ? "#292929" : "transparent",
                   border: skill.isFavorite ? "1px solid #545454" : "1px solid transparent",
                   borderRadius: 6,
-                  width: 28,
-                  height: 28,
+                  width: 32,
+                  height: 32,
                   padding: 0,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
-                  color: skill.isFavorite ? "#EAEAEA" : "#767676",
+                  color: skill.isFavorite ? "#D97757" : "#767676",
                   transition: "all 0.15s ease",
                   zIndex: 2,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = "#333333";
                   e.currentTarget.style.borderColor = "#767676";
-                  e.currentTarget.style.color = "#FFFFFF";
+                  e.currentTarget.style.color = "#D97757";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.backgroundColor = skill.isFavorite ? "#292929" : "transparent";
                   e.currentTarget.style.borderColor = skill.isFavorite ? "#545454" : "transparent";
-                  e.currentTarget.style.color = skill.isFavorite ? "#EAEAEA" : "#767676";
+                  e.currentTarget.style.color = skill.isFavorite ? "#D97757" : "#767676";
                 }}
               >
-                <Icon n={skill.isFavorite ? "star-filled" : "star"} size={15} />
+                <Icon n={skill.isFavorite ? "star-filled" : "star"} size={16} />
               </button>
 
-              {/* Left Booklet Graphic */}
-              <div style={{ flexShrink: 0 }}>
-                <BookCover
-                  title={skill.name}
-                  theme={skill.coverTheme}
-                  variant="thumbnail"
-                />
-              </div>
+              {/* Left Booklet Graphic & Middle Information */}
+              <div className="flex items-start sm:items-center gap-3 sm:gap-4 flex-1 min-w-0 pr-8 sm:pr-2">
+                <div className="shrink-0">
+                  <BookCover
+                    title={skill.name}
+                    theme={skill.coverTheme}
+                    variant="thumbnail"
+                  />
+                </div>
 
-              {/* Middle Information */}
-              <div style={{ flex: 1, minWidth: 0, paddingRight: 8 }}>
-                <h3
-                  style={{
-                    fontSize: 15.5,
-                    fontWeight: 700,
-                    color: "#EAEAEA",
-                    margin: "0 0 4px 0",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  {skill.name}
-                </h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm sm:text-base font-bold text-[#EAEAEA] group-hover:text-white transition-colors mb-1 leading-snug">
+                    {skill.name}
+                  </h3>
 
-                <p
-                  style={{
-                    fontSize: 13,
-                    color: "#C2C2C2",
-                    margin: "0 0 8px 0",
-                    lineHeight: 1.45,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                  }}
-                >
-                  {skill.description}
-                </p>
+                  <p className="text-xs sm:text-[13px] text-[#C2C2C2] mb-2 leading-relaxed line-clamp-2">
+                    {skill.description}
+                  </p>
 
-                {/* Verified Shield & Update Date */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    color: "#9B9B9B",
-                    fontSize: 12,
-                  }}
-                >
-                  <Icon n="check-circle" size={13} />
-                  <span>Atualizado em {skill.updatedAt || "28 de set. de 2026"}</span>
+                  {/* Verified Shield, Update Date & Token Footprint */}
+                  <div className="flex items-center gap-2 sm:gap-3 text-[#9B9B9B] text-xs flex-wrap">
+                    <div className="flex items-center gap-1.5 text-[11px] sm:text-xs">
+                      <Icon n="check-circle" size={13} className="text-[#D97757]" />
+                      <span>Atualizado em {skill.updatedAt || "28 de set. de 2026"}</span>
+                    </div>
+                    <span>•</span>
+                    {(() => {
+                      const profile = calculateSkillTokenProfile(skill);
+                      return (
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 4,
+                            color: profile.categoryColor,
+                            fontWeight: 700,
+                            fontFamily: "monospace",
+                            fontSize: 11,
+                          }}
+                        >
+                          <Icon n="zap" size={11} />
+                          <span>{formatTokens(profile.totalTokens)}</span>
+                          <span style={{ fontSize: 9.5, opacity: 0.85 }}>({profile.categoryLabel})</span>
+                        </span>
+                      );
+                    })()}
+                  </div>
                 </div>
               </div>
 
               {/* Right Action Button: + Adicionar */}
-              <div style={{ flexShrink: 0, marginTop: 12 }}>
+              <div className="w-full sm:w-auto shrink-0 flex items-center justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-[#2a2a2a]">
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     onToggleInstall(skill.id);
                   }}
-                  style={{
-                    backgroundColor: skill.installed ? "#2b2b2b" : "#333333",
-                    color: skill.installed ? "#C2C2C2" : "#EAEAEA",
-                    border: skill.installed ? "1px solid #767676" : "1px solid #545454",
-                    borderRadius: 20,
-                    padding: "7px 16px",
-                    fontSize: 12.5,
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                    whiteSpace: "nowrap",
-                    transition: "all 0.15s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!skill.installed) {
-                      e.currentTarget.style.backgroundColor = "#444444";
-                      e.currentTarget.style.borderColor = "#767676";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!skill.installed) {
-                      e.currentTarget.style.backgroundColor = "#333333";
-                      e.currentTarget.style.borderColor = "#545454";
-                    }
-                  }}
+                  className={`w-full sm:w-auto py-2 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
+                    skill.installed
+                      ? "bg-[#292929] text-[#C2C2C2] border border-[#444]"
+                      : "bg-[#262626] hover:bg-[#D97757] text-[#EAEAEA] hover:text-[#151515] border border-[#3d3d3d] hover:border-[#D97757] shadow-sm"
+                  }`}
                 >
                   {skill.installed ? (
                     <>
-                      <Icon n="check" size={13} />
-                      Adicionado
+                      <Icon n="check" size={13} className="text-[#D97757]" />
+                      <span>Adicionado</span>
                     </>
                   ) : (
                     <>
                       <Icon n="plus" size={13} />
-                      Adicionar
+                      <span>Adicionar</span>
                     </>
                   )}
                 </button>

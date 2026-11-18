@@ -1,117 +1,196 @@
 @import "tailwindcss";
 
 :root {
-  /* Official 7-Shade Palette */
-  --c-1: #EAEAEA;
-  --c-2: #C2C2C2;
-  --c-3: #9B9B9B;
-  --c-4: #767676;
-  --c-5: #545454;
-  --c-6: #333333;
-  --c-7: #151515;
+  /* Paleta Editorial Sertão • Estilo Claude (Warm Earth & Terracotta) */
+  --c-1: #F5F2EB; /* Pergaminho Marfim / Papel de Xilogravura */
+  --c-2: #D4CDC3; /* Linho Cru / Areia do Sertão */
+  --c-3: #A39889; /* Terra Seca / Faveleira */
+  --c-4: #766B5E; /* Argila Fria */
+  --c-5: #50463B; /* Sombra de Aroeira */
+  --c-6: #3A3229; /* Borda de Barro Seco */
+  --c-7: #1E1A17; /* Noite do Sertão / Deep Warm Charcoal */
 
-  --bg: #151515;
-  --panel: #1c1c1c;
-  --panel-2: #242424;
-  --panel-3: #2e2e2e;
-  --ink: #EAEAEA;
-  --ink-2: #C2C2C2;
-  --muted: #9B9B9B;
-  --faint: #767676;
-  --line: #2e2e2e;
-  --line-2: #3d3d3d;
-  --accent: #EAEAEA;
-  --accent-ink: #151515;
-  --accent-subtle: #333333;
+  --bg: #1E1A17; /* Canvas Terroso Quente (Claude Dark) */
+  --panel: #27221E; /* Painel Cerâmica de Barro / Adobe */
+  --panel-2: #302A24; /* Superfície Elevada / Hover */
+  --panel-3: #3B332D; /* Destaque / Modais */
+  --ink: #F5F2EB; /* Texto Marfim Suave */
+  --ink-2: #D4CDC3; /* Texto Secundário Areia */
+  --muted: #A39889; /* Texto Muted */
+  --faint: #766B5E; /* Texto Atenuado */
+  --line: #383129; /* Linha de Divisão Terrosa */
+  --line-2: #483E34; /* Borda Destacada */
 
-  --ok: #C2C2C2;
-  --ok-bg: #292929;
-  --warn: #C2C2C2;
-  --warn-bg: #292929;
-  --bad: #EAEAEA;
-  --bad-bg: #333333;
-  --info: #EAEAEA;
-  --info-bg: #292929;
-  --neutral: #9B9B9B;
-  --neutral-bg: #222222;
+  /* Terracota Icônico do Claude & Sol Poente do Sertão */
+  --accent: #D97757; /* Claude Terracotta / Barro Queimado */
+  --accent-hover: #E28768; /* Terracota Iluminado */
+  --accent-ink: #FFFFFF;
+  --accent-subtle: rgba(217, 119, 87, 0.15);
+  --accent-glow: rgba(217, 119, 87, 0.35);
+  --accent-border: rgba(217, 119, 87, 0.45);
+
+  --sertao-terracotta: #D97757;
+  --sertao-amber: #E09F3E;
+  --sertao-clay: #C45D3B;
+  --sertao-sand: #EADBC8;
+  --sertao-cactus: #85987E;
+  --sertao-leather: #A6623F;
+
+  --ok: #D4CDC3;
+  --ok-bg: #302A24;
+  --warn: #E09F3E;
+  --warn-bg: #34271A;
+  --bad: #F5F2EB;
+  --bad-bg: #402820;
+  --info: #F5F2EB;
+  --info-bg: #302A24;
+  --neutral: #A39889;
+  --neutral-bg: #2A241F;
 
   --r: 12px;
   --r-sm: 8px;
 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Charter", "Georgia", Arial, sans-serif;
   font-size: 14px;
   color-scheme: dark;
 }
 
-* {
-  box-sizing: border-box;
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  a {
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    color: var(--ink);
+  }
+
+  code, pre {
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+  }
+
+  pre {
+    background: #171412;
+    border: 1px solid var(--line);
+    padding: 12px 14px;
+    border-radius: 8px;
+    overflow: auto;
+    color: var(--ink-2);
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+
+  h2 {
+    font-size: 16px;
+    font-weight: 650;
+    margin: 4px 0 10px;
+    color: var(--ink);
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+
+  /* Inputs & Form Elements */
+  input, select, textarea {
+    font: inherit;
+    padding: 8px 12px;
+    border: 1px solid var(--line-2);
+    border-radius: 8px;
+    background: #1A1714;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  select {
+    width: 100%;
+    text-overflow: ellipsis;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    background: #241F1A;
+  }
+
+  button {
+    font: inherit;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background 0.15s ease, opacity 0.15s ease, transform 0.1s ease;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
-body {
-  margin: 0;
-  background: var(--bg);
+button.secondary {
+  background: #28221D;
   color: var(--ink);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  color: var(--ink-2);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-  color: var(--ink);
-}
-
-code, pre {
-  font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
-  font-size: 12.5px;
-}
-
-pre {
-  background: #191919;
-  border: 1px solid var(--line);
-  padding: 12px 14px;
+  border: 1px solid var(--line-2);
+  padding: 8px 14px;
   border-radius: 8px;
-  overflow: auto;
-  color: var(--ink-2);
-}
-
-h1 {
-  font-size: 22px;
-  font-weight: 700;
-  margin: 0 0 12px;
-  color: var(--ink);
-  letter-spacing: -0.015em;
-}
-
-h2 {
-  font-size: 16px;
-  font-weight: 650;
-  margin: 4px 0 10px;
-  color: var(--ink);
-}
-
-h3 {
-  font-size: 14px;
   font-weight: 600;
-  margin: 0 0 6px;
-  color: var(--ink);
 }
 
-/* Shell Layout */
+button.secondary:hover {
+  background: #332B25;
+  border-color: var(--c-3);
+}
+
+/* Shell Layout - Fully Responsive */
 .shell {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 296px minmax(0, 1fr);
   min-height: 100vh;
   background: var(--bg);
+  width: 100%;
 }
 
-/* Sidebar Styles (Matching ChatGPT Plugins / Personalizar) */
+@media (max-width: 1023px) {
+  .shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+/* Sidebar Styles (Matching ChatGPT Plugins / Personalizar & Claude Warm Aesthetic) */
 .side {
-  background: #171717;
+  background: #191613;
   border-right: 1px solid var(--line);
   padding: 18px 12px;
   position: sticky;
@@ -122,26 +201,32 @@ h3 {
   flex-direction: column;
 }
 
+@media (max-width: 1023px) {
+  .side.desktop-side {
+    display: none !important;
+  }
+}
+
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 4px 8px 18px;
+  padding: 2px 0px 8px 4px;
   color: var(--ink);
   border-bottom: 1px solid var(--line);
-  margin-bottom: 12px;
+  margin-bottom: 0px;
 }
 
 .brand-icon-wrap {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: #262626;
-  border: 1px solid #383838;
+  background: #28221D;
+  border: 1px solid var(--line-2);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #EAEAEA;
+  color: var(--ink);
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
@@ -173,18 +258,18 @@ h3 {
   font-weight: 700;
 }
 
-.side a, .side button.side-nav-btn {
+.side a, button.side-nav-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  padding: 8px 10px;
+  padding: 8px 9px;
   border-radius: 8px;
   color: var(--ink-2);
   background: transparent;
   border: 0;
   font: inherit;
-  font-size: 13px;
+  font-size: 12.5px;
   text-align: left;
   cursor: pointer;
   text-decoration: none;
@@ -192,13 +277,13 @@ h3 {
   margin-bottom: 2px;
 }
 
-.side a:hover, .side button.side-nav-btn:hover {
-  background: #242424;
+.side a:hover, button.side-nav-btn:hover {
+  background: #28231E;
   color: var(--ink);
 }
 
-.side a.active, .side button.side-nav-btn.active {
-  background: #2f2f2f;
+.side a.active, button.side-nav-btn.active {
+  background: #342D26;
   color: var(--ink);
   font-weight: 600;
   border: 1px solid var(--line-2);
@@ -228,12 +313,12 @@ h3 {
 }
 
 .side-installed-item:hover {
-  background: #242424;
+  background: #28231E;
   color: var(--ink);
 }
 
 .side-installed-item.active {
-  background: #2f2f2f;
+  background: #342D26;
   color: var(--ink);
   font-weight: 600;
 }
@@ -242,8 +327,8 @@ h3 {
   width: 22px;
   height: 22px;
   border-radius: 5px;
-  background: #292929;
-  border: 1px solid #383838;
+  background: #2A241F;
+  border: 1px solid var(--line-2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -280,55 +365,13 @@ main {
   background: var(--bg);
   padding: 24px 28px;
   min-width: 0;
+  width: 100%;
 }
 
-/* Inputs & Form Elements */
-input, select, textarea {
-  font: inherit;
-  padding: 8px 12px;
-  border: 1px solid var(--line-2);
-  border-radius: 8px;
-  background: #202020;
-  color: var(--ink);
-  outline: none;
-  transition: border-color 0.15s, background 0.15s;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: var(--c-2);
-  background: #252525;
-}
-
-button {
-  font: inherit;
-  padding: 8px 14px;
-  border: 1px solid var(--c-5);
-  border-radius: 8px;
-  background: var(--c-1);
-  color: var(--c-7);
-  cursor: pointer;
-  transition: background 0.15s ease, opacity 0.15s ease;
-  font-weight: 600;
-}
-
-button:hover {
-  background: var(--c-2);
-}
-
-button.secondary {
-  background: #282828;
-  color: var(--ink);
-  border-color: var(--line-2);
-}
-
-button.secondary:hover {
-  background: #333333;
-  border-color: var(--c-3);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+@media (max-width: 1023px) {
+  main {
+    padding: 16px 14px 88px 14px;
+  }
 }
 
 /* Badges */
@@ -341,22 +384,23 @@ button:disabled {
   font-size: 11.5px;
   font-weight: 600;
   white-space: nowrap;
-  background: #282828;
+  background: #2A241F;
   color: var(--ink-2);
   border: 1px solid var(--line-2);
 }
 
 .badge.ok {
-  background: #2a2a2a;
-  color: var(--c-1);
+  background: #302720;
+  color: var(--accent);
+  border-color: var(--accent-border);
 }
 
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(5px);
+  background: rgba(18, 15, 13, 0.82);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -365,15 +409,15 @@ button:disabled {
 }
 
 .modal-content {
-  background: #1c1c1c;
-  border: 1px solid #383838;
+  background: #24201D;
+  border: 1px solid var(--line-2);
   border-radius: 14px;
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.8);
-  color: #EAEAEA;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.85);
+  color: var(--ink);
 }
 
 /* Scrollbars */
@@ -387,10 +431,211 @@ button:disabled {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #383838;
+  background: #3A3229;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #545454;
+  background: #50463B;
 }
+
+/* Keyboard shortcut kbd chip */
+.shortcut-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 5px;
+  border-radius: 5px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  background: #241F1B;
+  color: #A39889;
+  border: 1px solid #3D352D;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* =========================================================================
+   MODO DE ACESSIBILIDADE: ALTO CONTRASTE (Baixa Visão)
+   Fundo preto puro (#000000), texto branco (#FFFFFF) e bordas verde neon (#00FF66)
+   ========================================================================= */
+html[data-accessibility-contrast="high"] {
+  --c-1: #FFFFFF;
+  --c-2: #FFFFFF;
+  --c-3: #FFFFFF;
+  --c-4: #FFFFFF;
+  --c-5: #00FF66;
+  --c-6: #00FF66;
+  --c-7: #000000;
+
+  --bg: #000000;
+  --panel: #000000;
+  --panel-2: #000000;
+  --panel-3: #000000;
+  --ink: #FFFFFF;
+  --ink-2: #FFFFFF;
+  --muted: #FFFFFF;
+  --faint: #FFFFFF;
+  --line: #00FF66;
+  --line-2: #00FF66;
+
+  --accent: #00FF66;
+  --accent-hover: #39FF14;
+  --accent-ink: #000000;
+  --accent-subtle: rgba(0, 255, 102, 0.16);
+  --accent-glow: rgba(0, 255, 102, 0.45);
+  --accent-border: #00FF66;
+
+  --ok: #00FF66;
+  --ok-bg: #000000;
+  --warn: #00FF66;
+  --warn-bg: #000000;
+  --bad: #FFFFFF;
+  --bad-bg: #000000;
+  --info: #FFFFFF;
+  --info-bg: #000000;
+  --neutral: #FFFFFF;
+  --neutral-bg: #000000;
+}
+
+html[data-accessibility-contrast="high"] body,
+html[data-accessibility-contrast="high"] .shell,
+html[data-accessibility-contrast="high"] main,
+html[data-accessibility-contrast="high"] .side,
+html[data-accessibility-contrast="high"] .modal-content,
+html[data-accessibility-contrast="high"] pre,
+html[data-accessibility-contrast="high"] input,
+html[data-accessibility-contrast="high"] select,
+html[data-accessibility-contrast="high"] textarea,
+html[data-accessibility-contrast="high"] header,
+html[data-accessibility-contrast="high"] nav {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #00FF66 !important;
+}
+
+html[data-accessibility-contrast="high"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.92) !important;
+}
+
+/* Override all Tailwind dark/earthy surface classes & inline background surfaces */
+html[data-accessibility-contrast="high"] :where(.shell [class*="bg-[#"]),
+html[data-accessibility-contrast="high"] :where(.shell section > div:not([data-testid="excalidraw-canvas-container"]) [style*="background"]),
+html[data-accessibility-contrast="high"] :where(.shell > main > div [style*="background"]),
+html[data-accessibility-contrast="high"] :where(.shell > nav [style*="background"]),
+html[data-accessibility-contrast="high"] :where(.modal-content [class*="bg-[#"]),
+html[data-accessibility-contrast="high"] :where(.modal-content [style*="background"]) {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+}
+
+/* Text colors -> pure crisp White across all cards, labels, descriptions and metadata */
+html[data-accessibility-contrast="high"] :where(.shell [class*="text-[#"]),
+html[data-accessibility-contrast="high"] :where(.shell section > div:not([data-testid="excalidraw-canvas-container"]) [style*="color"]),
+html[data-accessibility-contrast="high"] :where(.shell > main > div [style*="color"]),
+html[data-accessibility-contrast="high"] :where(.shell > nav [style*="color"]),
+html[data-accessibility-contrast="high"] :where(.modal-content [class*="text-[#"]),
+html[data-accessibility-contrast="high"] :where(.modal-content [style*="color"]) {
+  color: #FFFFFF !important;
+}
+
+/* Accent text highlights & active outline items -> Neon Green text on pure Black */
+html[data-accessibility-contrast="high"] .shell [class*="text-[#D97757]"],
+html[data-accessibility-contrast="high"] .shell [class*="text-[#E28768]"],
+html[data-accessibility-contrast="high"] .shell [class*="text-[#E09F3E]"],
+html[data-accessibility-contrast="high"] .shell [class*="text-[#FFD700]"],
+html[data-accessibility-contrast="high"] .shell > main button[style*="color: rgb(217, 119, 87)"],
+html[data-accessibility-contrast="high"] .shell > main button[style*="color: rgb(217, 119, 87)"] *,
+html[data-accessibility-contrast="high"] .shell > main [style*="color: rgb(217, 119, 87)"],
+html[data-accessibility-contrast="high"] .side-nav-btn.active,
+html[data-accessibility-contrast="high"] .side-installed-item.active,
+html[data-accessibility-contrast="high"] .badge.ok {
+  color: #00FF66 !important;
+}
+
+/* Primary CTA terracotta actions (Tailwind bg-[#D97757] or inline background rgb(217,119,87)) -> Neon Green fill + pure Black text */
+html[data-accessibility-contrast="high"] body .shell [class*="bg-[#D97757]"],
+html[data-accessibility-contrast="high"] body .shell [class*="bg-[#E28768]"],
+html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(217, 119, 87)"],
+html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(217, 119, 87)"],
+html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(226, 135, 104)"],
+html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(226, 135, 104)"],
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background-color: rgb(217, 119, 87)"],
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background: rgb(217, 119, 87)"] {
+  background: #00FF66 !important;
+  background-color: #00FF66 !important;
+  color: #000000 !important;
+  border: 2px solid #00FF66 !important;
+  font-weight: 800 !important;
+}
+
+html[data-accessibility-contrast="high"] body .shell [class*="bg-[#D97757]"] *,
+html[data-accessibility-contrast="high"] body .shell [class*="bg-[#E28768]"] *,
+html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(217, 119, 87)"] *,
+html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(217, 119, 87)"] *,
+html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(226, 135, 104)"] *,
+html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(226, 135, 104)"] *,
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background-color: rgb(217, 119, 87)"] *,
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background: rgb(217, 119, 87)"] * {
+  color: #000000 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Borders -> Crisp Neon Green everywhere */
+html[data-accessibility-contrast="high"] .shell [class*="border-[#"],
+html[data-accessibility-contrast="high"] .shell section > div:not([data-testid="excalidraw-canvas-container"]) [style*="border"],
+html[data-accessibility-contrast="high"] .shell > main > div [style*="border"],
+html[data-accessibility-contrast="high"] .shell > nav [style*="border"],
+html[data-accessibility-contrast="high"] .modal-content [class*="border-[#"],
+html[data-accessibility-contrast="high"] .modal-content [style*="border"],
+html[data-accessibility-contrast="high"] .side,
+html[data-accessibility-contrast="high"] .brand,
+html[data-accessibility-contrast="high"] .side-foot,
+html[data-accessibility-contrast="high"] .side-installed-avatar,
+html[data-accessibility-contrast="high"] .brand-icon-wrap,
+html[data-accessibility-contrast="high"] .badge,
+html[data-accessibility-contrast="high"] button.secondary {
+  border-color: #00FF66 !important;
+}
+
+html[data-accessibility-contrast="high"] .side-nav-btn.active,
+html[data-accessibility-contrast="high"] .side-installed-item.active,
+html[data-accessibility-contrast="high"] .side-nav-btn:hover,
+html[data-accessibility-contrast="high"] .side-installed-item:hover {
+  background-color: #000000 !important;
+  border: 1px solid #00FF66 !important;
+}
+
+html[data-accessibility-contrast="high"] .shortcut-kbd {
+  background: #000000 !important;
+  color: #00FF66 !important;
+  border: 1px solid #00FF66 !important;
+}
+
+html[data-accessibility-contrast="high"] *:focus-visible {
+  outline: 2px solid #00FF66 !important;
+  outline-offset: 2px !important;
+}
+
+html[data-accessibility-contrast="high"] .hc-banner-scrim {
+  background: rgba(0, 0, 0, 0.88) !important;
+}
+
+html[data-accessibility-contrast="high"] .hc-toast {
+  background: #000000 !important;
+  border: 2px solid #00FF66 !important;
+  color: #FFFFFF !important;
+}
+
+html[data-accessibility-contrast="high"] [data-testid="excalidraw-canvas-container"] {
+  border: 2px solid #00FF66 !important;
+}
+
+html[data-accessibility-contrast="high"] ::-webkit-scrollbar-thumb {
+  background: #00FF66;
+}
+

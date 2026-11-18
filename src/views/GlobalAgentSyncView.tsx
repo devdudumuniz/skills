@@ -65,173 +65,80 @@ export const GlobalAgentSyncView: React.FC<GlobalAgentSyncViewProps> = ({
   };
 
   return (
-    <div
-      style={{
-        maxWidth: 1040,
-        margin: "0 auto",
-        padding: "24px 20px 60px 20px",
-        color: "#EAEAEA",
-      }}
-    >
+    <div className="max-w-5xl mx-auto px-3 sm:px-5 py-4 sm:py-6 pb-20 text-[#F5F2EB] min-w-0">
       {/* Header com Breadcrumb */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
         <button
           type="button"
           onClick={onBackToCatalog}
-          style={{
-            background: "transparent",
-            border: "none",
-            color: "#9B9B9B",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            fontSize: 13,
-            padding: 0,
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "#EAEAEA")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "#9B9B9B")}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#2A241F] hover:bg-[#332C26] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#383129] text-xs font-medium transition-colors cursor-pointer"
         >
           <Icon n="chevron" size={14} />
           <span>Voltar ao Catálogo</span>
         </button>
 
-        <span
-          style={{
-            fontSize: 12,
-            backgroundColor: "#202020",
-            border: "1px solid #333333",
-            padding: "4px 10px",
-            borderRadius: 6,
-            color: "#C2C2C2",
-          }}
-        >
-          Última sincronização: <b>{lastSyncTime}</b>
+        <span className="text-xs bg-[#24201D] border border-[#383129] px-3 py-1.5 rounded-lg text-[#D4CDC3]">
+          Última sincronização: <b className="text-[#F5F2EB]">{lastSyncTime}</b>
         </span>
       </div>
 
       {/* Hero Banner */}
-      <div
-        style={{
-          backgroundColor: "#202020",
-          border: "1px solid #333333",
-          borderRadius: 14,
-          padding: "28px 24px",
-          marginBottom: 28,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
-          <div
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 10,
-              backgroundColor: "#292929",
-              border: "1px solid #545454",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#EAEAEA",
-              flexShrink: 0,
-            }}
-          >
+      <div className="bg-[#27221E] border border-[#383129] rounded-2xl p-5 sm:p-7 mb-6 shadow-xl">
+        <div className="flex flex-col sm:flex-row items-start gap-4">
+          <div className="w-11 h-11 rounded-xl bg-[#32231C] border border-[#D97757]/40 flex items-center justify-center text-[#D97757] shrink-0">
             <Icon n="terminal" size={22} />
           </div>
 
-          <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-              <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0, color: "#EAEAEA" }}>
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-2.5 mb-2">
+              <h1 className="text-lg sm:text-xl font-bold text-[#F5F2EB] m-0">
                 Ativação Global de Skills para Todos os Agentes
               </h1>
-              <span
-                style={{
-                  fontSize: 11.5,
-                  padding: "2px 8px",
-                  borderRadius: 12,
-                  backgroundColor: "#2d3748",
-                  border: "1px solid #4a5568",
-                  color: "#EAEAEA",
-                  fontWeight: 600,
-                }}
-              >
-                9 Skills Prontas
+              <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#32231C] border border-[#D97757]/45 text-[#E28768] font-semibold whitespace-nowrap">
+                {skills.length} Skills Prontas
               </span>
             </div>
 
-            <p style={{ fontSize: 13.5, color: "#C2C2C2", margin: "0 0 16px 0", lineHeight: 1.5 }}>
-              Todas as habilidades localizadas na pasta oficial <code>./skills/</code> deste repositório
-              são mapeadas para os diretórios globais padrão utilizados pelos agentes autônomos no seu sistema.
+            <p className="text-xs sm:text-sm text-[#D4CDC3] mb-4 leading-relaxed">
+              Todas as habilidades localizadas na pasta oficial{" "}
+              <code className="px-1.5 py-0.5 rounded bg-[#191613] border border-[#383129] text-[#E28768]">
+                ./skills/
+              </code>{" "}
+              deste repositório são mapeadas para os diretórios globais padrão utilizados pelos agentes autônomos no seu sistema.
               Dessa forma, qualquer agente iniciado em qualquer diretório da sua máquina reconhece e pode invocar as skills automaticamente.
             </p>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <div className="flex flex-wrap items-center gap-2.5">
               <button
                 type="button"
                 onClick={handleSimulateSync}
                 disabled={syncStatus === "syncing"}
-                style={{
-                  backgroundColor: "#EAEAEA",
-                  color: "#151515",
-                  border: "none",
-                  borderRadius: 8,
-                  padding: "8px 18px",
-                  fontSize: 13,
-                  fontWeight: 700,
-                  cursor: syncStatus === "syncing" ? "wait" : "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  transition: "background 0.15s ease",
-                }}
-                onMouseEnter={(e) => {
-                  if (syncStatus !== "syncing") e.currentTarget.style.backgroundColor = "#C2C2C2";
-                }}
-                onMouseLeave={(e) => {
-                  if (syncStatus !== "syncing") e.currentTarget.style.backgroundColor = "#EAEAEA";
-                }}
+                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white text-xs sm:text-[13px] font-bold inline-flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_2px_10px_rgba(217,119,87,0.35)] disabled:opacity-60"
               >
                 <Icon n={syncStatus === "syncing" ? "clock" : "check"} size={14} />
-                {syncStatus === "syncing" ? "Sincronizando Skills..." : "Sincronizar Globalmente Agora"}
+                <span>
+                  {syncStatus === "syncing" ? "Sincronizando Skills..." : "Sincronizar Globalmente Agora"}
+                </span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleCopy("npm run skills:global", "npm-btn")}
-                style={{
-                  backgroundColor: "#292929",
-                  color: "#EAEAEA",
-                  border: "1px solid #545454",
-                  borderRadius: 8,
-                  padding: "8px 14px",
-                  fontSize: 12.5,
-                  cursor: "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
+                className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-[#2A241F] hover:bg-[#332C26] text-[#F5F2EB] border border-[#483E34] text-xs font-medium inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Icon n="copy" size={13} />
-                {copiedCmd === "npm-btn" ? "Copiado!" : "Copiar comando: npm run skills:global"}
+                <span className="truncate">
+                  {copiedCmd === "npm-btn" ? "Copiado!" : "Copiar: npm run skills:global"}
+                </span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleCopy("deda-skills list", "cli-btn")}
-                style={{
-                  backgroundColor: "#292929",
-                  color: "#C2C2C2",
-                  border: "1px solid #383838",
-                  borderRadius: 8,
-                  padding: "8px 14px",
-                  fontSize: 12.5,
-                  cursor: "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
+                className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#383129] text-xs font-medium inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Icon n="terminal" size={13} />
-                {copiedCmd === "cli-btn" ? "Copiado!" : "CLI: deda-skills list"}
+                <span>{copiedCmd === "cli-btn" ? "Copiado!" : "CLI: deda-skills list"}</span>
               </button>
             </div>
           </div>
@@ -239,56 +146,31 @@ export const GlobalAgentSyncView: React.FC<GlobalAgentSyncViewProps> = ({
       </div>
 
       {/* Grid de 2 Colunas: Diretórios Globais & Como Usar no Prompt */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(460px, 1fr))", gap: 20, marginBottom: 28 }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-7 min-w-0">
         {/* Card 1: Locais de Agentes Vinculados */}
-        <div
-          style={{
-            backgroundColor: "#202020",
-            border: "1px solid #333333",
-            borderRadius: 14,
-            padding: "20px 22px",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+        <div className="bg-[#24201D] border border-[#383129] rounded-2xl p-5 min-w-0">
+          <div className="flex items-center gap-2 mb-3.5 text-[#D97757]">
             <Icon n="layers" size={16} />
-            <h2 style={{ fontSize: 15, fontWeight: 700, margin: 0, color: "#EAEAEA" }}>
+            <h2 className="text-[15px] font-bold m-0 text-[#F5F2EB]">
               Diretórios Globais Configurados
             </h2>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div className="flex flex-col gap-2.5">
             {agentLocations.map((loc, idx) => (
               <div
                 key={idx}
-                style={{
-                  backgroundColor: "#181818",
-                  border: "1px solid #2d2d2d",
-                  borderRadius: 8,
-                  padding: "10px 14px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
+                className="bg-[#1E1A17] border border-[#332C26] rounded-xl px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2"
               >
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#EAEAEA", marginBottom: 2 }}>
+                <div className="min-w-0 flex-1">
+                  <div className="text-[13px] font-semibold text-[#F5F2EB] mb-0.5 break-words">
                     {loc.agent}
                   </div>
-                  <code style={{ fontSize: 11.5, color: "#9B9B9B", fontFamily: "monospace" }}>
+                  <code className="text-[11.5px] text-[#A39889] font-mono break-all">
                     {loc.dir}
                   </code>
                 </div>
-                <span
-                  style={{
-                    fontSize: 11,
-                    backgroundColor: "#243224",
-                    border: "1px solid #395239",
-                    color: "#A3D9A5",
-                    padding: "3px 8px",
-                    borderRadius: 12,
-                    fontWeight: 600,
-                  }}
-                >
+                <span className="text-[11px] bg-[#32231C] border border-[#D97757]/40 text-[#E28768] px-2.5 py-0.5 rounded-full font-semibold whitespace-nowrap shrink-0">
                   {loc.status}
                 </span>
               </div>
@@ -297,85 +179,51 @@ export const GlobalAgentSyncView: React.FC<GlobalAgentSyncViewProps> = ({
         </div>
 
         {/* Card 2: Instruções para o Terminal e Prompts */}
-        <div
-          style={{
-            backgroundColor: "#202020",
-            border: "1px solid #333333",
-            borderRadius: 14,
-            padding: "20px 22px",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+        <div className="bg-[#24201D] border border-[#383129] rounded-2xl p-5 min-w-0">
+          <div className="flex items-center gap-2 mb-3.5 text-[#D97757]">
             <Icon n="code" size={16} />
-            <h2 style={{ fontSize: 15, fontWeight: 700, margin: 0, color: "#EAEAEA" }}>
+            <h2 className="text-[15px] font-bold m-0 text-[#F5F2EB]">
               Como Usar as Skills com seus Agentes
             </h2>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, fontSize: 13, color: "#C2C2C2", lineHeight: 1.5 }}>
-            <div style={{ backgroundColor: "#181818", border: "1px solid #2d2d2d", borderRadius: 8, padding: "12px 14px" }}>
-              <div style={{ fontWeight: 600, color: "#EAEAEA", marginBottom: 4 }}>
+          <div className="flex flex-col gap-3 text-[13px] text-[#D4CDC3] leading-relaxed">
+            <div className="bg-[#1E1A17] border border-[#332C26] rounded-xl p-3.5">
+              <div className="font-semibold text-[#F5F2EB] mb-1">
                 1. No Claude Code ou Cursor
               </div>
-              <p style={{ margin: "0 0 8px 0", fontSize: 12.5, color: "#9B9B9B" }}>
+              <p className="m-0 mb-2 text-xs text-[#A39889]">
                 Basta pedir no prompt para seguir a skill desejada:
               </p>
-              <div
-                style={{
-                  backgroundColor: "#111111",
-                  border: "1px solid #333333",
-                  borderRadius: 6,
-                  padding: "6px 10px",
-                  fontFamily: "monospace",
-                  fontSize: 12,
-                  color: "#EAEAEA",
-                }}
-              >
+              <div className="bg-[#191613] border border-[#383129] rounded-lg px-3 py-2 font-mono text-xs text-[#F5F2EB] break-words">
                 "Siga as diretrizes da skill @devops-delivery para planejar a entrega do microsserviço."
               </div>
             </div>
 
-            <div style={{ backgroundColor: "#181818", border: "1px solid #2d2d2d", borderRadius: 8, padding: "12px 14px" }}>
-              <div style={{ fontWeight: 600, color: "#EAEAEA", marginBottom: 4 }}>
+            <div className="bg-[#1E1A17] border border-[#332C26] rounded-xl p-3.5">
+              <div className="font-semibold text-[#F5F2EB] mb-1">
                 2. No Terminal com a CLI Universal
               </div>
-              <p style={{ margin: "0 0 8px 0", fontSize: 12.5, color: "#9B9B9B" }}>
+              <p className="m-0 mb-2 text-xs text-[#A39889]">
                 Use o comando global criado pelo instalador:
               </p>
-              <div
-                style={{
-                  backgroundColor: "#111111",
-                  border: "1px solid #333333",
-                  borderRadius: 6,
-                  padding: "6px 10px",
-                  fontFamily: "monospace",
-                  fontSize: 12,
-                  color: "#EAEAEA",
-                }}
-              >
-                deda-skills list &nbsp;&nbsp;&nbsp;&nbsp;# lista as skills ativas<br />
-                deda-skills info vibecode-builder
+              <div className="bg-[#191613] border border-[#383129] rounded-lg px-3 py-2 font-mono text-xs text-[#F5F2EB] overflow-x-auto">
+                <div>deda-skills list &nbsp;&nbsp;# lista as skills ativas</div>
+                <div>deda-skills info vibecode-builder</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Tabela / Lista das 9 Skills no Diretório Oficial ./skills/ */}
-      <div
-        style={{
-          backgroundColor: "#202020",
-          border: "1px solid #333333",
-          borderRadius: 14,
-          padding: "20px 22px",
-        }}
-      >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-          <div>
-            <h2 style={{ fontSize: 15, fontWeight: 700, margin: 0, color: "#EAEAEA" }}>
+      {/* Tabela / Lista das Skills no Diretório Oficial ./skills/ */}
+      <div className="bg-[#24201D] border border-[#383129] rounded-2xl p-5 min-w-0">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div className="min-w-0">
+            <h2 className="text-[15px] font-bold m-0 text-[#F5F2EB]">
               Skills Gerenciadas em ./skills/
             </h2>
-            <span style={{ fontSize: 12, color: "#9B9B9B" }}>
+            <span className="text-xs text-[#A39889]">
               Separadas da interface da plataforma e prontas para consumo por agentes
             </span>
           </div>
@@ -383,95 +231,43 @@ export const GlobalAgentSyncView: React.FC<GlobalAgentSyncViewProps> = ({
           <button
             type="button"
             onClick={() => handleCopy("python3 scripts/install_global_skills.py", "py-btn")}
-            style={{
-              backgroundColor: "#292929",
-              color: "#C2C2C2",
-              border: "1px solid #444444",
-              borderRadius: 6,
-              padding: "5px 12px",
-              fontSize: 12,
-              cursor: "pointer",
-            }}
+            className="self-start sm:self-auto px-3 py-1.5 rounded-lg bg-[#2A241F] hover:bg-[#332C26] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#483E34] text-xs font-medium transition-colors cursor-pointer shrink-0"
           >
             {copiedCmd === "py-btn" ? "Copiado!" : "Copiar python3 script"}
           </button>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <div className="flex flex-col gap-2.5">
           {skills.map((skill) => (
-            <div
+            <button
               key={skill.id}
+              type="button"
               onClick={() => onSelectSkill(skill)}
-              style={{
-                backgroundColor: "#181818",
-                border: "1px solid #2d2d2d",
-                borderRadius: 8,
-                padding: "12px 16px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                cursor: "pointer",
-                transition: "background 0.15s, border-color 0.15s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#242424";
-                e.currentTarget.style.borderColor = "#545454";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#181818";
-                e.currentTarget.style.borderColor = "#2d2d2d";
-              }}
+              className="w-full text-left bg-[#1E1A17] hover:bg-[#2A241F] border border-[#332C26] hover:border-[#D97757]/50 rounded-xl px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 cursor-pointer transition-colors"
             >
-              <div style={{ flex: 1, minWidth: 0, paddingRight: 16 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: "#EAEAEA" }}>
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2 mb-1">
+                  <span className="text-sm font-bold text-[#F5F2EB]">
                     {skill.name}
                   </span>
-                  <span
-                    style={{
-                      fontSize: 11,
-                      backgroundColor: "#292929",
-                      border: "1px solid #444444",
-                      padding: "1px 6px",
-                      borderRadius: 4,
-                      color: "#9B9B9B",
-                      fontFamily: "monospace",
-                    }}
-                  >
+                  <span className="text-[11px] bg-[#2A241F] border border-[#483E34] px-2 py-0.5 rounded text-[#D4CDC3] font-mono">
                     skills/{skill.id}
                   </span>
                 </div>
-                <p
-                  style={{
-                    fontSize: 12.5,
-                    color: "#9B9B9B",
-                    margin: 0,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <p className="text-xs text-[#A39889] m-0 line-clamp-2 sm:truncate">
                   {skill.description}
                 </p>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
-                <span
-                  style={{
-                    fontSize: 11.5,
-                    backgroundColor: "#243224",
-                    border: "1px solid #395239",
-                    color: "#A3D9A5",
-                    padding: "3px 8px",
-                    borderRadius: 12,
-                    fontWeight: 600,
-                  }}
-                >
+              <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
+                <span className="text-[11px] bg-[#32231C] border border-[#D97757]/40 text-[#E28768] px-2.5 py-0.5 rounded-full font-semibold">
                   Global
                 </span>
-                <span style={{ fontSize: 12, color: "#767676" }}>Ver detalhes &rarr;</span>
+                <span className="text-xs text-[#A39889] font-medium">
+                  Ver detalhes &rarr;
+                </span>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>

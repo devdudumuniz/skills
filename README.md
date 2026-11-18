@@ -1,26 +1,43 @@
-# DM Skills
+# Deda Skills • Catálogo de Habilidades para Agentes de IA
 
 <p align="center">
-  <img src="./assets/banner.svg" alt="DM Skills Banner" width="100%">
+  <img src="./assets/banner.jpg" alt="Deda Skills Banner" width="100%">
 </p>
 
-Catálogo aberto e profissional de **habilidades de engenharia para Agentes de IA** (Claude Code, OpenAI Codex, Manus, Antigravity, Cursor, Hermes, OpenCode e agentes locais).
+Catálogo aberto, auditado e profissional de **habilidades de engenharia para Agentes de IA** (Claude Code, OpenAI Codex, Manus, Antigravity, Cursor, Hermes, OpenCode, OpenHands e agentes locais).
 
-Este repositório é dedicado exclusivamente ao desenvolvimento, empacotamento, teste e distribuição de **Skills**. Ele inclui uma interface gráfica integrada para execução local na sua máquina, além de mecanismos automáticos para tornar todas as skills **visíveis globalmente** para qualquer agente configurado no sistema.
+> 💡 **Versão 1.0.0 (Release Aberta)**: O **Deda Skills** está em sua versão inicial **v1.0.0** e preparado para publicação como repositório aberto e público. As skills listadas representam **algumas das habilidades disponíveis atualmente** no ecossistema, incluindo 6 mascotes assistentes da fauna brasileira (Carcará, Lobo-Guará, Tatu-Bola, Ararinha-Azul, Sagui e Onça-Pintada) e suítes com arte em xilogravura nordestina.
 
 ---
 
-## 📂 Estrutura do Repositório
+## 🔒 Portabilidade Universal & Segurança Zero-Vazamento
+
+Nossas skills foram projetadas para serem **100% reaproveitáveis em qualquer agente e em qualquer ambiente**, e não apenas no nosso:
+
+- **Compatibilidade Agnóstica**: Seguem o padrão canônico `.skill` com especificação aberta em `SKILL.md`, executáveis por Claude Code, Cursor IDE, OpenAI Codex, OpenHands, Hermes e agentes locais CLI.
+- **Zero Vazamento de Credenciais**: Nenhuma skill armazena tokens privados, chaves de API, senhas ou caminhos pessoais de ambiente. A autenticação é provida via variáveis de ambiente padrão (`process.env`) ou parâmetros de execução informados pelo usuário.
+- **Isolamento & Salvaguardas**: Cada habilidade opera com limites determinísticos e procedimentos plan-first, evitando exfiltração de dados ou mutações não autorizadas.
+- **Tema & Responsividade**: Interface configurada no **Tema do Sertão no Estilo Claude (`#D97757` Terracotta / Barro Queimado)** com paleta terrosa quente, superfícies de cerâmica/adobe e arquitetura 100% responsiva para smartphones, tablets e desktops (com menu drawer e barra inferior para navegação com o polegar).
+
+---
+
+## 📂 Estrutura do Repositório (Amostra de Skills Disponíveis)
+
+Abaixo estão **algumas das skills oficiais disponíveis** na versão atual:
 
 ```text
 .
-├── skills/                          # Diretório oficial das skills do repositório
-│   ├── devops-delivery/             # Planejamento defensivo de CI/CD e entrega
-│   ├── vibecode-builder/            # Engenharia incremental orientada a TDD
+├── skills/                          # Amostra das skills oficiais prontas para uso
+│   ├── devops-delivery/             # Planejamento defensivo de CI/CD, blue-green e entrega
+│   ├── vibecode-builder/            # Engenharia incremental orientada a TDD e qualidade
 │   ├── automation-designer/         # Desenho de automações, webhooks e idempotência
-│   ├── security-baseline/           # Análise estática e hardening defensivo
-│   ├── network-server-diagnostics/  # Diagnóstico e triagem de infraestrutura
-│   ├── exact-ui-extraction-transfer/# Extração e replicação de fidelidade visual
+│   ├── security-baseline/           # Análise estática, hardening defensivo e zero-trust
+│   ├── network-server-diagnostics/  # Diagnóstico e triagem de infraestrutura e portas
+│   ├── exact-ui-extraction-transfer/# Extração e replicação de fidelidade visual pixel-perfect
+│   ├── design-intelligence-studio/  # Design systems W3C DTCG, calibração estética e auditoria WCAG
+│   ├── canvas-diagram-studio/       # Diagramas Excalidraw v2 com bindings nativos e layout anti-colisão
+│   ├── excalidraw-diagram-generator/# Gerador interativo de diagramas arquiteturais via prompt no Excalidraw
+│   ├── architecture-diagram-engine/ # Diagramas técnicos Draw.io/mxGraph (C4, ER, UML) validados
 │   ├── status-portal/               # Skill geradora de portal de status executivo
 │   ├── status-portal-registro/      # Registro auditável de progresso e timeline
 │   └── status-portal-publicar/      # Sanitização e publicação para visão cliente
@@ -28,7 +45,7 @@ Este repositório é dedicado exclusivamente ao desenvolvimento, empacotamento, 
 ├── scripts/                         # Automações de empacotamento e link global
 │   ├── install_global_skills.py     # Script para disponibilizar skills para todos os agentes
 │   └── package_skills.py            # Empacotador de diretórios em arquivos .skill
-└── src/                             # Plataforma Web local para exploração e testes de skills
+└── src/                             # Plataforma Web local responsiva para testes e exploração
 ```
 
 > **Nota sobre o `status-portal`**: O painel de status executivo é exclusivamente uma das habilidades empacotadas (`./skills/status-portal/`). Ele não governa a aplicação nem o repositório — sendo acionado sob demanda apenas quando um agente executa tarefas de relatório executivo.
