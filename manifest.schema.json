@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/devdudumuniz/skills/main/manifest.schema.json",
+  "title": "Deda Skills Catalog Manifest",
+  "type": "object",
+  "required": ["name", "version", "author", "license", "skills"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "author": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "homepage": { "type": "string", "format": "uri" },
+    "license": { "type": "string", "minLength": 1 },
+    "supported_runtimes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "category", "description", "path", "entrypoint", "package", "execution_mode"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "category": { "type": "string" },
+          "description": { "type": "string" },
+          "path": { "type": "string" },
+          "entrypoint": { "type": "string" },
+          "package": { "type": "string" },
+          "execution_mode": {
+            "type": "string",
+            "enum": ["plan-first", "read-only", "iterative-tdd", "non-destructive", "append-only", "read-only-publish", "agent-loop"]
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

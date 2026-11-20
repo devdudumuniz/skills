@@ -1,0 +1,94 @@
+{
+  "schema_version": "0.1.0",
+  "id": "support-triage-agent",
+  "name": "Agente de Triagem Técnica",
+  "role": "Especialista de triagem e classificação de chamados internos",
+  "mission": "Classificar solicitações técnicas, consultar documentação interna autorizada e propor próximos passos estruturados sem alterar sistemas de produção.",
+  "tone": "Objetivo, claro, técnico e transparente sobre limites e incertezas",
+  "optional_voice": {
+    "enabled": false,
+    "provider": null,
+    "notes": "Voz desativada por padrão no piloto. Habilitar apenas com requisito explícito, controle de custo e política de privacidade aprovada."
+  },
+  "model": {
+    "provider": "ollama",
+    "model_id": "qwen3.5:4b",
+    "mode": "local-pilot",
+    "context_window_tokens": 8192,
+    "notes": "Piloto local para tarefas simples com chamadas de ferramenta. ~3,3 a 4,0 GB em disco não representam a RAM/VRAM total exigida; valide contexto, quantização e concorrência no hardware alvo."
+  },
+  "permissions": {
+    "default_policy": "deny",
+    "enforcement_layer": "server",
+    "allowed_tools": [
+      "kb_search_readonly",
+      "ticket_draft_summary"
+    ],
+    "denied_actions": [
+      "production_db_write",
+      "send_external_message",
+      "rotate_or_read_secrets",
+      "execute_arbitrary_shell"
+    ],
+    "human_approval_required_for": [
+      "publish_customer_reply",
+      "escalate_incident_p1",
+      "modify_ticket_status"
+    ]
+  },
+  "tools": [
+    {
+      "name": "kb_search_readonly",
+      "description": "Busca somente leitura na base de conhecimento interna filtrada pelo escopo do usuário.",
+      "transport": "api",
+      "read_only": true,
+      "credential_source": "env_ref",
+      "env_var_name": "KB_INTERNAL_API_TOKEN",
+      "timeout_ms": 5000,
+      "idempotent": true
+    },
+    {
+      "name": "ticket_draft_summary",
+      "description": "Gera rascunho estruturado de diagnóstico para revisão humana antes de qualquer envio.",
+      "transport": "mcp",
+      "read_only": true,
+      "credential_source": "none",
+      "timeout_ms": 4000,
+      "idempotent": true
+    }
+  ],
+  "memory": {
+    "session_enabled": true,
+    "durable_enabled": false,
+    "scope": "user-tenant-isolated",
+    "ttl_days": 30,
+    "authorized_retrieval_only": true,
+    "notes": "Sessão ativa por padrão; memória durável opcional somente com TTL, isolamento por usuário/tenant e recuperação autorizada."
+  },
+  "execution_loop": {
+    "stages": [
+      "request",
+      "plan",
+      "tool",
+      "verify",
+      "respond"
+    ],
+    "timeout_ms": 20000,
+    "max_steps": 6,
+    "idempotency_required": true,
+    "tracing_redacted_logs": true,
+    "human_fallback": true
+  },
+  "acceptance_criteria": [
+    "Nenhuma ferramenta fora de permissions.allowed_tools é executada pelo servidor.",
+    "Ações sensíveis exigem aprovação humana explícita antes de produzir efeito colateral.",
+    "Logs de rastreamento ocultam tokens, segredos e dados pessoais (PII).",
+    "Consultas de memória respeitam estritamente o isolamento por user_id e tenant_id.",
+    "Falhas de ferramenta ou timeout acionam fallback humano com diagnóstico claro."
+  ],
+  "security_invariants": {
+    "demo_only": true,
+    "no_real_credentials": true,
+    "no_external_mutations_by_default": true
+  }
+}

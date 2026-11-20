@@ -80,7 +80,7 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
       style={{
         position: "fixed",
         inset: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        backgroundColor: "rgba(46, 25, 15, 0.45)",
         backdropFilter: "blur(4px)",
         display: "flex",
         alignItems: "center",
@@ -92,19 +92,20 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
       {/* Toast Alert */}
       {toast && (
         <div
+          className="hc-toast"
           style={{
             position: "fixed",
             top: 24,
             left: "50%",
             transform: "translateX(-50%)",
-            background: "#202020",
-            color: "#EAEAEA",
-            border: "1px solid #545454",
+            background: "#FFFDF9",
+            color: "#2E190F",
+            border: "1px solid #CEB79A",
             padding: "8px 18px",
             borderRadius: 8,
             fontSize: 13,
-            fontWeight: 500,
-            boxShadow: "0 10px 25px rgba(0,0,0,0.7)",
+            fontWeight: 600,
+            boxShadow: "0 10px 25px rgba(46, 25, 15, 0.18)",
             zIndex: 10000,
           }}
         >
@@ -112,22 +113,22 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
         </div>
       )}
 
-      {/* Main Dialog Box matching image_c938581a.png */}
+      {/* Main Dialog Box */}
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
           width: "100%",
           maxWidth: 780,
-          backgroundColor: "#24201D",
+          backgroundColor: "#FFFDF9",
           borderRadius: 16,
-          border: "1px solid #483E34",
-          boxShadow: "0 24px 60px rgba(0, 0, 0, 0.85)",
-          color: "#F5F2EB",
+          border: "1px solid #CEB79A",
+          boxShadow: "0 24px 60px rgba(46, 25, 15, 0.22)",
+          color: "#2E190F",
           position: "relative",
           maxHeight: "90vh",
           overflowY: "auto",
         }}
-        className="skill-preview-dialog p-5 sm:p-7"
+        className="modal-content skill-preview-dialog p-5 sm:p-7"
       >
         {/* Top Right Action Buttons: Share, Download, Close */}
         <div
@@ -149,7 +150,7 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
               style={{
                 background: "transparent",
                 border: "none",
-                color: skill.isFavorite ? "#EAEAEA" : "#9B9B9B",
+                color: skill.isFavorite ? "#9A6008" : "#5A4032",
                 cursor: "pointer",
                 padding: 4,
                 display: "flex",
@@ -157,11 +158,11 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
                 transition: "color 0.15s, transform 0.15s",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#FFFFFF";
+                e.currentTarget.style.color = skill.isFavorite ? "#9A6008" : "#2E190F";
                 e.currentTarget.style.transform = "scale(1.1)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = skill.isFavorite ? "#EAEAEA" : "#9B9B9B";
+                e.currentTarget.style.color = skill.isFavorite ? "#9A6008" : "#5A4032";
                 e.currentTarget.style.transform = "scale(1)";
               }}
             >
@@ -176,15 +177,15 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
             style={{
               background: "transparent",
               border: "none",
-              color: "#9B9B9B",
+              color: "#5A4032",
               cursor: "pointer",
               padding: 4,
               display: "flex",
               alignItems: "center",
               transition: "color 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#EAEAEA")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#9B9B9B")}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#2E190F")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#5A4032")}
           >
             {/* Share curved arrow */}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -201,15 +202,15 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
             style={{
               background: "transparent",
               border: "none",
-              color: "#9B9B9B",
+              color: "#5A4032",
               cursor: "pointer",
               padding: 4,
               display: "flex",
               alignItems: "center",
               transition: "color 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#EAEAEA")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#9B9B9B")}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#2E190F")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#5A4032")}
           >
             {/* Download tray icon */}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -226,15 +227,15 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
             style={{
               background: "transparent",
               border: "none",
-              color: "#9B9B9B",
+              color: "#5A4032",
               cursor: "pointer",
               padding: 4,
               display: "flex",
               alignItems: "center",
               transition: "color 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#EAEAEA")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#9B9B9B")}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#2E190F")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#5A4032")}
           >
             {/* Close 'X' */}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -253,11 +254,11 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
                 <span
                   key={idx}
                   style={{
-                    backgroundColor: "#2F2823",
-                    border: "1px solid #443A30",
-                    color: "#D4CDC3",
+                    backgroundColor: "#F4EBDD",
+                    border: "1px solid #E2D1BC",
+                    color: "#5A4032",
                     fontSize: 11.5,
-                    fontWeight: 500,
+                    fontWeight: 600,
                     padding: "3px 10px",
                     borderRadius: 6,
                   }}
@@ -272,7 +273,7 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
               style={{
                 fontSize: 24,
                 fontWeight: 700,
-                color: "#F5F2EB",
+                color: "#2E190F",
                 margin: "0 0 10px 0",
                 lineHeight: 1.25,
               }}
@@ -287,12 +288,12 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
                 alignItems: "center",
                 flexWrap: "wrap",
                 gap: 10,
-                color: "#A39889",
+                color: "#755B4B",
                 fontSize: 12.5,
                 marginBottom: 20,
               }}
             >
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#D4CDC3" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#5A4032", fontWeight: 600 }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z" />
                 </svg>
@@ -317,9 +318,9 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
                 type="button"
                 onClick={() => onToggleInstall && onToggleInstall(skill.id)}
                 style={{
-                  backgroundColor: skill.installed ? "#302A24" : "#D97757",
-                  color: skill.installed ? "#F5F2EB" : "#FFFFFF",
-                  border: skill.installed ? "1px solid #483E34" : "1px solid #D97757",
+                  backgroundColor: skill.installed ? "#F7EFE4" : "#C45730",
+                  color: skill.installed ? "#2E190F" : "#FFFFFF",
+                  border: skill.installed ? "1px solid #CEB79A" : "1px solid #C45730",
                   borderRadius: 8,
                   padding: "8px 16px",
                   fontSize: 13,
@@ -353,21 +354,21 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
                 type="button"
                 onClick={() => onOpenDetails(skill)}
                 style={{
-                  backgroundColor: "#2A241F",
-                  color: "#F5F2EB",
-                  border: "1px solid #483E34",
+                  backgroundColor: "#F7EFE4",
+                  color: "#2E190F",
+                  border: "1px solid #CEB79A",
                   borderRadius: 8,
                   padding: "8px 16px",
                   fontSize: 13,
-                  fontWeight: 500,
+                  fontWeight: 600,
                   cursor: "pointer",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 7,
                   transition: "background 0.15s, border-color 0.15s",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#332B25")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2A241F")}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#EFE1CE")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#F7EFE4")}
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -395,7 +396,7 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
         <div
           style={{
             height: 1,
-            backgroundColor: "#383129",
+            backgroundColor: "#E2D1BC",
             margin: "24px 0 20px 0",
           }}
         />
@@ -405,7 +406,7 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
           style={{
             fontSize: 14.5,
             lineHeight: 1.6,
-            color: "#D4CDC3",
+            color: "#5A4032",
             margin: "0 0 20px 0",
           }}
         >
@@ -423,11 +424,11 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
                 style={{
                   width: "100%",
                   textAlign: "left",
-                  backgroundColor: "#1E1A17",
-                  border: "1px solid #383129",
+                  backgroundColor: "#F4EBDD",
+                  border: "1px solid #E2D1BC",
                   borderRadius: 12,
                   padding: "13px 18px",
-                  color: copiedPrompt === prompt ? "#F5F2EB" : "#D4CDC3",
+                  color: copiedPrompt === prompt ? "#2E190F" : "#5A4032",
                   fontSize: 13.5,
                   cursor: "pointer",
                   display: "flex",
@@ -436,12 +437,12 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
                   transition: "background 0.15s, border-color 0.15s, transform 0.1s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#2B2520";
-                  e.currentTarget.style.borderColor = "#D97757";
+                  e.currentTarget.style.backgroundColor = "#EFE1CE";
+                  e.currentTarget.style.borderColor = "#C45730";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#1E1A17";
-                  e.currentTarget.style.borderColor = "#383129";
+                  e.currentTarget.style.backgroundColor = "#F4EBDD";
+                  e.currentTarget.style.borderColor = "#E2D1BC";
                 }}
               >
                 {/* Speech Bubble Icon */}
@@ -450,7 +451,7 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
                   height="17"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#9B9B9B"
+                  stroke="#755B4B"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -464,7 +465,8 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
                 <span
                   style={{
                     fontSize: 11,
-                    color: copiedPrompt === prompt ? "#EAEAEA" : "#767676",
+                    fontWeight: 600,
+                    color: copiedPrompt === prompt ? "#B44B25" : "#755B4B",
                     marginLeft: 8,
                     whiteSpace: "nowrap",
                   }}
@@ -476,11 +478,11 @@ export const SkillPreviewModal: React.FC<SkillPreviewModalProps> = ({
           ) : (
             <div
               style={{
-                backgroundColor: "#1c1c1c",
-                border: "1px solid #333333",
+                backgroundColor: "#F4EBDD",
+                border: "1px solid #E2D1BC",
                 borderRadius: 12,
                 padding: "14px 18px",
-                color: "#9B9B9B",
+                color: "#5A4032",
                 fontSize: 13,
                 display: "flex",
                 alignItems: "center",

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { AGENT_SUITES } from "./data";
 import { AGENT_SKILLS } from "../src/data/skillsData";
 
-test("AGENT_SUITES contains all 3 new Deda Skills suites with unique IDs and original authorship", () => {
+test("AGENT_SUITES contains all Deda Skills suites with unique IDs and original authorship", () => {
   const ids = AGENT_SUITES.map((s) => s.id);
   assert.equal(new Set(ids).size, ids.length, "Suite IDs must be unique");
 
@@ -12,6 +12,7 @@ test("AGENT_SUITES contains all 3 new Deda Skills suites with unique IDs and ori
     "canvas-diagram-studio",
     "architecture-diagram-engine",
     "excalidraw-diagram-generator",
+    "agent-profile-builder",
   ];
 
   for (const id of expectedNewIds) {
@@ -34,6 +35,7 @@ test("New Deda Skills suites avoid external plugin/runtime lock-in paths", () =>
       "canvas-diagram-studio",
       "architecture-diagram-engine",
       "excalidraw-diagram-generator",
+      "agent-profile-builder",
     ].includes(s.id)
   );
   for (const suite of newSuites) {

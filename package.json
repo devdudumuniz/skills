@@ -1,13 +1,21 @@
 {
   "name": "deda-skills",
-  "private": true,
   "version": "1.0.0",
+  "description": "Catálogo universal aberto de habilidades de engenharia para agentes autônomos de IA.",
+  "author": "Eduardo Muniz (https://github.com/devdudumuniz)",
+  "license": "MIT",
+  "homepage": "https://github.com/devdudumuniz/skills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devdudumuniz/skills.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
     "start": "node server.ts",
     "build": "tsc && vite build",
     "lint": "tsc --noEmit",
+    "test": "tsx --test skills/data.test.ts src/utils/*.test.ts",
     "preview": "vite preview --port 3000",
     "skills:global": "python3 scripts/install_global_skills.py",
     "skills:package": "python3 scripts/package_skills.py"
@@ -19,6 +27,7 @@
     "@types/express": "^5.0.6",
     "@types/three": "^0.187.0",
     "express": "^5.3.0",
+    "html2canvas": "^1.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^4.3.4",

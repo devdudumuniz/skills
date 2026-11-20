@@ -39,12 +39,18 @@ Every skill in this repository must follow strict production engineering guideli
    ├── references/
    └── scripts/
    ```
-3. Register the skill in `manifest.json`.
+3. Register the skill in `manifest.json` (validated against `manifest.schema.json`).
 4. Bundle distribution packages:
    ```bash
-   python tools/package_skills.py --skill <your-skill-name>
+   python3 scripts/package_skills.py
+   # or via npm script:
+   npm run skills:package
    ```
-5. Test installation:
+5. Test global activation:
    ```bash
-   python install.py --dest ./test-dir --skill <your-skill-name>
+   python3 scripts/install_global_skills.py
+   # or via npm script:
+   npm run skills:global
    ```
+6. **Licensing**: All contributions are licensed under the repository MIT License (`LICENSE` and `skills/LICENSE`, Copyright © 2026 Eduardo Muniz).
+

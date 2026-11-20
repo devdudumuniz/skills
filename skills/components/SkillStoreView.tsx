@@ -240,7 +240,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
         maxWidth: 1040,
         margin: "0 auto",
         padding: "16px 16px 60px",
-        color: "#EAEAEA",
+        color: "#2E190F",
       }}
     >
       {/* Top Banner / Actions Bar */}
@@ -260,21 +260,22 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               width: 38,
               height: 38,
               borderRadius: 10,
-              backgroundColor: "#222222",
-              border: "1px solid #383838",
+              backgroundColor: "#FFFDF9",
+              border: "1px solid #CEB79A",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#EAEAEA",
+              color: "#C45730",
+              boxShadow: "0 2px 8px rgba(46, 25, 15, 0.06)",
             }}
           >
-            <DedaLogo size={22} color="#EAEAEA" />
+            <DedaLogo size={22} color="#C45730" />
           </div>
           <div>
-            <h1 style={{ fontSize: 19, fontWeight: 700, margin: 0, color: "#F5F2EB" }}>
+            <h1 style={{ fontSize: 19, fontWeight: 700, margin: 0, color: "#2E190F" }}>
               Deda Skills • Catálogo de Agentes
             </h1>
-            <p style={{ fontSize: 12, color: "#A39889", margin: "2px 0 0" }}>
+            <p style={{ fontSize: 12, color: "#755B4B", margin: "2px 0 0" }}>
               {suites.length} agentes especializados agrupando {totalBundledSkills} habilidades com arte em xilogravura
             </p>
           </div>
@@ -285,9 +286,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             type="button"
             onClick={() => onNavigateTest()}
             style={{
-              background: "#26211D",
-              border: "1px solid #3D352D",
-              color: "#F5F2EB",
+              background: "#FFFDF9",
+              border: "1px solid #CEB79A",
+              color: "#2E190F",
               padding: "7px 12px",
               borderRadius: 8,
               fontSize: 12,
@@ -297,8 +298,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               gap: 6,
               cursor: "pointer",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#2F2924")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#26211D")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#F6ECE0")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#FFFDF9")}
           >
             <Icon n="play" size={13} />
             <span>Playground</span>
@@ -309,9 +310,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               type="button"
               onClick={() => onNavigateDiagramStudio()}
               style={{
-                background: "#26211D",
-                border: "1px solid #3D352D",
-                color: "#F5F2EB",
+                background: "#FFFDF9",
+                border: "1px solid #CEB79A",
+                color: "#2E190F",
                 padding: "7px 12px",
                 borderRadius: 8,
                 fontSize: 12,
@@ -321,8 +322,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 gap: 6,
                 cursor: "pointer",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#2F2924")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#26211D")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#F6ECE0")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#FFFDF9")}
             >
               <Icon n="pen-tool" size={13} />
               <span>Diagramas Excalidraw</span>
@@ -333,9 +334,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             type="button"
             onClick={onNavigateGlobalSync}
             style={{
-              background: "#26211D",
-              border: "1px solid #3D352D",
-              color: "#F5F2EB",
+              background: "#FFFDF9",
+              border: "1px solid #CEB79A",
+              color: "#2E190F",
               padding: "7px 12px",
               borderRadius: 8,
               fontSize: 12,
@@ -345,8 +346,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               gap: 6,
               cursor: "pointer",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#2F2924")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#26211D")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#F6ECE0")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#FFFDF9")}
           >
             <Icon n="terminal" size={13} />
             <span>Ativação Global</span>
@@ -357,9 +358,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               type="button"
               onClick={onNavigateMascots}
               style={{
-                background: "#26211D",
-                border: "1px solid #3D352D",
-                color: "#F5F2EB",
+                background: "#FFFDF9",
+                border: "1px solid #CEB79A",
+                color: "#2E190F",
                 padding: "7px 12px",
                 borderRadius: 8,
                 fontSize: 12,
@@ -369,8 +370,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 gap: 6,
                 cursor: "pointer",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#2F2924")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#26211D")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#F6ECE0")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#FFFDF9")}
             >
               <Icon n="users" size={13} />
               <span>Mascotes (6)</span>
@@ -382,9 +383,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               type="button"
               onClick={onNavigatePlanned}
               style={{
-                background: "#26211D",
-                border: "1px solid #3D352D",
-                color: "#F5F2EB",
+                background: "#FFFDF9",
+                border: "1px solid #CEB79A",
+                color: "#2E190F",
                 padding: "7px 12px",
                 borderRadius: 8,
                 fontSize: 12,
@@ -394,8 +395,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 gap: 6,
                 cursor: "pointer",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#2F2924")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#26211D")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#F6ECE0")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#FFFDF9")}
             >
               <Icon n="calendar" size={13} />
               <span>Próximas Skills</span>
@@ -408,9 +409,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               onClick={onOpenBackup}
               title="Exportar ou migrar preferências de habilidades instaladas e favoritas em JSON"
               style={{
-                background: "#26211D",
-                border: "1px solid #3D352D",
-                color: "#F5F2EB",
+                background: "#FFFDF9",
+                border: "1px solid #CEB79A",
+                color: "#2E190F",
                 padding: "7px 12px",
                 borderRadius: 8,
                 fontSize: 12,
@@ -420,8 +421,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 gap: 6,
                 cursor: "pointer",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#2F2924")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#26211D")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#F6ECE0")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#FFFDF9")}
             >
               <Icon n="download" size={13} />
               <span>Exportar JSON</span>
@@ -432,8 +433,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             type="button"
             onClick={onNavigateCreate}
             style={{
-              background: "#D97757",
-              border: "1px solid #D97757",
+              background: "#C45730",
+              border: "1px solid #C45730",
               color: "#FFFFFF",
               padding: "7px 14px",
               borderRadius: 8,
@@ -443,10 +444,10 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               alignItems: "center",
               gap: 6,
               cursor: "pointer",
-              boxShadow: "0 2px 10px rgba(217, 119, 87, 0.35)",
+              boxShadow: "0 4px 12px rgba(196, 87, 48, 0.25)",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#E28768")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#D97757")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#AE4823")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#C45730")}
           >
             <Icon n="sparkles" size={13} />
             <span>Criar com IA</span>
@@ -470,8 +471,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
         <div
           onClick={() => setInstalledOnly(!installedOnly)}
           style={{
-            backgroundColor: installedOnly ? "#34221A" : "#24201D",
-            border: `1px solid ${installedOnly ? "#D97757" : "#383129"}`,
+            backgroundColor: installedOnly ? "#FCEEE6" : "#FFFDF9",
+            border: `1px solid ${installedOnly ? "#C45730" : "#E2D1BC"}`,
             borderRadius: 12,
             padding: "14px 16px",
             cursor: "pointer",
@@ -480,11 +481,12 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             flexDirection: "column",
             justifyContent: "space-between",
             position: "relative",
+            boxShadow: "0 2px 8px rgba(46, 25, 15, 0.04)",
           }}
           title="Clique para alternar filtro de habilidades instaladas"
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#A39889" }}>
+            <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#5A4032" }}>
               Habilidades Instaladas
             </span>
             <div
@@ -492,22 +494,22 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 width: 26,
                 height: 26,
                 borderRadius: 6,
-                backgroundColor: "#2C2621",
+                backgroundColor: "#FCEEE6",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#D97757",
+                color: "#B44B25",
               }}
             >
               <Icon n="check-circle" size={14} />
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 22, fontWeight: 800, color: "#F5F2EB", letterSpacing: "-0.02em" }}>
-              {installedCount} <span style={{ fontSize: 13, color: "#766B5E", fontWeight: 500 }}>/ {suites.length}</span>
+            <div style={{ fontSize: 22, fontWeight: 800, color: "#2E190F", letterSpacing: "-0.02em" }}>
+              {installedCount} <span style={{ fontSize: 13, color: "#755B4B", fontWeight: 500 }}>/ {suites.length}</span>
             </div>
-            <div style={{ fontSize: 11, color: installedOnly ? "#D97757" : "#8C8172", marginTop: 2, display: "flex", alignItems: "center", gap: 4 }}>
-              <span style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: installedCount > 0 ? "#D97757" : "#6E6356" }}></span>
+            <div style={{ fontSize: 11, color: installedOnly ? "#B44B25" : "#755B4B", marginTop: 2, display: "flex", alignItems: "center", gap: 4 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: installedCount > 0 ? "#C45730" : "#8F7564" }}></span>
               <span>{installedOnly ? "Filtrando instaladas (ativo)" : "Prontas no agente autônomo"}</span>
             </div>
           </div>
@@ -517,8 +519,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
         <div
           onClick={() => onNavigateTest()}
           style={{
-            backgroundColor: "#24201D",
-            border: "1px solid #383129",
+            backgroundColor: "#FFFDF9",
+            border: "1px solid #E2D1BC",
             borderRadius: 12,
             padding: "14px 16px",
             cursor: "pointer",
@@ -526,13 +528,14 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
+            boxShadow: "0 2px 8px rgba(46, 25, 15, 0.04)",
           }}
           title="Abrir Playground de testes"
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#4A4036")}
-          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#383129")}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#CEB79A")}
+          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E2D1BC")}
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#A39889" }}>
+            <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#5A4032" }}>
               Tempo Médio de Teste
             </span>
             <div
@@ -540,21 +543,21 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 width: 26,
                 height: 26,
                 borderRadius: 6,
-                backgroundColor: "#2C2621",
+                backgroundColor: "#FFF6E3",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#E09F3E",
+                color: "#9A6008",
               }}
             >
               <Icon n="zap" size={14} />
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 22, fontWeight: 800, color: "#F5F2EB", letterSpacing: "-0.02em", fontFamily: "monospace" }}>
+            <div style={{ fontSize: 22, fontWeight: 800, color: "#2E190F", letterSpacing: "-0.02em", fontFamily: "monospace" }}>
               {avgTestDuration}
             </div>
-            <div style={{ fontSize: 11, color: "#8C8172", marginTop: 2 }}>
+            <div style={{ fontSize: 11, color: "#755B4B", marginTop: 2 }}>
               Benchmark rápido em sandbox isolada
             </div>
           </div>
@@ -564,8 +567,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
         <div
           onClick={onNavigateCreate}
           style={{
-            backgroundColor: "#24201D",
-            border: "1px solid #383129",
+            backgroundColor: "#FFFDF9",
+            border: "1px solid #E2D1BC",
             borderRadius: 12,
             padding: "14px 16px",
             cursor: "pointer",
@@ -573,13 +576,14 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
+            boxShadow: "0 2px 8px rgba(46, 25, 15, 0.04)",
           }}
           title="Abrir criação orientada por entrevista IA"
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#4A4036")}
-          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#383129")}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#CEB79A")}
+          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E2D1BC")}
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#A39889" }}>
+            <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#5A4032" }}>
               Criações Feitas com IA
             </span>
             <div
@@ -587,21 +591,21 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 width: 26,
                 height: 26,
                 borderRadius: 6,
-                backgroundColor: "#2C2621",
+                backgroundColor: "#FCEEE6",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#D97757",
+                color: "#B44B25",
               }}
             >
               <Icon n="sparkles" size={14} />
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 22, fontWeight: 800, color: "#F5F2EB", letterSpacing: "-0.02em" }}>
-              {aiCreationsCount} <span style={{ fontSize: 13, color: "#766B5E", fontWeight: 500 }}>{aiCreationsCount === 1 ? "skill criada" : "skills criadas"}</span>
+            <div style={{ fontSize: 22, fontWeight: 800, color: "#2E190F", letterSpacing: "-0.02em" }}>
+              {aiCreationsCount} <span style={{ fontSize: 13, color: "#755B4B", fontWeight: 500 }}>{aiCreationsCount === 1 ? "skill criada" : "skills criadas"}</span>
             </div>
-            <div style={{ fontSize: 11, color: "#8C8172", marginTop: 2 }}>
+            <div style={{ fontSize: 11, color: "#755B4B", marginTop: 2 }}>
               Entrevistas & Briefings validados
             </div>
           </div>
@@ -610,18 +614,19 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
         {/* Métrica 4: Footprint Médio de Contexto / Tokens */}
         <div
           style={{
-            backgroundColor: "#24201D",
-            border: "1px solid #383129",
+            backgroundColor: "#FFFDF9",
+            border: "1px solid #E2D1BC",
             borderRadius: 12,
             padding: "14px 16px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
+            boxShadow: "0 2px 8px rgba(46, 25, 15, 0.04)",
           }}
           title="Tamanho médio de payload adicionado ao prompt do agente"
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#A39889" }}>
+            <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#5A4032" }}>
               Footprint de Contexto
             </span>
             <div
@@ -629,21 +634,21 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 width: 26,
                 height: 26,
                 borderRadius: 6,
-                backgroundColor: "#2C2621",
+                backgroundColor: "#F4EBDD",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#D4CDC3",
+                color: "#5A4032",
               }}
             >
               <Icon n="layers" size={14} />
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 22, fontWeight: 800, color: "#F5F2EB", letterSpacing: "-0.02em", fontFamily: "monospace" }}>
-              ~{avgTokens} <span style={{ fontSize: 12, color: "#D97757", fontWeight: 600 }}>/ skill</span>
+            <div style={{ fontSize: 22, fontWeight: 800, color: "#2E190F", letterSpacing: "-0.02em", fontFamily: "monospace" }}>
+              ~{avgTokens} <span style={{ fontSize: 12, color: "#B44B25", fontWeight: 600 }}>/ skill</span>
             </div>
-            <div style={{ fontSize: 11, color: "#8C8172", marginTop: 2 }}>
+            <div style={{ fontSize: 11, color: "#755B4B", marginTop: 2 }}>
               Consumo leve (1.1% de 128k de janela)
             </div>
           </div>
@@ -656,10 +661,10 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
           position: "relative",
           borderRadius: 14,
           overflow: "hidden",
-          border: "1px solid #3E352C",
+          border: "1px solid #CEB79A",
           marginBottom: 16,
-          boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-          background: "#1E1A17",
+          boxShadow: "0 8px 24px rgba(46, 25, 15, 0.12)",
+          background: "#2E190F",
         }}
       >
         <img
@@ -670,16 +675,17 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             maxHeight: 140,
             objectFit: "cover",
             display: "block",
-            filter: "contrast(1.08) brightness(0.92)",
+            filter: "contrast(1.04) brightness(0.95)",
           }}
         />
         <div
+          className="hc-banner-scrim"
           style={{
             position: "absolute",
             bottom: 0,
             left: 0,
             right: 0,
-            background: "linear-gradient(to top, rgba(30, 26, 23, 0.96) 0%, rgba(30, 26, 23, 0.65) 60%, transparent 100%)",
+            background: "linear-gradient(to top, rgba(46, 25, 15, 0.90) 0%, rgba(46, 25, 15, 0.55) 65%, transparent 100%)",
             padding: "12px 18px 10px",
             display: "flex",
             alignItems: "center",
@@ -689,10 +695,10 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
           }}
         >
           <div>
-            <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.08em", color: "#D4CDC3", fontWeight: 700 }}>
+            <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.08em", color: "#F2E6D5", fontWeight: 700 }}>
               Inspiração Nordestina • Arte de Xilogravura & Literatura de Cordel
             </div>
-            <div style={{ fontSize: 13.5, color: "#F5F2EB", fontWeight: 600 }}>
+            <div style={{ fontSize: 13.5, color: "#FFFDF9", fontWeight: 600 }}>
               Habilidades Forjadas com a Maestria e Resiliência do Sertão
             </div>
           </div>
@@ -702,11 +708,11 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               alignItems: "center",
               gap: 6,
               fontSize: 11,
-              color: "#A39889",
-              background: "rgba(25, 21, 18, 0.75)",
+              color: "#FFFDF9",
+              background: "rgba(46, 25, 15, 0.72)",
               padding: "4px 10px",
               borderRadius: 6,
-              border: "1px solid rgba(245, 242, 235, 0.12)",
+              border: "1px solid rgba(255, 253, 249, 0.25)",
             }}
           >
             <Icon n="check-circle" size={12} />
@@ -720,10 +726,10 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
           ========================================================================= */}
       <div style={{ marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-          <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.07em", color: "#A39889" }}>
+          <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.07em", color: "#5A4032" }}>
             Filtrar por Categoria
           </span>
-          <span style={{ fontSize: 11, color: "#766B5E" }}>
+          <span style={{ fontSize: 11, color: "#755B4B" }}>
             {filteredSuites.length} {filteredSuites.length === 1 ? "habilidade exibida" : "habilidades exibidas"}
           </span>
         </div>
@@ -756,29 +762,29 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                   borderRadius: 10,
                   fontSize: 12.5,
                   fontWeight: isActive ? 700 : 500,
-                  backgroundColor: isActive ? "#312720" : "#211D1A",
-                  color: isActive ? "#D97757" : "#D4CDC3",
-                  border: `1px solid ${isActive ? "#D97757" : "#383129"}`,
+                  backgroundColor: isActive ? "#FCEEE6" : "#FFFDF9",
+                  color: isActive ? "#A8421E" : "#5A4032",
+                  border: `1px solid ${isActive ? "#C45730" : "#CEB79A"}`,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   gap: 7,
                   whiteSpace: "nowrap",
                   transition: "all 0.15s ease",
-                  boxShadow: isActive ? "0 2px 10px rgba(217, 119, 87, 0.2)" : "none",
+                  boxShadow: isActive ? "0 2px 10px rgba(196, 87, 48, 0.14)" : "none",
                 }}
                 onMouseEnter={(e) => {
                   if (!isActive) {
-                    e.currentTarget.style.backgroundColor = "#2A241F";
-                    e.currentTarget.style.color = "#F5F2EB";
-                    e.currentTarget.style.borderColor = "#4A4036";
+                    e.currentTarget.style.backgroundColor = "#F6ECE0";
+                    e.currentTarget.style.color = "#2E190F";
+                    e.currentTarget.style.borderColor = "#B59C7E";
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (!isActive) {
-                    e.currentTarget.style.backgroundColor = "#211D1A";
-                    e.currentTarget.style.color = "#D4CDC3";
-                    e.currentTarget.style.borderColor = "#383129";
+                    e.currentTarget.style.backgroundColor = "#FFFDF9";
+                    e.currentTarget.style.color = "#5A4032";
+                    e.currentTarget.style.borderColor = "#CEB79A";
                   }
                 }}
               >
@@ -790,9 +796,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                     fontWeight: 700,
                     padding: "1px 6px",
                     borderRadius: 12,
-                    backgroundColor: isActive ? "#3E2B20" : "#2A241F",
-                    color: isActive ? "#D97757" : "#8C8172",
-                    border: `1px solid ${isActive ? "#D97757" : "#3E352C"}`,
+                    backgroundColor: isActive ? "#F9DFD1" : "#F4EBDD",
+                    color: isActive ? "#A8421E" : "#755B4B",
+                    border: `1px solid ${isActive ? "#E5A992" : "#E2D1BC"}`,
                   }}
                 >
                   {count}
@@ -810,10 +816,10 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 padding: "6px 12px",
                 borderRadius: 10,
                 fontSize: 12,
-                fontWeight: isFilteringFavorites ? 600 : 400,
-                backgroundColor: isFilteringFavorites ? "#332619" : "#211D1A",
-                color: isFilteringFavorites ? "#E09F3E" : "#A39889",
-                border: `1px solid ${isFilteringFavorites ? "#E09F3E" : "#383129"}`,
+                fontWeight: isFilteringFavorites ? 600 : 500,
+                backgroundColor: isFilteringFavorites ? "#FFF6E3" : "#FFFDF9",
+                color: isFilteringFavorites ? "#9A6008" : "#5A4032",
+                border: `1px solid ${isFilteringFavorites ? "#D99B38" : "#CEB79A"}`,
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
@@ -837,7 +843,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               left: 14,
               top: "50%",
               transform: "translateY(-50%)",
-              color: "#766B5E",
+              color: "#755B4B",
               pointerEvents: "none",
               display: "flex",
               alignItems: "center",
@@ -853,22 +859,22 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             style={{
               width: "100%",
               boxSizing: "border-box",
-              backgroundColor: "#201B18",
-              border: "1px solid #383129",
+              backgroundColor: "#FFFDF9",
+              border: "1px solid #CEB79A",
               borderRadius: 10,
               padding: "10px 14px 10px 40px",
               fontSize: 13.5,
-              color: "#F5F2EB",
+              color: "#2E190F",
               outline: "none",
               transition: "border-color 0.15s, background 0.15s",
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = "#D97757";
-              e.target.style.backgroundColor = "#27211D";
+              e.target.style.borderColor = "#C45730";
+              e.target.style.backgroundColor = "#FFFFFF";
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = "#383129";
-              e.target.style.backgroundColor = "#201B18";
+              e.target.style.borderColor = "#CEB79A";
+              e.target.style.backgroundColor = "#FFFDF9";
             }}
           />
           {searchQuery && (
@@ -883,7 +889,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 transform: "translateY(-50%)",
                 background: "none",
                 border: "none",
-                color: "#A39889",
+                color: "#755B4B",
                 cursor: "pointer",
                 padding: 4,
               }}
@@ -897,7 +903,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
         <div
           role="group"
           aria-label="Alternar layout do catálogo"
-          className="inline-flex items-center bg-[#201B18] border border-[#383129] rounded-[10px] p-1 gap-1 shrink-0 self-end sm:self-auto"
+          className="inline-flex items-center bg-[#F4EBDD] border border-[#CEB79A] rounded-[10px] p-1 gap-1 shrink-0 self-end sm:self-auto"
         >
           <button
             type="button"
@@ -907,8 +913,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             title="Lista compacta"
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition-all cursor-pointer border ${
               layoutMode === "list"
-                ? "bg-[#312720] text-[#D97757] border-[#D97757]/60 shadow-sm"
-                : "bg-transparent text-[#A39889] hover:text-[#F5F2EB] border-transparent"
+                ? "bg-[#FFFDF9] text-[#A8421E] border-[#C45730]/60 shadow-sm"
+                : "bg-transparent text-[#5A4032] hover:text-[#2E190F] border-transparent"
             }`}
           >
             <Icon n="list" size={14} />
@@ -923,8 +929,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             title="Grade expansiva"
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition-all cursor-pointer border ${
               layoutMode === "grid"
-                ? "bg-[#312720] text-[#D97757] border-[#D97757]/60 shadow-sm"
-                : "bg-transparent text-[#A39889] hover:text-[#F5F2EB] border-transparent"
+                ? "bg-[#FFFDF9] text-[#A8421E] border-[#C45730]/60 shadow-sm"
+                : "bg-transparent text-[#5A4032] hover:text-[#2E190F] border-transparent"
             }`}
           >
             <Icon n="grid" size={14} />
@@ -940,17 +946,17 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            background: "#222222",
-            border: "1px solid #383838",
+            background: "#FFF6E3",
+            border: "1px solid #D99B38",
             borderRadius: 8,
             padding: "8px 14px",
             marginBottom: 16,
             fontSize: 13,
-            color: "#C2C2C2",
+            color: "#5A4032",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <Icon n="star" size={14} />
+            <Icon n="star" size={14} className="text-[#9A6008]" />
             <span>Exibindo apenas habilidades favoritas ({favoriteCount})</span>
           </div>
           <button
@@ -962,8 +968,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             style={{
               background: "none",
               border: "none",
-              color: "#EAEAEA",
+              color: "#2E190F",
               fontSize: 12,
+              fontWeight: 600,
               textDecoration: "underline",
               cursor: "pointer",
               padding: 0,
@@ -982,17 +989,17 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
           style={{
             textAlign: "center",
             padding: "48px 24px",
-            backgroundColor: "#1a1a1a",
-            border: "1px dashed #383838",
+            backgroundColor: "#FFFDF9",
+            border: "1px dashed #CEB79A",
             borderRadius: 12,
             marginTop: 16,
           }}
         >
-          <Icon n="search" size={32} />
-          <h3 style={{ fontSize: 16, color: "#EAEAEA", margin: "12px 0 6px" }}>
+          <Icon n="search" size={32} className="text-[#755B4B] mx-auto" />
+          <h3 style={{ fontSize: 16, color: "#2E190F", margin: "12px 0 6px" }}>
             Nenhuma habilidade encontrada
           </h3>
-          <p style={{ fontSize: 13, color: "#9B9B9B", margin: 0 }}>
+          <p style={{ fontSize: 13, color: "#755B4B", margin: 0 }}>
             Tente buscar com outro termo ou limpe os filtros de categoria e favoritos.
           </p>
           <button
@@ -1007,11 +1014,12 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
             style={{
               marginTop: 16,
               padding: "8px 16px",
-              borderRadius: 6,
-              background: "#333333",
-              border: "1px solid #545454",
-              color: "#EAEAEA",
+              borderRadius: 8,
+              background: "#F4EBDD",
+              border: "1px solid #CEB79A",
+              color: "#2E190F",
               fontSize: 13,
+              fontWeight: 600,
               cursor: "pointer",
             }}
           >
@@ -1030,29 +1038,29 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
               <div
                 key={suite.id}
                 onClick={() => onSelectSuite(suite)}
-                className="group bg-[#24201D] hover:bg-[#2C2520] border border-[#362F28] hover:border-[#4D4135] rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-all shadow-sm"
+                className="group bg-[#FFFDF9] hover:bg-[#F6ECE0] border border-[#E2D1BC] hover:border-[#CEB79A] rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-all shadow-sm"
               >
                 {/* Expansive Cover Header */}
-                <div className="relative h-28 w-full bg-[#191613] border-b border-[#362F28] overflow-hidden">
+                <div className="relative h-28 w-full bg-[#F2E6D5] border-b border-[#E2D1BC] overflow-hidden">
                   {suite.coverTheme?.imageUrl ? (
                     <img
                       src={suite.coverTheme.imageUrl}
                       alt={suite.name}
-                      className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-[#D97757]">
+                    <div className="w-full h-full flex items-center justify-center text-[#C45730]">
                       <Icon n={suite.coverTheme?.icon || "layers"} size={32} />
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#24201D] via-[#24201D]/35 to-transparent" />
+                  <div className="hc-cover-scrim absolute inset-0 bg-gradient-to-t from-[#FFFDF9] via-[#FFFDF9]/25 to-transparent" />
 
                   {/* Category + Favorite Overlay */}
                   <div
                     className="absolute top-2.5 left-3 right-3 flex items-center justify-between gap-2"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <span className="text-[10.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#191613]/85 border border-[#483E34] text-[#D4CDC3] backdrop-blur-sm">
+                    <span className="text-[10.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#FFFDF9]/92 border border-[#CEB79A] text-[#2E190F] backdrop-blur-sm">
                       {suite.category}
                     </span>
 
@@ -1062,9 +1070,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                       title={suite.isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
                       aria-label={suite.isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
                       style={{
-                        background: suite.isFavorite ? "#342C25" : "rgba(25, 22, 19, 0.82)",
-                        border: `1px solid ${suite.isFavorite ? "#E09F3E" : "#483E34"}`,
-                        color: suite.isFavorite ? "#E09F3E" : "#D4CDC3",
+                        background: suite.isFavorite ? "#FFF6E3" : "rgba(255, 253, 249, 0.92)",
+                        border: `1px solid ${suite.isFavorite ? "#D99B38" : "#CEB79A"}`,
+                        color: suite.isFavorite ? "#9A6008" : "#5A4032",
                       }}
                       className="w-8 h-8 rounded-lg flex items-center justify-center backdrop-blur-sm cursor-pointer transition-colors"
                     >
@@ -1076,22 +1084,22 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                 {/* Expansive Card Body */}
                 <div className="p-4 flex-1 flex flex-col gap-2.5 min-w-0">
                   <div>
-                    <h3 className="text-[15.5px] font-bold text-[#F5F2EB] m-0 leading-snug">
+                    <h3 className="text-[15.5px] font-bold text-[#2E190F] m-0 leading-snug">
                       {suite.name}
                     </h3>
-                    <div className="text-[11px] text-[#A39889] mt-0.5">
+                    <div className="text-[11px] text-[#755B4B] mt-0.5">
                       Por {suite.author} • {suite.usageCount} execuções
                     </div>
                   </div>
 
                   {/* Badges */}
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="text-[10.5px] px-2 py-0.5 rounded bg-[#2D2620] border border-[#3E352C] text-[#D4CDC3]">
+                    <span className="text-[10.5px] px-2 py-0.5 rounded bg-[#F4EBDD] border border-[#E2D1BC] text-[#5A4032]">
                       {suite.skills.length} sub-habilidades
                     </span>
                     <span
                       style={{
-                        background: "rgba(217, 119, 87, 0.09)",
+                        background: "#FCEEE6",
                         border: `1px solid ${tokenProfile.categoryColor}40`,
                         color: tokenProfile.categoryColor,
                       }}
@@ -1103,7 +1111,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                   </div>
 
                   {/* Expanded Description */}
-                  <p className="text-[12.5px] text-[#D4CDC3] m-0 leading-relaxed line-clamp-3">
+                  <p className="text-[12.5px] text-[#5A4032] m-0 leading-relaxed line-clamp-3">
                     {suite.description || suite.tagline}
                   </p>
 
@@ -1113,13 +1121,13 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                       {suite.skills.slice(0, 3).map((sub) => (
                         <span
                           key={sub.id}
-                          className="text-[10.5px] px-2 py-0.5 rounded-md bg-[#1E1A17] border border-[#383129] text-[#A39889] truncate max-w-full"
+                          className="text-[10.5px] px-2 py-0.5 rounded-md bg-[#F4EBDD] border border-[#E2D1BC] text-[#5A4032] truncate max-w-full"
                         >
                           {sub.name}
                         </span>
                       ))}
                       {suite.skills.length > 3 && (
-                        <span className="text-[10.5px] px-2 py-0.5 rounded-md bg-[#1E1A17] border border-[#383129] text-[#D97757] font-semibold">
+                        <span className="text-[10.5px] px-2 py-0.5 rounded-md bg-[#FCEEE6] border border-[#E5A992] text-[#A8421E] font-semibold">
                           +{suite.skills.length - 3}
                         </span>
                       )}
@@ -1128,16 +1136,16 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
 
                   {/* Footer Actions */}
                   <div
-                    className="mt-auto pt-3 border-t border-[#362F28] flex items-center justify-between gap-2"
+                    className="mt-auto pt-3 border-t border-[#E2D1BC] flex items-center justify-between gap-2"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <button
                       type="button"
                       onClick={() => onToggleInstall(suite.id)}
                       style={{
-                        background: suite.installed ? "#32231C" : "#2A241F",
-                        border: `1px solid ${suite.installed ? "#D97757" : "#423A31"}`,
-                        color: suite.installed ? "#D97757" : "#F5F2EB",
+                        background: suite.installed ? "#FCEEE6" : "#FFFDF9",
+                        border: `1px solid ${suite.installed ? "#C45730" : "#CEB79A"}`,
+                        color: suite.installed ? "#A8421E" : "#2E190F",
                       }}
                       className="flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-all"
                     >
@@ -1149,7 +1157,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                       <button
                         type="button"
                         onClick={() => onNavigateDiagramStudio(suite.prompts[0])}
-                        className="py-1.5 px-3 rounded-lg bg-[#D97757] hover:bg-[#E28768] border border-[#D97757] text-white text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                        className="py-1.5 px-3 rounded-lg bg-[#C45730] hover:bg-[#AE4823] border border-[#C45730] text-white text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
                       >
                         <Icon n="pen-tool" size={12} />
                         <span>Gerar</span>
@@ -1159,7 +1167,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                     <button
                       type="button"
                       onClick={() => onNavigateTest(suite.id)}
-                      className="py-1.5 px-3 rounded-lg bg-[#26211D] hover:bg-[#302A24] border border-[#3D352D] text-[#D4CDC3] hover:text-[#F5F2EB] text-xs font-medium flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                      className="py-1.5 px-3 rounded-lg bg-[#F7EFE4] hover:bg-[#EFE1CE] border border-[#CEB79A] text-[#2E190F] text-xs font-medium flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
                     >
                       <Icon n="play" size={12} />
                       <span>Testar</span>
@@ -1188,20 +1196,21 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                   gap: 16,
                   padding: "14px 18px",
                   borderRadius: 12,
-                  backgroundColor: "#24201D",
-                  border: "1px solid #362F28",
+                  backgroundColor: "#FFFDF9",
+                  border: "1px solid #E2D1BC",
                   cursor: "pointer",
                   transition: "all 0.15s ease",
                   flexWrap: "wrap",
+                  boxShadow: "0 2px 6px rgba(46, 25, 15, 0.04)",
                 }}
                 onClick={() => onSelectSuite(suite)}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#2C2520";
-                  e.currentTarget.style.borderColor = "#4D4135";
+                  e.currentTarget.style.backgroundColor = "#F6ECE0";
+                  e.currentTarget.style.borderColor = "#CEB79A";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#24201D";
-                  e.currentTarget.style.borderColor = "#362F28";
+                  e.currentTarget.style.backgroundColor = "#FFFDF9";
+                  e.currentTarget.style.borderColor = "#E2D1BC";
                 }}
               >
                 {/* Left: Avatar & Info */}
@@ -1212,10 +1221,10 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                       height: 52,
                       borderRadius: 10,
                       overflow: "hidden",
-                      background: suite.coverTheme?.bg || "#1E1A17",
-                      border: "1px solid #3D352D",
+                      background: suite.coverTheme?.bg || "#F2E6D5",
+                      border: "1px solid #CEB79A",
                       flexShrink: 0,
-                      boxShadow: "0 3px 10px rgba(0,0,0,0.45)",
+                      boxShadow: "0 3px 10px rgba(46, 25, 15, 0.14)",
                       position: "relative",
                     }}
                   >
@@ -1228,7 +1237,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                           height: "100%",
                           objectFit: "cover",
                           display: "block",
-                          filter: "contrast(1.08)",
+                          filter: "contrast(1.06)",
                         }}
                       />
                     ) : (
@@ -1239,7 +1248,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          color: suite.coverTheme?.accent || "#F5F2EB",
+                          color: suite.coverTheme?.accent || "#2E190F",
                         }}
                       >
                         <Icon n={suite.coverTheme?.icon || "layers"} size={22} />
@@ -1253,7 +1262,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                         style={{
                           fontSize: 15,
                           fontWeight: 700,
-                          color: "#F5F2EB",
+                          color: "#2E190F",
                           margin: 0,
                         }}
                       >
@@ -1264,9 +1273,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                           fontSize: 10.5,
                           padding: "1px 6px",
                           borderRadius: 4,
-                          background: "#2D2620",
-                          border: "1px solid #3E352C",
-                          color: "#A39889",
+                          background: "#F4EBDD",
+                          border: "1px solid #E2D1BC",
+                          color: "#5A4032",
                         }}
                       >
                         {suite.skills.length} sub-habilidades
@@ -1278,7 +1287,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                           fontSize: 10.5,
                           padding: "1px 6px",
                           borderRadius: 4,
-                          background: "rgba(217, 119, 87, 0.09)",
+                          background: "#FCEEE6",
                           border: `1px solid ${tokenProfile.categoryColor}40`,
                           color: tokenProfile.categoryColor,
                           fontWeight: 700,
@@ -1290,14 +1299,14 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                         title={`Consumo estimado de contexto: ${tokenProfile.totalTokens} tokens (~${tokenProfile.percent128k}% de 128k)`}
                       >
                         <span>⚡ {tokenProfile.formatted}</span>
-                        <span style={{ fontSize: 9.5, opacity: 0.85 }}>• {tokenProfile.categoryLabel}</span>
+                        <span style={{ fontSize: 9.5, opacity: 0.9 }}>• {tokenProfile.categoryLabel}</span>
                       </span>
                     </div>
 
                     <p
                       style={{
                         fontSize: 12.5,
-                        color: "#A39889",
+                        color: "#5A4032",
                         margin: "3px 0 5px",
                         lineHeight: 1.4,
                         display: "-webkit-box",
@@ -1315,7 +1324,7 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                         alignItems: "center",
                         gap: 10,
                         fontSize: 11,
-                        color: "#766B5E",
+                        color: "#755B4B",
                         flexWrap: "wrap",
                       }}
                     >
@@ -1344,10 +1353,11 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                     type="button"
                     onClick={() => onToggleFavorite(suite.id)}
                     title={suite.isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                    aria-label={suite.isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
                     style={{
-                      background: suite.isFavorite ? "#342C25" : "transparent",
-                      border: `1px solid ${suite.isFavorite ? "#8C8172" : "#3D352D"}`,
-                      color: suite.isFavorite ? "#F5F2EB" : "#8C8172",
+                      background: suite.isFavorite ? "#FFF6E3" : "#FFFDF9",
+                      border: `1px solid ${suite.isFavorite ? "#D99B38" : "#CEB79A"}`,
+                      color: suite.isFavorite ? "#9A6008" : "#755B4B",
                       width: 32,
                       height: 32,
                       borderRadius: 8,
@@ -1365,9 +1375,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                     type="button"
                     onClick={() => onToggleInstall(suite.id)}
                     style={{
-                      background: suite.installed ? "#32231C" : "#2A241F",
-                      border: `1px solid ${suite.installed ? "#D97757" : "#423A31"}`,
-                      color: suite.installed ? "#D97757" : "#F5F2EB",
+                      background: suite.installed ? "#FCEEE6" : "#FFFDF9",
+                      border: `1px solid ${suite.installed ? "#C45730" : "#CEB79A"}`,
+                      color: suite.installed ? "#A8421E" : "#2E190F",
                       padding: "6px 14px",
                       borderRadius: 8,
                       fontSize: 12,
@@ -1388,8 +1398,8 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                       type="button"
                       onClick={() => onNavigateDiagramStudio(suite.prompts[0])}
                       style={{
-                        background: "#D97757",
-                        border: "1px solid #D97757",
+                        background: "#C45730",
+                        border: "1px solid #C45730",
                         color: "#FFFFFF",
                         padding: "6px 12px",
                         borderRadius: 8,
@@ -1411,9 +1421,9 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                     type="button"
                     onClick={() => onNavigateTest(suite.id)}
                     style={{
-                      background: "#26211D",
-                      border: "1px solid #3D352D",
-                      color: "#D4CDC3",
+                      background: "#F7EFE4",
+                      border: "1px solid #CEB79A",
+                      color: "#2E190F",
                       padding: "6px 12px",
                       borderRadius: 8,
                       fontSize: 12,
@@ -1425,12 +1435,12 @@ export const SkillStoreView: React.FC<SkillStoreViewProps> = ({
                       transition: "all 0.15s ease",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "#F5F2EB";
-                      e.currentTarget.style.borderColor = "#544A3F";
+                      e.currentTarget.style.background = "#EFE1CE";
+                      e.currentTarget.style.borderColor = "#B59C7E";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "#D4CDC3";
-                      e.currentTarget.style.borderColor = "#3D352D";
+                      e.currentTarget.style.background = "#F7EFE4";
+                      e.currentTarget.style.borderColor = "#CEB79A";
                     }}
                   >
                     <Icon n="play" size={12} />

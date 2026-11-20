@@ -49,26 +49,26 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-1 sm:px-6 py-2 sm:py-6 pb-24 text-[#F5F2EB] min-w-0">
+    <div className="max-w-6xl mx-auto px-1 sm:px-6 py-2 sm:py-6 pb-24 text-[#2E190F] min-w-0">
       {/* Top Breadcrumb & Navigation */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#383129]">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#E2D1BC]">
         <button
           type="button"
           onClick={onBackToCatalog}
-          className="flex items-center gap-2 text-xs text-[#D4CDC3] hover:text-[#F5F2EB] bg-[#27221E] hover:bg-[#302A24] border border-[#383129] hover:border-[#483E34] px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+          className="flex items-center gap-2 text-xs text-[#5A4032] hover:text-[#2E190F] bg-[#FFFDF9] hover:bg-[#F6ECE0] border border-[#CEB79A] px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
         >
           <Icon n="chevron" size={14} />
           <span>Voltar ao Catálogo de Habilidades</span>
         </button>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs px-2.5 py-1 rounded-full bg-[#27221E] text-[#D4CDC3] border border-[#383129] font-medium">
+          <span className="text-xs px-2.5 py-1 rounded-full bg-[#FFFDF9] text-[#5A4032] border border-[#CEB79A] font-medium">
             6 Mascotes Ativos
           </span>
           <button
             type="button"
             onClick={onNavigateGlobalSync}
-            className="flex items-center gap-1.5 text-xs text-[#D4CDC3] hover:text-[#F5F2EB] px-3 py-1.5 rounded-lg bg-[#27221E] border border-[#383129] hover:border-[#D97757]/60 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs text-[#5A4032] hover:text-[#2E190F] px-3 py-1.5 rounded-lg bg-[#FFFDF9] border border-[#CEB79A] hover:border-[#C45730]/60 transition-colors cursor-pointer"
           >
             <Icon n="terminal" size={12} />
             <span>Sincronizar com Agentes</span>
@@ -77,17 +77,17 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
       </div>
 
       {/* Hero Banner: Conheça os Mascotes Assistentes */}
-      <section className="bg-gradient-to-b from-[#27221E] to-[#1E1A17] border border-[#383129] rounded-2xl p-5 sm:p-7 mb-8 shadow-2xl">
+      <section className="bg-gradient-to-b from-[#FFFDF9] to-[#F4EBDD] border border-[#E2D1BC] rounded-2xl p-5 sm:p-7 mb-8 shadow-sm">
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5">
           <div className="flex items-center gap-3.5 min-w-0">
-            <div className="w-11 h-11 rounded-xl bg-[#302A24] border border-[#483E34] flex items-center justify-center text-[#D97757] shadow-md shrink-0">
-              <DedaLogo size={22} color="#D97757" />
+            <div className="w-11 h-11 rounded-xl bg-[#FCEEE6] border border-[#E5A992] flex items-center justify-center text-[#C45730] shadow-sm shrink-0">
+              <DedaLogo size={22} color="#C45730" />
             </div>
             <div className="min-w-0">
-              <span className="text-[11px] uppercase font-bold tracking-widest text-[#D97757] block">
+              <span className="text-[11px] uppercase font-bold tracking-widest text-[#B44B25] block">
                 Equipe de Agentes Autônomos • Deda Skills
               </span>
-              <h1 className="text-xl sm:text-3xl font-extrabold text-[#F5F2EB] tracking-tight mt-0.5 mb-0">
+              <h1 className="text-xl sm:text-3xl font-extrabold text-[#2E190F] tracking-tight mt-0.5 mb-0">
                 Conheça os 6 Mascotes Assistentes
               </h1>
             </div>
@@ -100,7 +100,7 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
                 key={m.id}
                 src={m.avatar}
                 alt={m.name}
-                className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl object-cover border-2 border-[#383129] hover:border-[#D97757] shadow-lg sm:-ml-3 sm:first:ml-0 hover:scale-110 hover:z-10 transition-all cursor-pointer bg-[#1E1A17]"
+                className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl object-cover border-2 border-[#FFFDF9] hover:border-[#C45730] shadow-md sm:-ml-3 sm:first:ml-0 hover:scale-110 hover:z-10 transition-all cursor-pointer bg-[#F4EBDD]"
                 title={`${m.name} — ${m.title} (Clique para ver estilo & especialidades)`}
                 onClick={() => setQuickInfoMascot(m)}
               />
@@ -109,14 +109,14 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
         </div>
 
         {/* Tab Selector: 4 Tabs */}
-        <div className="flex items-center gap-2 mt-5 pt-4 border-t border-[#383129] flex-wrap">
+        <div className="flex items-center gap-2 mt-5 pt-4 border-t border-[#E2D1BC] flex-wrap">
           <button
             type="button"
             onClick={() => setActiveTab("mascots")}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === "mascots"
-                ? "bg-[#D97757] text-white border border-[#D97757] shadow-[0_2px_10px_rgba(217,119,87,0.35)]"
-                : "bg-[#2A241F] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#383129] hover:border-[#483E34]"
+                ? "bg-[#C45730] text-white border border-[#C45730] shadow-[0_4px_12px_rgba(196,87,48,0.25)]"
+                : "bg-[#FFFDF9] text-[#5A4032] hover:text-[#2E190F] border border-[#CEB79A] hover:bg-[#F6ECE0]"
             }`}
           >
             <Icon n="users" size={14} />
@@ -128,8 +128,8 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
             onClick={() => setActiveTab("studio3d")}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === "studio3d"
-                ? "bg-[#D97757] text-white border border-[#D97757] shadow-[0_2px_10px_rgba(217,119,87,0.35)]"
-                : "bg-[#2A241F] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#383129] hover:border-[#483E34]"
+                ? "bg-[#C45730] text-white border border-[#C45730] shadow-[0_4px_12px_rgba(196,87,48,0.25)]"
+                : "bg-[#FFFDF9] text-[#5A4032] hover:text-[#2E190F] border border-[#CEB79A] hover:bg-[#F6ECE0]"
             }`}
           >
             <Icon n="cube" size={14} />
@@ -141,8 +141,8 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
             onClick={() => setActiveTab("mediahub")}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === "mediahub"
-                ? "bg-[#D97757] text-white border border-[#D97757] shadow-[0_2px_10px_rgba(217,119,87,0.35)]"
-                : "bg-[#2A241F] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#383129] hover:border-[#483E34]"
+                ? "bg-[#C45730] text-white border border-[#C45730] shadow-[0_4px_12px_rgba(196,87,48,0.25)]"
+                : "bg-[#FFFDF9] text-[#5A4032] hover:text-[#2E190F] border border-[#CEB79A] hover:bg-[#F6ECE0]"
             }`}
           >
             <Icon n="download" size={14} />
@@ -154,8 +154,8 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
             onClick={() => setActiveTab("team")}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === "team"
-                ? "bg-[#D97757] text-white border border-[#D97757] shadow-[0_2px_10px_rgba(217,119,87,0.35)]"
-                : "bg-[#2A241F] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#383129] hover:border-[#483E34]"
+                ? "bg-[#C45730] text-white border border-[#C45730] shadow-[0_4px_12px_rgba(196,87,48,0.25)]"
+                : "bg-[#FFFDF9] text-[#5A4032] hover:text-[#2E190F] border border-[#CEB79A] hover:bg-[#F6ECE0]"
             }`}
           >
             <Icon n="activity" size={14} />
@@ -168,10 +168,10 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
       {activeTab === "mascots" && (
         <div>
           <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <span className="text-xs uppercase tracking-wider font-bold text-[#A39889]">
+            <span className="text-xs uppercase tracking-wider font-bold text-[#5A4032]">
               Selecione um mascote para ver estilo de resolução & especialidades
             </span>
-            <span className="text-[11px] text-[#766B5E]">Clique no card para abrir o modal</span>
+            <span className="text-[11px] text-[#755B4B]">Clique no card para abrir o modal</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -179,46 +179,46 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
               <div
                 key={mascot.id}
                 onClick={() => setQuickInfoMascot(mascot)}
-                className="bg-[#24201D] border border-[#383129] hover:border-[#D97757]/60 rounded-2xl p-5 sm:p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(0,0,0,0.65)] flex flex-col justify-between group cursor-pointer relative overflow-hidden min-w-0"
+                className="bg-[#FFFDF9] border border-[#E2D1BC] hover:border-[#C45730]/60 rounded-2xl p-5 sm:p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(46,25,15,0.10)] flex flex-col justify-between group cursor-pointer relative overflow-hidden min-w-0"
               >
                 {/* Subtle Glow Background on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#D97757]/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#C45730]/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                 <div className="relative z-10">
                   {/* Top Bar inside Card: Avatar + Name + Interactive Hover Pill */}
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-[#383129] group-hover:border-[#D97757] shrink-0 shadow-lg transition-all duration-300 bg-[#191613]">
+                    <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-[#E2D1BC] group-hover:border-[#C45730] shrink-0 shadow-sm transition-all duration-300 bg-[#F4EBDD]">
                       <img
                         src={mascot.avatar}
                         alt={mascot.name}
                         className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-300 ease-out"
                       />
-                      <span className="absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-[#D97757] border border-[#191613] animate-pulse"></span>
+                      <span className="absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-[#C45730] border border-[#FFFDF9] animate-pulse"></span>
                     </div>
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="text-lg font-bold text-[#F5F2EB] group-hover:text-white transition-colors m-0">
+                            <h3 className="text-lg font-bold text-[#2E190F] transition-colors m-0">
                               {mascot.name}
                             </h3>
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#302A24] border border-[#483E34] text-[#D4CDC3] font-semibold whitespace-nowrap">
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#F4EBDD] border border-[#E2D1BC] text-[#5A4032] font-semibold whitespace-nowrap">
                               {mascot.nickname}
                             </span>
                           </div>
 
-                          <div className="text-xs font-semibold text-[#D4CDC3] mt-1">
+                          <div className="text-xs font-semibold text-[#5A4032] mt-1">
                             {mascot.title}
                           </div>
 
-                          <div className="text-[11px] text-[#766B5E] mt-0.5 truncate">
+                          <div className="text-[11px] text-[#755B4B] mt-0.5 truncate">
                             {mascot.species}
                           </div>
                         </div>
 
                         {/* Interactive Pill on Card */}
-                        <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#2A241F] text-[#A39889] border border-[#383129] group-hover:border-[#D97757] group-hover:text-[#D97757] group-hover:bg-[#32231C] transition-all shrink-0 mt-0.5">
+                        <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#F4EBDD] text-[#5A4032] border border-[#E2D1BC] group-hover:border-[#C45730] group-hover:text-[#A8421E] group-hover:bg-[#FCEEE6] transition-all shrink-0 mt-0.5">
                           <span>Ver Estilo</span>
                           <Icon n="chevron" size={10} />
                         </span>
@@ -227,45 +227,45 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
                   </div>
 
                   {/* Problem Solving Style Badge & Approach */}
-                  <div className="p-3 rounded-xl bg-[#1E1A17] border border-[#383129] group-hover:border-[#483E34] transition-colors mb-3">
+                  <div className="p-3 rounded-xl bg-[#FAF3E8] border border-[#E2D1BC] group-hover:border-[#CEB79A] transition-colors mb-3">
                     <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-[#F5F2EB]">
-                        <div className="w-4 h-4 rounded bg-[#32231C] flex items-center justify-center text-[#D97757] shrink-0">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-[#2E190F]">
+                        <div className="w-4 h-4 rounded bg-[#FCEEE6] flex items-center justify-center text-[#B44B25] shrink-0">
                           <Icon n="zap" size={11} />
                         </div>
                         <span>Estilo: {mascot.problemSolvingStyle.headline}</span>
                       </div>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#2A241F] border border-[#383129] text-[#D4CDC3] font-mono">
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FFFDF9] border border-[#E2D1BC] text-[#5A4032] font-mono">
                         {mascot.problemSolvingStyle.badge}
                       </span>
                     </div>
-                    <p className="text-[11.5px] text-[#A39889] leading-relaxed line-clamp-2 m-0">
+                    <p className="text-[11.5px] text-[#5A4032] leading-relaxed line-clamp-2 m-0">
                       {mascot.problemSolvingStyle.description}
                     </p>
                   </div>
 
                   {/* Role & Tagline */}
-                  <div className="p-2.5 rounded-xl bg-[#1E1A17] border border-[#322B24] mb-4">
-                    <div className="text-xs font-semibold text-[#D4CDC3]">{mascot.role}</div>
-                    <p className="text-[11px] text-[#766B5E] mt-0.5 mb-0 italic">"{mascot.tagline}"</p>
+                  <div className="p-2.5 rounded-xl bg-[#FAF3E8] border border-[#E2D1BC] mb-4">
+                    <div className="text-xs font-semibold text-[#2E190F]">{mascot.role}</div>
+                    <p className="text-[11px] text-[#755B4B] mt-0.5 mb-0 italic">"{mascot.tagline}"</p>
                   </div>
 
                   {/* Core Expertises */}
                   <div className="space-y-1.5 mb-5">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#A39889] flex items-center justify-between">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#5A4032] flex items-center justify-between">
                       <span>Especialidades Únicas</span>
-                      <span className="text-[10px] font-normal text-[#766B5E]">{mascot.expertises.length} áreas</span>
+                      <span className="text-[10px] font-normal text-[#755B4B]">{mascot.expertises.length} áreas</span>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                       {mascot.expertises.slice(0, 4).map((exp, idx) => (
                         <div
                           key={idx}
-                          className="p-2 rounded-lg bg-[#27221E] border border-[#383129] flex items-center gap-2 group-hover:border-[#483E34] transition-colors min-w-0"
+                          className="p-2 rounded-lg bg-[#F4EBDD] border border-[#E2D1BC] flex items-center gap-2 group-hover:border-[#CEB79A] transition-colors min-w-0"
                         >
-                          <div className="w-4 h-4 rounded bg-[#302A24] flex items-center justify-center shrink-0 text-[#D97757]">
+                          <div className="w-4 h-4 rounded bg-[#FFFDF9] flex items-center justify-center shrink-0 text-[#B44B25]">
                             <Icon n={exp.icon} size={11} />
                           </div>
-                          <span className="text-[11px] text-[#D4CDC3] truncate">{exp.title}</span>
+                          <span className="text-[11px] text-[#2E190F] truncate">{exp.title}</span>
                         </div>
                       ))}
                     </div>
@@ -273,14 +273,14 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
                 </div>
 
                 {/* Bottom Actions (Stacked vertically, one button below the other across all cards) */}
-                <div className="relative z-10 pt-4 border-t border-[#383129] flex flex-col gap-2 w-full">
+                <div className="relative z-10 pt-4 border-t border-[#E2D1BC] flex flex-col gap-2 w-full">
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       setQuickInfoMascot(mascot);
                     }}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#2A241F] hover:bg-[#342D26] text-[#F5F2EB] text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-2 border border-[#443A30]"
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#2E190F] text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-2 border border-[#CEB79A]"
                     title="Abrir modal com estilo de resolução e especialidades"
                   >
                     <Icon n="zap" size={13} />
@@ -293,7 +293,7 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
                       e.stopPropagation();
                       setSelectedMascot(mascot);
                     }}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#1E1A17] hover:bg-[#27221E] text-[#D4CDC3] hover:text-[#F5F2EB] text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-2 border border-[#383129]"
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#FFFDF9] hover:bg-[#F6ECE0] text-[#5A4032] hover:text-[#2E190F] text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-2 border border-[#CEB79A]"
                     title="Ver ficha completa do colega de equipe"
                   >
                     <Icon n="file-text" size={13} />
@@ -306,7 +306,7 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
                       e.stopPropagation();
                       onTestPrompt(mascot.suggestedSkillId, mascot.samplePrompts[0]);
                     }}
-                    className="w-full py-2.5 px-3.5 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white border border-[#D97757] text-xs font-bold transition-all shadow-[0_2px_10px_rgba(217,119,87,0.3)] cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full py-2.5 px-3.5 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white border border-[#C45730] text-xs font-bold transition-all shadow-[0_4px_12px_rgba(196,87,48,0.25)] cursor-pointer flex items-center justify-center gap-2"
                     title="Testar no Playground"
                   >
                     <Icon n="play" size={13} />
@@ -342,16 +342,16 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
       {activeTab === "team" && (
         <div className="space-y-6">
           {/* Team Explanation Card */}
-          <div className="bg-[#24201D] border border-[#383129] rounded-2xl p-5 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#383129]">
+          <div className="bg-[#FFFDF9] border border-[#E2D1BC] rounded-2xl p-5 sm:p-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E2D1BC]">
               <div>
-                <span className="text-xs uppercase font-bold tracking-wider text-[#D97757]">
+                <span className="text-xs uppercase font-bold tracking-wider text-[#B44B25]">
                   Pipeline Orquestrado de Engenharia
                 </span>
-                <h2 className="text-xl font-bold text-[#F5F2EB] mt-0.5 mb-0">
+                <h2 className="text-xl font-bold text-[#2E190F] mt-0.5 mb-0">
                   Como os 6 Mascotes Trabalham em Equipe
                 </h2>
-                <p className="text-xs text-[#A39889] mt-1 mb-0 max-w-2xl">
+                <p className="text-xs text-[#5A4032] mt-1 mb-0 max-w-2xl">
                   Ao invés de um agente solitário tentar resolver tudo, cada mascote assume a etapa em que é especialista, passando o bastão com evidências auditadas.
                 </p>
               </div>
@@ -360,7 +360,7 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
                 type="button"
                 onClick={handleRunTeamSimulation}
                 disabled={simulatingTeam}
-                className="py-3 px-5 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white border border-[#D97757] text-xs font-extrabold uppercase tracking-wider transition-all shadow-[0_2px_10px_rgba(217,119,87,0.35)] cursor-pointer flex items-center gap-2 shrink-0 disabled:opacity-50 active:scale-[0.99]"
+                className="py-3 px-5 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white border border-[#C45730] text-xs font-extrabold uppercase tracking-wider transition-all shadow-[0_4px_12px_rgba(196,87,48,0.25)] cursor-pointer flex items-center gap-2 shrink-0 disabled:opacity-50 active:scale-[0.99]"
               >
                 <Icon n={simulatingTeam ? "activity" : "play"} size={14} />
                 <span>{simulatingTeam ? "Executando Pipeline..." : "Simular Trabalho em Equipe"}</span>
@@ -379,43 +379,43 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
                     onClick={() => setQuickInfoMascot(m)}
                     className={`p-4 rounded-xl border transition-all duration-300 relative cursor-pointer ${
                       isActive
-                        ? "bg-[#32231C] border-[#D97757] shadow-xl scale-[1.01]"
+                        ? "bg-[#FCEEE6] border-[#C45730] shadow-md scale-[1.01]"
                         : isPassed
-                        ? "bg-[#27221E] border-[#483E34] hover:border-[#D97757]/50"
-                        : "bg-[#1E1A17] border-[#383129] hover:border-[#483E34] opacity-85"
+                        ? "bg-[#F4EBDD] border-[#CEB79A] hover:border-[#C45730]/60"
+                        : "bg-[#FAF3E8] border-[#E2D1BC] hover:border-[#CEB79A]"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-[10.5px] font-bold px-2 py-0.5 rounded bg-[#302A24] text-[#F5F2EB] border border-[#483E34]">
+                      <span className="text-[10.5px] font-bold px-2 py-0.5 rounded bg-[#FFFDF9] text-[#2E190F] border border-[#CEB79A]">
                         Etapa {m.collaborationStep}
                       </span>
-                      <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#383129] bg-[#191613]">
+                      <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#CEB79A] bg-[#F4EBDD]">
                         <img src={m.avatar} alt={m.name} className="w-full h-full object-cover" />
                       </div>
                     </div>
 
-                    <div className="text-sm font-bold text-[#F5F2EB]">{m.name}</div>
-                    <div className="text-xs font-semibold text-[#D97757] mt-0.5">
+                    <div className="text-sm font-bold text-[#2E190F]">{m.name}</div>
+                    <div className="text-xs font-semibold text-[#B44B25] mt-0.5">
                       {m.collaborationRole}
                     </div>
 
-                    <p className="text-[11px] text-[#A39889] mt-2 leading-relaxed">
+                    <p className="text-[11px] text-[#5A4032] mt-2 leading-relaxed">
                       {m.collaborationAction}
                     </p>
 
-                    <div className="mt-4 pt-2.5 border-t border-[#383129] flex items-center gap-2 text-[11px]">
+                    <div className="mt-4 pt-2.5 border-t border-[#E2D1BC] flex items-center gap-2 text-[11px]">
                       {isActive ? (
-                        <span className="text-[#D97757] font-semibold flex items-center gap-1.5 animate-pulse">
-                          <span className="w-2 h-2 rounded-full bg-[#D97757]"></span>
+                        <span className="text-[#B44B25] font-semibold flex items-center gap-1.5 animate-pulse">
+                          <span className="w-2 h-2 rounded-full bg-[#C45730]"></span>
                           Executando agora...
                         </span>
                       ) : isPassed ? (
-                        <span className="text-[#D4CDC3] font-medium flex items-center gap-1.5">
-                          <Icon n="check-circle" size={12} />
+                        <span className="text-[#2E190F] font-medium flex items-center gap-1.5">
+                          <Icon n="check-circle" size={12} className="text-[#B44B25]" />
                           Concluído com sucesso
                         </span>
                       ) : (
-                        <span className="text-[#766B5E]">Aguardando bastão</span>
+                        <span className="text-[#755B4B]">Aguardando bastão</span>
                       )}
                     </div>
                   </div>
@@ -425,42 +425,42 @@ export const MascotAgentsView: React.FC<MascotAgentsViewProps> = ({
 
             {/* Live Terminal Log for Team Simulation */}
             {teamStep > 0 && (
-              <div className="mt-6 p-4 rounded-xl bg-[#191613] border border-[#383129] font-mono text-xs">
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-[#322B24] text-[#A39889] text-[11px]">
+              <div className="mt-6 p-4 rounded-xl bg-[#F4EBDD] border border-[#E2D1BC] font-mono text-xs">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-[#E2D1BC] text-[#5A4032] text-[11px]">
                   <span className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-[#D97757]"></span>
+                    <span className="w-2 h-2 rounded-full bg-[#C45730]"></span>
                     Terminal de Comunicação Entre Agentes (P2P Event Bus)
                   </span>
                   <span>Deda Skills v1.0</span>
                 </div>
 
-                <div className="space-y-1.5 text-[11.5px] text-[#D4CDC3]">
+                <div className="space-y-1.5 text-[11.5px] text-[#5A4032]">
                   {teamStep >= 1 && (
                     <div className="flex items-start gap-2">
-                      <span className="text-[#F5F2EB] font-bold shrink-0">[Lobo-Guará]</span>
+                      <span className="text-[#2E190F] font-bold shrink-0">[Lobo-Guará]</span>
                       <span>Topologia mapeada. Definida arquitetura limpa com 3 fatias verticais e contratos de API seguros.</span>
                     </div>
                   )}
                   {teamStep >= 2 && (
                     <div className="flex items-start gap-2">
-                      <span className="text-[#F5F2EB] font-bold shrink-0">[Ararinha-Azul]</span>
+                      <span className="text-[#2E190F] font-bold shrink-0">[Ararinha-Azul]</span>
                       <span>Interface projetada. Componentes Tailwind CSS e design tokens sincronizados. Cópia persuasiva pronta.</span>
                     </div>
                   )}
                   {teamStep >= 3 && (
                     <div className="flex items-start gap-2">
-                      <span className="text-[#F5F2EB] font-bold shrink-0">[Tatu-Bola]</span>
+                      <span className="text-[#2E190F] font-bold shrink-0">[Tatu-Bola]</span>
                       <span>TDD finalizado. 14 testes unitários e 4 testes de regressão passando com 100% de cobertura.</span>
                     </div>
                   )}
                   {teamStep >= 4 && (
                     <div className="flex items-start gap-2">
-                      <span className="text-[#F5F2EB] font-bold shrink-0">[Carcará]</span>
+                      <span className="text-[#2E190F] font-bold shrink-0">[Carcará]</span>
                       <span>Varredura de segurança concluída. Zero vulnerabilidades, zero segredos vazados. Gate aprovado para entrega!</span>
                     </div>
                   )}
                   {teamStep >= 5 && (
-                    <div className="flex items-start gap-2 text-[#D97757] font-bold pt-1">
+                    <div className="flex items-start gap-2 text-[#B44B25] font-bold pt-1">
                       <span className="shrink-0">[Equipe Deda Skills]</span>
                       <span>Missão executada com perfeição. Pacote gerado e disponível para todos os agentes autônomos.</span>
                     </div>

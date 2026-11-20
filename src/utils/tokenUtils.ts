@@ -52,7 +52,7 @@ export function calculateSkillTokenProfile(skillOrSuite: any): SkillTokenProfile
       formattedBytes: "0 B",
       category: "leve",
       categoryLabel: "Leve",
-      categoryColor: "#D97757",
+      categoryColor: "#B44B25",
       percent128k: 0,
       percentClaude200k: 0,
     };
@@ -116,16 +116,16 @@ export function calculateSkillTokenProfile(skillOrSuite: any): SkillTokenProfile
 
   let category: "leve" | "otimizado" | "denso" = "leve";
   let categoryLabel = "Leve & Rápido";
-  let categoryColor = "#D97757"; // Terracota Claude do Sertão
+  let categoryColor = "#B44B25"; // Terracota escuro (contraste AA em fundo claro)
 
   if (totalTokens > 3200) {
     category = "denso";
     categoryLabel = "Denso / Completo";
-    categoryColor = "#FFB800"; // Âmbar
+    categoryColor = "#9A6008"; // Âmbar tostado (contraste AA em fundo claro)
   } else if (totalTokens > 1200) {
     category = "otimizado";
     categoryLabel = "Otimizado";
-    categoryColor = "#E28768"; // Terracota suave do Sertão
+    categoryColor = "#C45730"; // Terracota queimado do Sertão
   }
 
   const formattedBytes = byteSize >= 1024 ? `${(byteSize / 1024).toFixed(1)} KB` : `${byteSize} B`;

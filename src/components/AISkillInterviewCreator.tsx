@@ -66,7 +66,7 @@ export const AISkillInterviewCreator: React.FC<AISkillInterviewCreatorProps> = (
   const [createdSkill, setCreatedSkill] = useState<AgentSkill | null>(null);
   const [isFinalizingSkill, setIsFinalizingSkill] = useState(false);
 
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatFeedRef = useRef<HTMLDivElement>(null);
 
   const selectedMascot =
     MASCOT_AGENTS.find((m) => m.id === selectedMascotId) || MASCOT_AGENTS[2]; // Default: Tatu-Bola
@@ -87,7 +87,13 @@ export const AISkillInterviewCreator: React.FC<AISkillInterviewCreatorProps> = (
   };
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Rola apenas o feed interno do chat após interações, sem rolar a página inteira no mount
+    if (messages.length > 1 || isLoading) {
+      const feed = chatFeedRef.current;
+      if (feed) {
+        feed.scrollTo({ top: feed.scrollHeight, behavior: "smooth" });
+      }
+    }
   }, [messages, isLoading]);
 
   // Dynamic Token / Context Calculations
@@ -369,62 +375,63 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-3 sm:px-5 py-4 pb-20 text-[#F5F2EB] min-w-0">
+    <div className="max-w-6xl mx-auto px-0 sm:px-3 xl:px-5 py-1 sm:py-4 pb-6 lg:pb-16 text-[#2E190F] min-w-0 w-full">
       {/* =========================================================================
-          UNIFIED RESPONSIVE HEADER & NAVIGATION (Zero Duplication, Clean & Modern)
+          UNIFIED RESPONSIVE HEADER & NAVIGATION
           ========================================================================= */}
-      <header className="pb-4 mb-5 border-b border-[#383129] space-y-3">
+      <header className="pb-3.5 sm:pb-4 mb-4 sm:mb-5 border-b border-[#E2D1BC] space-y-3 min-w-0">
         {/* Top Navigation Row: Back, Title, Token Badge & Mode Toggle */}
-        <div className="flex items-center justify-between gap-3 flex-wrap">
+        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-2.5 sm:gap-3 min-w-0">
           {/* Brand & Title */}
           <div className="flex items-center gap-2.5 min-w-0">
             <button
               type="button"
               onClick={onCancel}
-              className="p-2 rounded-xl bg-[#27221E] hover:bg-[#332C26] text-[#A39889] hover:text-[#F5F2EB] border border-[#383129] transition-colors cursor-pointer shrink-0 flex items-center justify-center"
+              className="p-2 rounded-xl bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#5A4032] hover:text-[#2E190F] border border-[#CEB79A] transition-colors cursor-pointer shrink-0 flex items-center justify-center"
               title="Voltar ao Catálogo"
+              aria-label="Voltar ao Catálogo"
             >
               <Icon n="arrow" size={14} className="rotate-180" />
             </button>
 
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-[10.5px] font-black uppercase tracking-wider text-[#D97757]">
+                <span className="text-[10.5px] font-black uppercase tracking-wider text-[#B44B25]">
                   Estúdio IA
                 </span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#32231C] text-[#E28768] border border-[#D97757]/40 font-semibold hidden sm:inline-block">
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#FCEEE6] text-[#A8421E] border border-[#E5A992] font-semibold hidden sm:inline-block">
                   Entrevista & Validação
                 </span>
               </div>
-              <h1 className="text-base sm:text-lg font-black text-[#F5F2EB] tracking-tight truncate">
+              <h1 className="text-base sm:text-lg font-black text-[#2E190F] tracking-tight truncate !m-0">
                 Criação de Habilidades com IA
               </h1>
             </div>
           </div>
 
           {/* Right Area: Context Token Counter & Mode Switcher */}
-          <div className="flex items-center gap-2 flex-wrap ml-auto">
+          <div className="flex items-center justify-between xl:justify-end gap-2 flex-wrap w-full xl:w-auto shrink-0">
             {/* Live Context & Token Counter Pill */}
             <div
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#24201D] border border-[#383129] text-xs shadow-inner"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#FFFDF9] border border-[#E2D1BC] text-xs shadow-sm min-w-0"
               title={`Consumo estimado de contexto: ${activeTokens} tokens (~${percent128k}% de uma janela padrão de 128k)`}
             >
-              <span className="w-2 h-2 rounded-full bg-[#D97757] animate-pulse"></span>
-              <span className="text-[11px] text-[#A39889] hidden md:inline">Contexto:</span>
-              <span className="font-mono text-xs font-bold text-[#F5F2EB]">
+              <span className="w-2 h-2 rounded-full bg-[#C45730] animate-pulse shrink-0"></span>
+              <span className="text-[11px] text-[#755B4B] hidden md:inline">Contexto:</span>
+              <span className="font-mono text-xs font-bold text-[#2E190F]">
                 {formatTokens(activeTokens)}
               </span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#32231C] text-[#E28768] font-semibold border border-[#D97757]/40">
-                {percent128k}% de 128k
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#FCEEE6] text-[#A8421E] font-semibold border border-[#E5A992] whitespace-nowrap">
+                {percent128k}% <span className="hidden xs:inline sm:inline">de 128k</span>
               </span>
             </div>
 
             {/* Mode Switcher Toggle (IA vs Manual) */}
             {onSwitchToManual && (
-              <div className="flex items-center p-1 rounded-xl bg-[#24201D] border border-[#383129]">
+              <div className="flex items-center p-1 rounded-xl bg-[#F4EBDD] border border-[#E2D1BC] shrink-0">
                 <button
                   type="button"
-                  className="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#D97757] text-white shadow-sm flex items-center gap-1"
+                  className="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#C45730] text-white shadow-sm flex items-center gap-1 whitespace-nowrap"
                 >
                   <Icon n="sparkles" size={11} />
                   <span className="hidden sm:inline">Entrevista IA</span>
@@ -433,33 +440,34 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                 <button
                   type="button"
                   onClick={onSwitchToManual}
-                  className="px-2.5 py-1 rounded-lg text-xs font-semibold text-[#A39889] hover:text-[#F5F2EB] transition-colors flex items-center gap-1 cursor-pointer"
+                  className="px-2.5 py-1 rounded-lg text-xs font-semibold text-[#5A4032] hover:text-[#2E190F] transition-colors flex items-center gap-1 cursor-pointer whitespace-nowrap"
                 >
                   <Icon n="file-text" size={11} />
                   <span className="hidden sm:inline">Manual</span>
-                  <span className="sm:hidden">Form</span>
+                  <span className="sm:hidden">Manual</span>
                 </button>
               </div>
             )}
           </div>
         </div>
 
-        {/* Stepper Tabs Bar: Responsive, Slim & Elegant */}
-        <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#332C26]">
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#1E1A17] border border-[#383129] w-full sm:w-auto overflow-x-auto scrollbar-none">
+        {/* Stepper Tabs Bar: Responsive 3-col grid on mobile, compact inline row on sm+ */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 pt-2 border-t border-[#E2D1BC] min-w-0">
+          <div className="grid grid-cols-3 sm:inline-flex items-center gap-1 sm:gap-1.5 p-1 rounded-xl bg-[#F4EBDD] border border-[#E2D1BC] w-full sm:w-auto min-w-0">
             <button
               type="button"
               onClick={() => setCurrentTab("interview")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap flex-1 sm:flex-initial justify-center ${
+              className={`px-1.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1 sm:gap-1.5 cursor-pointer justify-center min-w-0 ${
                 currentTab === "interview"
-                  ? "bg-[#2F2721] text-[#F5F2EB] border border-[#483E34] shadow-sm"
-                  : "text-[#A39889] hover:text-[#D4CDC3]"
+                  ? "bg-[#FFFDF9] text-[#2E190F] border border-[#CEB79A] shadow-sm"
+                  : "text-[#5A4032] hover:text-[#2E190F]"
               }`}
             >
-              <span className="w-4 h-4 rounded-full bg-[#383129] text-[10px] flex items-center justify-center font-mono">
+              <span className="w-4 h-4 rounded-full bg-[#E7D6C0] text-[#2E190F] text-[10px] flex items-center justify-center font-mono shrink-0">
                 1
               </span>
-              <span>Entrevista no Chat</span>
+              <span className="truncate sm:hidden">Entrevista</span>
+              <span className="hidden sm:inline whitespace-nowrap">Entrevista no Chat</span>
             </button>
 
             <button
@@ -468,53 +476,55 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                 if (briefingMarkdown) setCurrentTab("briefing");
                 else handleGenerateBriefing();
               }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap flex-1 sm:flex-initial justify-center ${
+              className={`px-1.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1 sm:gap-1.5 cursor-pointer justify-center min-w-0 ${
                 currentTab === "briefing"
-                  ? "bg-[#32231C] text-[#E28768] border border-[#D97757]/50 shadow-sm"
-                  : "text-[#A39889] hover:text-[#D4CDC3]"
+                  ? "bg-[#FCEEE6] text-[#A8421E] border border-[#E5A992] shadow-sm"
+                  : "text-[#5A4032] hover:text-[#2E190F]"
               }`}
             >
-              <span className="w-4 h-4 rounded-full bg-[#383129] text-[10px] flex items-center justify-center font-mono">
+              <span className="w-4 h-4 rounded-full bg-[#E7D6C0] text-[#2E190F] text-[10px] flex items-center justify-center font-mono shrink-0">
                 2
               </span>
-              <span>Briefing de Validação</span>
+              <span className="truncate sm:hidden">Briefing</span>
+              <span className="hidden sm:inline whitespace-nowrap">Briefing de Validação</span>
             </button>
 
             <button
               type="button"
               disabled={!createdSkill}
               onClick={() => setCurrentTab("completed")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap flex-1 sm:flex-initial justify-center ${
+              className={`px-1.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1 sm:gap-1.5 justify-center min-w-0 ${
                 currentTab === "completed"
-                  ? "bg-[#D97757] text-white border border-[#D97757] shadow-sm"
-                  : "text-[#766B5E] cursor-not-allowed"
+                  ? "bg-[#C45730] text-white border border-[#C45730] shadow-sm"
+                  : "text-[#8F7564] cursor-not-allowed"
               }`}
             >
-              <span className="w-4 h-4 rounded-full bg-[#383129] text-[10px] flex items-center justify-center font-mono">
+              <span className="w-4 h-4 rounded-full bg-[#E7D6C0] text-[#2E190F] text-[10px] flex items-center justify-center font-mono shrink-0">
                 3
               </span>
-              <span>Skill Forjada</span>
+              <span className="truncate sm:hidden">Forjada</span>
+              <span className="hidden sm:inline whitespace-nowrap">Skill Forjada</span>
             </button>
           </div>
 
-          <div className="hidden md:flex items-center gap-1.5 text-xs text-[#A39889]">
+          <div className="hidden md:flex items-center gap-1.5 text-xs text-[#755B4B] shrink-0">
             <Icon n="activity" size={12} />
-            <span>Etapa ativa: <b className="text-[#F5F2EB]">{progressStage}</b></span>
+            <span>Etapa ativa: <b className="text-[#2E190F]">{progressStage}</b></span>
           </div>
         </div>
       </header>
 
       {/* =========================================================================
-          TAB 1: CHAT DE ENTREVISTA COM IA (ULTRA RESPONSIVO)
+          TAB 1: CHAT DE ENTREVISTA COM IA
           ========================================================================= */}
       {currentTab === "interview" && (
-        <div className="space-y-4">
-          {/* Mobile Mascot Quick Selector Bar with 1-by-1 Carousel Controls */}
-          <div className="lg:hidden bg-[#24201D] border border-[#383129] rounded-xl p-2.5 shadow-md flex items-center justify-between gap-2">
+        <div className="space-y-3.5 sm:space-y-4 min-w-0">
+          {/* Compact Mascot Quick Selector Bar (Mobile, Tablet & Narrow Desktop < 1280px) */}
+          <div className="xl:hidden bg-[#FFFDF9] border border-[#E2D1BC] rounded-xl p-2.5 shadow-sm flex items-center justify-between gap-2 min-w-0">
             <button
               type="button"
               onClick={handlePrevMascot}
-              className="p-2 rounded-lg bg-[#2A241F] hover:bg-[#332C26] text-[#D4CDC3] border border-[#483E34] text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+              className="p-2 rounded-lg bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#5A4032] border border-[#CEB79A] text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
               title="Mascote Anterior"
               aria-label="Mascote Anterior"
             >
@@ -525,23 +535,23 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
               <img
                 src={selectedMascot.mediaKit.pngTransparent}
                 alt={selectedMascot.name}
-                className="w-8 h-8 object-contain shrink-0 filter drop-shadow-md"
+                className="w-8 h-8 object-contain shrink-0 filter drop-shadow-sm"
               />
               <div className="min-w-0 text-left">
-                <div className="text-xs font-bold text-[#F5F2EB] truncate flex items-center gap-1.5">
-                  <span>{selectedMascot.name}</span>
-                  <span className="text-[9.5px] px-1.5 py-0.5 rounded bg-[#32231C] text-[#E28768] border border-[#D97757]/40 font-semibold font-mono">
+                <div className="text-xs font-bold text-[#2E190F] flex items-center gap-1.5 min-w-0">
+                  <span className="truncate">{selectedMascot.name}</span>
+                  <span className="text-[9.5px] px-1.5 py-0.5 rounded bg-[#FCEEE6] text-[#A8421E] border border-[#E5A992] font-semibold font-mono shrink-0">
                     0{currentMascotIndex + 1} / 0{MASCOT_AGENTS.length}
                   </span>
                 </div>
-                <div className="text-[10px] text-[#A39889] truncate">{selectedMascot.nickname} • {selectedMascot.role}</div>
+                <div className="text-[10px] text-[#755B4B] truncate">{selectedMascot.nickname} • {selectedMascot.role}</div>
               </div>
             </div>
 
             <button
               type="button"
               onClick={handleNextMascot}
-              className="p-2 rounded-lg bg-[#2A241F] hover:bg-[#332C26] text-[#D4CDC3] border border-[#483E34] text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+              className="p-2 rounded-lg bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#5A4032] border border-[#CEB79A] text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
               title="Próximo Mascote"
               aria-label="Próximo Mascote"
             >
@@ -549,23 +559,23 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
             </button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-            {/* Left Column (Desktop only: 4 cols): Mascot Persona & Progress */}
-            <div className="hidden lg:flex lg:col-span-4 flex-col gap-4">
-              {/* Mascot Persona Game-Style Selection Carousel */}
-              <div className="bg-[#24201D] border border-[#383129] rounded-2xl p-4 shadow-xl relative overflow-hidden flex flex-col">
-                {/* Header bar: Arcade Style */}
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#A39889] mb-3 flex items-center justify-between">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 xl:gap-5 items-start min-w-0">
+            {/* Left Column (Wide Desktop >= 1280px: 4 cols): Mascot Persona & Progress */}
+            <div className="hidden xl:flex xl:col-span-4 flex-col gap-4 min-w-0">
+              {/* Mascot Persona Selection Carousel */}
+              <div className="bg-[#FFFDF9] border border-[#E2D1BC] rounded-2xl p-4 shadow-sm relative overflow-hidden flex flex-col">
+                {/* Header bar */}
+                <div className="text-[11px] font-bold uppercase tracking-wider text-[#755B4B] mb-3 flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
-                    <Icon n="target" size={13} className="text-[#D97757]" />
+                    <Icon n="target" size={13} className="text-[#C45730]" />
                     <span>Mascote Entrevistador</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10.5px] text-[#D4CDC3] bg-[#2A241F] px-1.5 py-0.5 rounded border border-[#383129]">
+                    <span className="font-mono text-[10.5px] text-[#5A4032] bg-[#F4EBDD] px-1.5 py-0.5 rounded border border-[#E2D1BC]">
                       0{currentMascotIndex + 1} / 0{MASCOT_AGENTS.length}
                     </span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#32231C] text-[#E28768] font-semibold border border-[#D97757]/40 flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D97757] animate-pulse"></span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#FCEEE6] text-[#A8421E] font-semibold border border-[#E5A992] flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C45730] animate-pulse"></span>
                       <span>Ativo</span>
                     </span>
                   </div>
@@ -573,9 +583,9 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
 
                 {/* Character Arena Stage / Carousel Viewport */}
                 <div
-                  className="relative rounded-xl border border-[#2a2a2a] p-4 pt-5 pb-4 flex flex-col items-center justify-center text-center overflow-hidden transition-all duration-300"
+                  className="relative rounded-xl border border-[#E2D1BC] p-4 pt-5 pb-4 flex flex-col items-center justify-center text-center overflow-hidden transition-all duration-300"
                   style={{
-                    background: `radial-gradient(ellipse at 50% 40%, ${selectedMascot.mediaKit.themeColors.glow || 'rgba(0,255,163,0.25)'} 0%, rgba(20,20,20,0.85) 75%)`,
+                    background: `radial-gradient(ellipse at 50% 35%, ${selectedMascot.mediaKit.themeColors.glow || 'rgba(196,87,48,0.16)'} 0%, #F2E6D5 78%)`,
                   }}
                 >
                   {/* Side Navigation Arrow: Previous Mascot */}
@@ -583,7 +593,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                     type="button"
                     onClick={handlePrevMascot}
                     style={{ padding: "4px 8px" }}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 rounded-lg bg-[#141414]/90 hover:bg-[#252525] text-[#C2C2C2] hover:text-[#D97757] border border-[#383838] hover:border-[#D97757]/50 transition-all cursor-pointer shadow-lg active:scale-95 group"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 rounded-lg bg-[#FFFDF9]/95 hover:bg-[#EFE1CE] text-[#5A4032] hover:text-[#C45730] border border-[#CEB79A] hover:border-[#C45730]/50 transition-all cursor-pointer shadow-sm active:scale-95 group"
                     title="Mascote Anterior (Passar para o lado)"
                     aria-label="Mascote Anterior"
                   >
@@ -595,90 +605,70 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                     type="button"
                     onClick={handleNextMascot}
                     style={{ padding: "4px 8px" }}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 rounded-lg bg-[#141414]/90 hover:bg-[#252525] text-[#C2C2C2] hover:text-[#D97757] border border-[#383838] hover:border-[#D97757]/50 transition-all cursor-pointer shadow-lg active:scale-95 group"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 rounded-lg bg-[#FFFDF9]/95 hover:bg-[#EFE1CE] text-[#5A4032] hover:text-[#C45730] border border-[#CEB79A] hover:border-[#C45730]/50 transition-all cursor-pointer shadow-sm active:scale-95 group"
                     title="Próximo Mascote (Passar para o lado)"
                     aria-label="Próximo Mascote"
                   >
                     <Icon n="arrow" size={13} className="group-hover:translate-x-0.5 transition-transform" />
                   </button>
 
-                  {/* Character 3D Spotlight & Pedestal */}
+                  {/* Character Spotlight & Pedestal */}
                   <div className="relative mb-2 flex flex-col items-center">
                     <img
                       key={selectedMascot.id}
                       src={selectedMascot.mediaKit.pngTransparent}
                       alt={selectedMascot.name}
-                      className="w-24 h-24 sm:w-28 sm:h-28 object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)] transition-all duration-300"
+                      className="w-24 h-24 sm:w-28 sm:h-28 object-contain filter drop-shadow-[0_10px_18px_rgba(46,25,15,0.22)] transition-all duration-300"
                     />
                     {/* Glowing Pedestal Ring */}
                     <div
-                      className="w-20 h-2.5 rounded-[100%] blur-[1px] -mt-1 opacity-80"
+                      className="w-20 h-2.5 rounded-[100%] blur-[1px] -mt-1 opacity-75"
                       style={{
-                        background: `radial-gradient(ellipse at center, ${selectedMascot.mediaKit.themeColors.primary || '#D97757'} 0%, rgba(0,0,0,0) 80%)`,
-                        boxShadow: `0 0 14px ${selectedMascot.mediaKit.themeColors.primary || '#D97757'}`,
+                        background: `radial-gradient(ellipse at center, ${selectedMascot.mediaKit.themeColors.primary || '#C45730'} 0%, rgba(0,0,0,0) 80%)`,
                       }}
                     />
                   </div>
 
                   {/* Mascot Identity */}
                   <div className="space-y-0.5 min-w-0 max-w-full px-4">
-                    <div className="text-[10px] font-mono uppercase tracking-wider text-[#9B9B9B]">
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-[#755B4B]">
                       {selectedMascot.nickname}
                     </div>
-                    <div className="text-base sm:text-lg font-black text-[#EAEAEA] tracking-tight truncate flex items-center justify-center gap-1.5">
+                    <div className="text-base sm:text-lg font-black text-[#2E190F] tracking-tight truncate flex items-center justify-center gap-1.5">
                       <span>{selectedMascot.name}</span>
                     </div>
-                    <div
-                      className="text-[10.5px] font-bold line-clamp-1"
-                      style={{ color: selectedMascot.mediaKit.themeColors.primary || "#D97757" }}
-                    >
+                    <div className="text-[10.5px] font-bold line-clamp-1 text-[#B44B25]">
                       {selectedMascot.role}
                     </div>
                   </div>
 
-                  {/* Mascot Style Motto, Trait & Capabilities Card (Targeted Element) */}
+                  {/* Mascot Style Motto, Trait & Capabilities Card */}
                   <div
-                    className="mt-3 w-full text-left rounded-xl bg-[#141414]/95 backdrop-blur-md border border-[#2d2d2d] hover:border-[#404040] p-3 shadow-xl transition-all duration-300 relative overflow-hidden group"
-                    style={{
-                      boxShadow: `0 4px 20px -2px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05)`,
-                    }}
+                    className="mt-3 w-full text-left rounded-xl bg-[#FFFDF9]/95 backdrop-blur-md border border-[#CEB79A] p-3 shadow-sm transition-all duration-300 relative overflow-hidden group"
                   >
                     {/* Top ambient color bar indicator */}
                     <div
-                      className="absolute top-0 left-0 right-0 h-[2px] opacity-80"
+                      className="absolute top-0 left-0 right-0 h-[2px] opacity-85"
                       style={{
-                        background: `linear-gradient(90deg, transparent, ${selectedMascot.mediaKit.themeColors.primary || '#D97757'}, transparent)`,
+                        background: `linear-gradient(90deg, transparent, ${selectedMascot.mediaKit.themeColors.primary || '#C45730'}, transparent)`,
                       }}
                     />
 
                     {/* Header Row: Trait Category + Badge */}
                     <div className="flex items-center justify-between gap-1.5 mb-2">
                       <div className="flex items-center gap-1.5">
-                        <span
-                          className="w-4 h-4 rounded-md flex items-center justify-center text-[10px] shrink-0 font-bold"
-                          style={{
-                            backgroundColor: `${selectedMascot.mediaKit.themeColors.primary || '#D97757'}20`,
-                            color: selectedMascot.mediaKit.themeColors.primary || "#D97757",
-                          }}
-                        >
+                        <span className="w-4 h-4 rounded-md bg-[#FCEEE6] text-[#B44B25] flex items-center justify-center text-[10px] shrink-0 font-bold">
                           <Icon n="zap" size={11} />
                         </span>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#9B9B9B]">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#755B4B]">
                           Estilo de Resolução
                         </span>
                       </div>
-                      <span
-                        className="text-[9.5px] px-2 py-0.5 rounded-full font-semibold font-mono border shrink-0 flex items-center gap-1"
-                        style={{
-                          backgroundColor: `${selectedMascot.mediaKit.themeColors.primary || '#D97757'}15`,
-                          borderColor: `${selectedMascot.mediaKit.themeColors.primary || '#D97757'}40`,
-                          color: selectedMascot.mediaKit.themeColors.primary || "#D97757",
-                        }}
-                      >
+                      <span className="text-[9.5px] px-2 py-0.5 rounded-full font-semibold font-mono bg-[#FCEEE6] border border-[#E5A992] text-[#A8421E] shrink-0 flex items-center gap-1">
                         <span
                           className="w-1.5 h-1.5 rounded-full animate-pulse"
                           style={{
-                            backgroundColor: selectedMascot.mediaKit.themeColors.primary || "#D97757",
+                            backgroundColor: selectedMascot.mediaKit.themeColors.primary || "#C45730",
                           }}
                         />
                         <span>{selectedMascot.problemSolvingStyle.badge}</span>
@@ -686,36 +676,31 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                     </div>
 
                     {/* Headline Trait */}
-                    <div className="text-xs font-bold text-[#EAEAEA] mb-1.5 flex items-center gap-1.5">
+                    <div className="text-xs font-bold text-[#2E190F] mb-1.5 flex items-center gap-1.5">
                       <span>{selectedMascot.problemSolvingStyle.headline}</span>
                     </div>
 
                     {/* Stylized Motto Quote Block */}
-                    <div
-                      className="border-l-2 pl-2.5 py-1 mb-2 bg-[#1b1b1b]/80 rounded-r-lg relative"
-                      style={{
-                        borderLeftColor: selectedMascot.mediaKit.themeColors.primary || "#D97757",
-                      }}
-                    >
-                      <p className="text-[10.5px] text-[#C2C2C2] leading-relaxed italic font-serif">
+                    <div className="border-l-2 border-[#C45730] pl-2.5 py-1 mb-2 bg-[#F4EBDD] rounded-r-lg relative">
+                      <p className="text-[10.5px] text-[#5A4032] leading-relaxed italic font-serif">
                         "{selectedMascot.problemSolvingStyle.keyMotto}"
                       </p>
                     </div>
 
                     {/* Approach & Key Focus Highlights */}
-                    <div className="pt-2 border-t border-[#262626] space-y-1.5">
-                      <div className="text-[10px] text-[#8E8E8E] flex items-start gap-1.5 leading-snug">
-                        <Icon n="check" size={11} className="text-[#D97757] shrink-0 mt-0.5" />
+                    <div className="pt-2 border-t border-[#E2D1BC] space-y-1.5">
+                      <div className="text-[10px] text-[#5A4032] flex items-start gap-1.5 leading-snug">
+                        <Icon n="check" size={11} className="text-[#C45730] shrink-0 mt-0.5" />
                         <span className="line-clamp-2">
-                          <strong className="text-[#A5A5A5] font-semibold">Abordagem: </strong>
+                          <strong className="text-[#2E190F] font-semibold">Abordagem: </strong>
                           {selectedMascot.problemSolvingStyle.approach}
                         </span>
                       </div>
                       {selectedMascot.uniqueSpecialties?.[0] && (
-                        <div className="text-[10px] text-[#8E8E8E] flex items-start gap-1.5 leading-snug">
-                          <Icon n="sparkles" size={11} className="text-[#D97757] shrink-0 mt-0.5" />
+                        <div className="text-[10px] text-[#5A4032] flex items-start gap-1.5 leading-snug">
+                          <Icon n="sparkles" size={11} className="text-[#C45730] shrink-0 mt-0.5" />
                           <span className="line-clamp-1 truncate">
-                            <strong className="text-[#A5A5A5] font-semibold">Foco: </strong>
+                            <strong className="text-[#2E190F] font-semibold">Foco: </strong>
                             {selectedMascot.uniqueSpecialties[0]}
                           </span>
                         </div>
@@ -726,13 +711,13 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
               </div>
 
               {/* Progress & Quick Briefing CTA Card */}
-              <div className="bg-[#24201D] border border-[#383129] rounded-2xl p-4 shadow-lg space-y-3">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#A39889] flex items-center justify-between">
+              <div className="bg-[#FFFDF9] border border-[#E2D1BC] rounded-2xl p-4 shadow-sm space-y-3">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-[#755B4B] flex items-center justify-between">
                   <span className="flex items-center gap-1.5">
                     <Icon n="activity" size={13} />
                     <span>Progresso da Descoberta</span>
                   </span>
-                  <span className="text-[10px] text-[#D97757] font-mono">
+                  <span className="text-[10px] text-[#B44B25] font-mono font-bold">
                     {messages.length} mensagens
                   </span>
                 </div>
@@ -749,13 +734,13 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                       key={idx}
                       className={`p-1.5 px-2.5 rounded-lg border text-xs flex items-center gap-2 transition-all ${
                         step.active
-                          ? "bg-[#32231C] border-[#D97757]/50 text-[#F5F2EB]"
-                          : "bg-[#191613] border-[#332C26] text-[#766B5E]"
+                          ? "bg-[#FCEEE6] border-[#E5A992] text-[#2E190F]"
+                          : "bg-[#F4EBDD] border-[#E2D1BC] text-[#755B4B]"
                       }`}
                     >
                       <span
                         className={`w-4 h-4 rounded-full text-[9px] flex items-center justify-center font-bold ${
-                          step.active ? "bg-[#D97757] text-white" : "bg-[#2A241F] text-[#766B5E]"
+                          step.active ? "bg-[#C45730] text-white" : "bg-[#E7D6C0] text-[#755B4B]"
                         }`}
                       >
                         {step.active ? "✓" : idx + 1}
@@ -771,38 +756,38 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                     type="button"
                     onClick={handleGenerateBriefing}
                     disabled={isGeneratingBriefing}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-[0_2px_10px_rgba(217,119,87,0.35)] flex items-center justify-center gap-2 cursor-pointer active:scale-98 disabled:opacity-50"
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer active:scale-98 disabled:opacity-50"
                   >
                     <Icon n="file-text" size={13} />
                     <span>
                       {isGeneratingBriefing ? "Gerando Briefing..." : "Gerar Briefing em Markdown"}
                     </span>
                   </button>
-                  <p className="text-[10px] text-[#A39889] text-center mt-1.5">
+                  <p className="text-[10px] text-[#755B4B] text-center mt-1.5">
                     Compila as respostas em Markdown estruturado
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Right Column (8 cols desktop, 12 cols mobile): Interactive Chat Stream */}
-            <div className="lg:col-span-8 flex flex-col bg-[#24201D] border border-[#383129] rounded-2xl shadow-2xl h-[540px] sm:h-[620px] overflow-hidden min-w-0">
+            {/* Right Column (8 cols wide desktop, 12 cols mobile/tablet/narrow): Interactive Chat Stream */}
+            <div className="xl:col-span-8 flex flex-col bg-[#FFFDF9] border border-[#E2D1BC] rounded-2xl shadow-sm h-[clamp(420px,62dvh,560px)] sm:h-[600px] xl:h-[640px] overflow-hidden min-w-0">
               {/* Chat Header Bar */}
-              <div className="px-4 py-3 bg-[#1E1A17] border-b border-[#383129] flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5 min-w-0">
+              <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-[#F4EBDD] border-b border-[#E2D1BC] flex items-center justify-between gap-2 sm:gap-3 min-w-0">
+                <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
                   <img
                     src={selectedMascot.mediaKit.pngTransparent}
                     alt={selectedMascot.name}
                     className="w-7 h-7 object-contain shrink-0"
                   />
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold text-[#F5F2EB] truncate flex items-center gap-1.5">
-                      <span>{selectedMascot.name}</span>
-                      <span className="text-[10px] text-[#A39889] font-normal truncate">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs font-bold text-[#2E190F] flex items-center gap-1.5 min-w-0">
+                      <span className="truncate">{selectedMascot.name}</span>
+                      <span className="text-[10px] text-[#755B4B] font-normal truncate hidden xs:inline sm:inline">
                         • {progressStage}
                       </span>
                     </div>
-                    <div className="text-[10px] text-[#A39889] truncate hidden sm:block">
+                    <div className="text-[10px] text-[#755B4B] truncate hidden sm:block">
                       Responda para moldar a skill; gere o briefing a qualquer momento
                     </div>
                   </div>
@@ -812,25 +797,26 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                 <button
                   type="button"
                   onClick={handleGenerateBriefing}
-                  className="px-3 py-1.5 rounded-lg bg-[#2A241F] hover:bg-[#332C26] text-[#E28768] border border-[#483E34] hover:border-[#D97757]/60 text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 shadow-sm"
+                  className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#FFFDF9] hover:bg-[#EFE1CE] text-[#B44B25] border border-[#CEB79A] hover:border-[#C45730]/60 text-[11px] sm:text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 shadow-sm whitespace-nowrap"
                   title="Sintetizar respostas no documento de validação"
                 >
                   <Icon n="file-text" size={13} />
-                  <span>Gerar Briefing</span>
+                  <span className="sm:hidden">Briefing</span>
+                  <span className="hidden sm:inline">Gerar Briefing</span>
                 </button>
               </div>
 
               {/* Chat Messages Feed */}
-              <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-4">
+              <div ref={chatFeedRef} className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-3.5 sm:space-y-4 min-w-0">
                 {messages.map((msg) => {
                   const isModel = msg.role === "model";
                   return (
                     <div
                       key={msg.id}
-                      className={`flex items-start gap-2.5 ${isModel ? "justify-start" : "justify-end"}`}
+                      className={`flex items-start gap-2 sm:gap-2.5 min-w-0 ${isModel ? "justify-start" : "justify-end"}`}
                     >
                       {isModel && (
-                        <div className="w-7 h-7 rounded-lg bg-[#222222] border border-[#383838] flex items-center justify-center shrink-0 p-0.5">
+                        <div className="w-7 h-7 rounded-lg bg-[#F4EBDD] border border-[#E2D1BC] flex items-center justify-center shrink-0 p-0.5">
                           <img
                             src={selectedMascot.mediaKit.pngTransparent}
                             alt={selectedMascot.name}
@@ -840,29 +826,29 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                       )}
 
                       <div
-                        className={`max-w-[88%] sm:max-w-[78%] rounded-2xl p-3.5 shadow-sm text-xs leading-relaxed ${
+                        className={`max-w-[88%] sm:max-w-[78%] min-w-0 rounded-2xl p-3 sm:p-3.5 shadow-sm text-xs leading-relaxed break-words ${
                           isModel
-                            ? "bg-[#1f1f1f] border border-[#2e2e2e] text-[#EAEAEA]"
-                            : "bg-[#272727] border border-[#3d3d3d] text-[#FFFFFF]"
+                            ? "bg-[#F4EBDD] border border-[#E2D1BC] text-[#2E190F]"
+                            : "bg-[#FCEEE6] border border-[#E5A992] text-[#2E190F]"
                         }`}
                       >
                         {/* Message author badge */}
-                        <div className="flex items-center justify-between text-[10px] text-[#888888] mb-1.5 pb-1 border-b border-[#2a2a2a]">
-                          <span className="font-bold">
+                        <div className="flex items-center justify-between gap-2 text-[10px] text-[#755B4B] mb-1.5 pb-1 border-b border-[#E2D1BC]">
+                          <span className="font-bold text-[#2E190F] truncate">
                             {isModel ? selectedMascot.name : "Você"}
                           </span>
-                          <span>{msg.timestamp}</span>
+                          <span className="shrink-0">{msg.timestamp}</span>
                         </div>
 
                         {/* Content formatted */}
-                        <div className="whitespace-pre-wrap font-sans text-xs sm:text-[13px] leading-relaxed">
+                        <div className="whitespace-pre-wrap break-words font-sans text-xs sm:text-[13px] leading-relaxed">
                           {msg.content}
                         </div>
 
                         {/* Clickable Quick Suggestions */}
                         {isModel && msg.suggestions && msg.suggestions.length > 0 && (
-                          <div className="mt-3 pt-2 border-t border-[#2a2a2a]">
-                            <div className="text-[10px] uppercase font-bold tracking-wider text-[#767676] mb-1.5 flex items-center gap-1">
+                          <div className="mt-3 pt-2 border-t border-[#E2D1BC]">
+                            <div className="text-[10px] uppercase font-bold tracking-wider text-[#755B4B] mb-1.5 flex items-center gap-1">
                               <Icon n="zap" size={10} />
                               <span>Respostas Rápidas Sugeridas:</span>
                             </div>
@@ -872,7 +858,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                                   key={sIdx}
                                   type="button"
                                   onClick={() => handleSendMessage(sug)}
-                                  className="text-[11px] text-left px-2 py-1 rounded-lg bg-[#141414] hover:bg-[#282828] text-[#C2C2C2] hover:text-[#D97757] border border-[#2e2e2e] hover:border-[#D97757]/40 transition-colors cursor-pointer"
+                                  className="text-[11px] text-left px-2.5 py-1.5 rounded-lg bg-[#FFFDF9] hover:bg-[#EFE1CE] text-[#5A4032] hover:text-[#B44B25] border border-[#CEB79A] hover:border-[#C45730]/60 transition-colors cursor-pointer whitespace-normal break-words max-w-full leading-snug"
                                 >
                                   {sug}
                                 </button>
@@ -883,7 +869,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                       </div>
 
                       {!isModel && (
-                        <div className="w-7 h-7 rounded-lg bg-[#2d2d2d] border border-[#444444] flex items-center justify-center shrink-0 text-[#EAEAEA] text-[11px] font-bold">
+                        <div className="w-7 h-7 rounded-lg bg-[#C45730] border border-[#AE4823] flex items-center justify-center shrink-0 text-white text-[11px] font-bold">
                           VC
                         </div>
                       )}
@@ -893,26 +879,24 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
 
                 {isLoading && (
                   <div className="flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-[#222222] border border-[#383838] flex items-center justify-center shrink-0 p-0.5">
+                    <div className="w-7 h-7 rounded-lg bg-[#F4EBDD] border border-[#E2D1BC] flex items-center justify-center shrink-0 p-0.5">
                       <img
                         src={selectedMascot.mediaKit.pngTransparent}
                         alt={selectedMascot.name}
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <div className="bg-[#1f1f1f] border border-[#2e2e2e] rounded-2xl p-3.5 text-xs text-[#9B9B9B] flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#D97757] animate-ping"></span>
+                    <div className="bg-[#F4EBDD] border border-[#E2D1BC] rounded-2xl p-3.5 text-xs text-[#5A4032] flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#C45730] animate-ping shrink-0"></span>
                       <span>{selectedMascot.name} está analisando suas respostas...</span>
                     </div>
                   </div>
                 )}
-
-                <div ref={chatEndRef} />
               </div>
 
               {/* Chat Input Bar */}
-              <div className="p-3 bg-[#1E1A17] border-t border-[#383129]">
-                <div className="flex items-end gap-2">
+              <div className="p-2.5 sm:p-3 bg-[#F4EBDD] border-t border-[#E2D1BC]">
+                <div className="flex items-end gap-2 min-w-0">
                   <textarea
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
@@ -922,18 +906,19 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                         handleSendMessage();
                       }
                     }}
-                    placeholder="Explique o que a skill deve fazer, regras ou responda às perguntas... (Shift+Enter para pular linha)"
+                    placeholder="Explique o que a skill deve fazer ou responda às perguntas..."
                     rows={2}
-                    className="flex-1 bg-[#191613] border border-[#383129] focus:border-[#D97757] rounded-xl p-2.5 text-xs sm:text-sm text-[#F5F2EB] placeholder-[#766B5E] outline-none transition-all resize-none"
+                    className="flex-1 min-w-0 bg-[#FFFDF9] border border-[#CEB79A] focus:border-[#C45730] rounded-xl p-2.5 text-xs sm:text-sm text-[#2E190F] placeholder-[#8F7564] outline-none transition-all resize-none"
                   />
                   <button
                     type="button"
                     onClick={() => handleSendMessage()}
                     disabled={!inputMessage.trim() || isLoading}
-                    className="px-3.5 py-2.5 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-40 cursor-pointer shrink-0 flex items-center gap-1.5 shadow-md active:scale-95"
+                    aria-label="Enviar mensagem"
+                    className="px-3 sm:px-3.5 py-2.5 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-40 cursor-pointer shrink-0 flex items-center gap-1.5 shadow-sm active:scale-95"
                   >
                     <span className="hidden sm:inline">Enviar</span>
-                    <Icon n="send" size={13} />
+                    <Icon n="send" size={14} />
                   </button>
                 </div>
               </div>
@@ -943,38 +928,38 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
       )}
 
       {/* =========================================================================
-          TAB 2: BRIEFING EM MARKDOWN PARA VALIDAÇÃO & REFINAMENTO (RESPONSIVO)
+          TAB 2: BRIEFING EM MARKDOWN PARA VALIDAÇÃO & REFINAMENTO
           ========================================================================= */}
       {currentTab === "briefing" && (
-        <div className="space-y-5">
+        <div className="space-y-4 sm:space-y-5 min-w-0">
           {/* Top Banner with Context Window Impact Stats */}
-          <div className="bg-gradient-to-r from-[#27221E] to-[#1E1A17] border border-[#383129] rounded-2xl p-5 sm:p-6 shadow-xl">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
+          <div className="bg-gradient-to-r from-[#FFFDF9] to-[#F4EBDD] border border-[#E2D1BC] rounded-2xl p-4 sm:p-6 shadow-sm min-w-0">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3.5 sm:gap-4 min-w-0">
+              <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#D97757]"></span>
-                  <span className="text-xs font-bold uppercase tracking-widest text-[#D97757]">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#C45730] shrink-0"></span>
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#B44B25]">
                     Etapa de Validação & Refinamento
                   </span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-black text-[#F5F2EB]">
+                <h2 className="text-lg sm:text-2xl font-black text-[#2E190F] !m-0">
                   Briefing Técnico para Validação do Cliente
                 </h2>
-                <p className="text-xs text-[#D4CDC3] mt-1 max-w-3xl leading-relaxed">
+                <p className="text-xs text-[#5A4032] mt-1 max-w-3xl leading-relaxed">
                   Listamos abaixo tudo o que foi conversado na entrevista em formato Markdown técnico estruturado. Revise os pontos, aplique refinamentos pelo chat ou confirme para forjar a habilidade oficial.
                 </p>
               </div>
 
               {/* View Mode Toggle & Fast Actions */}
-              <div className="flex items-center gap-2 self-start md:self-center flex-wrap">
-                <div className="flex items-center p-1 rounded-xl bg-[#191613] border border-[#383129]">
+              <div className="flex items-center gap-2 self-start md:self-center flex-wrap w-full md:w-auto">
+                <div className="flex items-center p-1 rounded-xl bg-[#F4EBDD] border border-[#E2D1BC]">
                   <button
                     type="button"
                     onClick={() => setBriefingViewMode("rendered")}
                     className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
                       briefingViewMode === "rendered"
-                        ? "bg-[#2F2721] text-[#F5F2EB]"
-                        : "text-[#A39889] hover:text-[#D4CDC3]"
+                        ? "bg-[#FFFDF9] text-[#2E190F] shadow-sm"
+                        : "text-[#5A4032] hover:text-[#2E190F]"
                     }`}
                   >
                     <Icon n="eye" size={12} />
@@ -985,8 +970,8 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                     onClick={() => setBriefingViewMode("source")}
                     className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
                       briefingViewMode === "source"
-                        ? "bg-[#32231C] text-[#E28768]"
-                        : "text-[#A39889] hover:text-[#D4CDC3]"
+                        ? "bg-[#FCEEE6] text-[#A8421E]"
+                        : "text-[#5A4032] hover:text-[#2E190F]"
                     }`}
                   >
                     <Icon n="code" size={12} />
@@ -997,7 +982,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                 <button
                   type="button"
                   onClick={handleCopyBriefing}
-                  className="px-2.5 py-1.5 rounded-xl bg-[#2A241F] hover:bg-[#332C26] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#483E34] text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1"
+                  className="px-2.5 py-1.5 rounded-xl bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#2E190F] border border-[#CEB79A] text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1"
                   title="Copiar Markdown"
                 >
                   <Icon n={copiedBriefing ? "check" : "copy"} size={13} />
@@ -1007,7 +992,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                 <button
                   type="button"
                   onClick={handleDownloadBriefing}
-                  className="px-2.5 py-1.5 rounded-xl bg-[#2A241F] hover:bg-[#332C26] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#483E34] text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1"
+                  className="px-2.5 py-1.5 rounded-xl bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#2E190F] border border-[#CEB79A] text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1"
                   title="Baixar arquivo briefing.md"
                 >
                   <Icon n="download" size={13} />
@@ -1017,56 +1002,56 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
             </div>
 
             {/* Context Impact Strip (Tokens, Bytes, Window %) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4 pt-4 border-t border-[#383129] text-xs">
-              <div className="p-2.5 rounded-lg bg-[#191613] border border-[#332C26]">
-                <div className="text-[10px] text-[#A39889] uppercase font-bold">Tokens da Skill</div>
-                <div className="text-sm font-mono text-[#D97757] font-bold mt-0.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 mt-4 pt-4 border-t border-[#E2D1BC] text-xs">
+              <div className="p-2.5 rounded-lg bg-[#FFFDF9] border border-[#E2D1BC] min-w-0">
+                <div className="text-[10px] text-[#755B4B] uppercase font-bold truncate">Tokens da Skill</div>
+                <div className="text-sm font-mono text-[#B44B25] font-bold mt-0.5 truncate">
                   {formatTokens(briefingTokens)}
                 </div>
               </div>
-              <div className="p-2.5 rounded-lg bg-[#191613] border border-[#332C26]">
-                <div className="text-[10px] text-[#A39889] uppercase font-bold">Tamanho Estimado</div>
-                <div className="text-sm font-mono text-[#F5F2EB] font-bold mt-0.5">
+              <div className="p-2.5 rounded-lg bg-[#FFFDF9] border border-[#E2D1BC] min-w-0">
+                <div className="text-[10px] text-[#755B4B] uppercase font-bold truncate">Tamanho Estimado</div>
+                <div className="text-sm font-mono text-[#2E190F] font-bold mt-0.5 truncate">
                   {(briefingMarkdown.length / 1024).toFixed(1)} KB
                 </div>
               </div>
-              <div className="p-2.5 rounded-lg bg-[#191613] border border-[#332C26]">
-                <div className="text-[10px] text-[#A39889] uppercase font-bold">Janela Claude (200k)</div>
-                <div className="text-sm font-mono text-[#E28768] font-bold mt-0.5">
+              <div className="p-2.5 rounded-lg bg-[#FFFDF9] border border-[#E2D1BC] min-w-0">
+                <div className="text-[10px] text-[#755B4B] uppercase font-bold truncate">Janela Claude (200k)</div>
+                <div className="text-sm font-mono text-[#A8421E] font-bold mt-0.5 truncate">
                   {Math.max(0.05, Number(((briefingTokens / 200000) * 100).toFixed(2)))}%
                 </div>
               </div>
-              <div className="p-2.5 rounded-lg bg-[#191613] border border-[#332C26]">
-                <div className="text-[10px] text-[#A39889] uppercase font-bold">Classificação</div>
-                <div className="text-sm text-[#D97757] font-bold mt-0.5">
+              <div className="p-2.5 rounded-lg bg-[#FFFDF9] border border-[#E2D1BC] min-w-0">
+                <div className="text-[10px] text-[#755B4B] uppercase font-bold truncate">Classificação</div>
+                <div className="text-xs sm:text-sm text-[#B44B25] font-bold mt-0.5 truncate">
                   ✓ Leve & Otimizada
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 xl:gap-5 items-start min-w-0">
             {/* Left 8 Cols: Markdown Document Display */}
-            <div className="lg:col-span-8 bg-[#24201D] border border-[#383129] rounded-2xl shadow-xl flex flex-col overflow-hidden min-h-[420px] sm:min-h-[500px] min-w-0">
-              <div className="px-4 py-2.5 bg-[#1E1A17] border-b border-[#383129] flex items-center justify-between text-xs text-[#A39889]">
-                <div className="flex items-center gap-2">
-                  <Icon n="file-text" size={13} />
-                  <span className="font-mono font-bold text-[#F5F2EB]">
+            <div className="xl:col-span-8 bg-[#FFFDF9] border border-[#E2D1BC] rounded-2xl shadow-sm flex flex-col overflow-hidden min-h-[340px] sm:min-h-[460px] min-w-0">
+              <div className="px-3.5 sm:px-4 py-2.5 bg-[#F4EBDD] border-b border-[#E2D1BC] flex flex-wrap items-center justify-between gap-2 text-xs text-[#755B4B]">
+                <div className="flex items-center gap-2 min-w-0">
+                  <Icon n="file-text" size={13} className="shrink-0" />
+                  <span className="font-mono font-bold text-[#2E190F] truncate">
                     briefing-validacao.md
                   </span>
                 </div>
-                <span>Padrão Universal Deda Skills</span>
+                <span className="text-[11px]">Padrão Universal Deda Skills</span>
               </div>
 
-              <div className="p-5 flex-1 overflow-y-auto max-h-[620px]">
+              <div className="p-3.5 sm:p-5 flex-1 overflow-y-auto max-h-[540px] sm:max-h-[620px] min-w-0">
                 {briefingViewMode === "rendered" ? (
-                  <div className="space-y-4 text-xs sm:text-[13px] leading-relaxed text-[#D5D5D5]">
+                  <div className="space-y-4 text-xs sm:text-[13px] leading-relaxed text-[#2E190F] break-words">
                     {briefingMarkdown.split("\n\n").map((block, idx) => {
                       if (block.startsWith("# ")) {
                         return (
                           <h1
                             key={idx}
-                            className="text-lg sm:text-xl font-black text-[#D97757] pb-2 border-b border-[#2e2e2e] mt-2 mb-3"
+                            className="text-lg sm:text-xl font-black text-[#B44B25] pb-2 border-b border-[#E2D1BC] mt-2 mb-3 break-words"
                           >
                             {block.replace("# ", "")}
                           </h1>
@@ -1076,9 +1061,9 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                         return (
                           <h2
                             key={idx}
-                            className="text-sm sm:text-base font-bold text-[#EAEAEA] mt-4 mb-2 flex items-center gap-2"
+                            className="text-sm sm:text-base font-bold text-[#2E190F] mt-4 mb-2 flex items-center gap-2 break-words"
                           >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]"></span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#C45730] shrink-0"></span>
                             <span>{block.replace("## ", "")}</span>
                           </h2>
                         );
@@ -1087,7 +1072,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                         return (
                           <div
                             key={idx}
-                            className="p-3 rounded-xl bg-[#141414] border-l-4 border-[#D97757] text-[#A5A5A5] italic text-xs my-2"
+                            className="p-3 rounded-xl bg-[#F4EBDD] border-l-4 border-[#C45730] text-[#5A4032] italic text-xs my-2 break-words"
                           >
                             {block.replace("> ", "")}
                           </div>
@@ -1095,7 +1080,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                       }
                       if (block.startsWith("- ")) {
                         return (
-                          <ul key={idx} className="space-y-1 my-2 pl-4 list-disc text-[#C2C2C2]">
+                          <ul key={idx} className="space-y-1 my-2 pl-4 list-disc text-[#2E190F] break-words">
                             {block.split("\n").map((item, itemIdx) => (
                               <li key={itemIdx}>{item.replace(/^- /, "")}</li>
                             ))}
@@ -1104,7 +1089,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                       }
                       if (block.startsWith("1. ")) {
                         return (
-                          <ol key={idx} className="space-y-1 my-2 pl-4 list-decimal text-[#C2C2C2]">
+                          <ol key={idx} className="space-y-1 my-2 pl-4 list-decimal text-[#2E190F] break-words">
                             {block.split("\n").map((item, itemIdx) => (
                               <li key={itemIdx}>{item.replace(/^\d+\. /, "")}</li>
                             ))}
@@ -1112,7 +1097,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                         );
                       }
                       return (
-                        <p key={idx} className="text-[#C2C2C2] leading-relaxed">
+                        <p key={idx} className="text-[#5A4032] leading-relaxed break-words">
                           {block}
                         </p>
                       );
@@ -1122,34 +1107,34 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                   <textarea
                     value={briefingMarkdown}
                     onChange={(e) => setBriefingMarkdown(e.target.value)}
-                    rows={24}
-                    className="w-full h-full bg-[#111111] border border-[#282828] rounded-xl p-3 font-mono text-xs text-[#EAEAEA] leading-relaxed outline-none focus:border-[#D97757] resize-none"
+                    rows={18}
+                    className="w-full h-full bg-[#F4EBDD] border border-[#CEB79A] rounded-xl p-3 font-mono text-xs text-[#2E190F] leading-relaxed outline-none focus:border-[#C45730] resize-y"
                   />
                 )}
               </div>
             </div>
 
             {/* Right 4 Cols: Refinement Box & Confirmation CTA */}
-            <div className="lg:col-span-4 space-y-4 flex flex-col justify-between">
+            <div className="xl:col-span-4 space-y-4 flex flex-col justify-between min-w-0">
               {/* Refinement Panel */}
-              <div className="bg-[#24201D] border border-[#383129] rounded-2xl p-4 sm:p-5 shadow-xl space-y-3.5">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-lg bg-[#32231C] flex items-center justify-center text-[#D97757]">
+              <div className="bg-[#FFFDF9] border border-[#E2D1BC] rounded-2xl p-4 sm:p-5 shadow-sm space-y-3.5 min-w-0">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-6 h-6 rounded-lg bg-[#FCEEE6] border border-[#E5A992] flex items-center justify-center text-[#B44B25] shrink-0">
                     <Icon n="sparkles" size={13} />
                   </div>
-                  <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#F5F2EB]">
+                  <div className="min-w-0">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#2E190F] !m-0">
                       Acrescentar ou Corrigir
                     </h3>
-                    <p className="text-[11px] text-[#A39889]">
+                    <p className="text-[11px] text-[#755B4B]">
                       Peça ajustes em linguagem natural e a IA refina o documento
                     </p>
                   </div>
                 </div>
 
                 {/* Quick suggestions to refine */}
-                <div className="space-y-1">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#A39889]">
+                <div className="space-y-1.5">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#755B4B]">
                     Ajustes rápidos:
                   </div>
                   {[
@@ -1161,7 +1146,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                       key={exIdx}
                       type="button"
                       onClick={() => setRefinementInput(ex)}
-                      className="w-full text-left p-1.5 px-2 rounded-lg bg-[#191613] hover:bg-[#2A241F] text-[#D4CDC3] hover:text-[#F5F2EB] border border-[#383129] text-[10.5px] transition-colors cursor-pointer truncate"
+                      className="w-full text-left p-2 px-2.5 rounded-lg bg-[#F4EBDD] hover:bg-[#EFE1CE] text-[#5A4032] hover:text-[#2E190F] border border-[#E2D1BC] text-[11px] leading-snug transition-colors cursor-pointer whitespace-normal break-words"
                     >
                       + {ex}
                     </button>
@@ -1175,13 +1160,13 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                     onChange={(e) => setRefinementInput(e.target.value)}
                     placeholder="Ex: 'Adicione suporte a Docker e parâmetros de entrada opcionais...'"
                     rows={3}
-                    className="w-full bg-[#191613] border border-[#383129] focus:border-[#D97757] rounded-xl p-2.5 text-xs text-[#F5F2EB] placeholder-[#766B5E] outline-none transition-all resize-none"
+                    className="w-full bg-[#FFFDF9] border border-[#CEB79A] focus:border-[#C45730] rounded-xl p-2.5 text-xs text-[#2E190F] placeholder-[#8F7564] outline-none transition-all resize-none"
                   />
                   <button
                     type="button"
                     onClick={handleRefineBriefing}
                     disabled={!refinementInput.trim() || isRefiningBriefing}
-                    className="w-full py-2 px-3 rounded-xl bg-[#2A241F] hover:bg-[#332C26] text-[#E28768] border border-[#483E34] text-xs font-bold transition-all disabled:opacity-40 cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-xl bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#B44B25] border border-[#CEB79A] text-xs font-bold transition-all disabled:opacity-40 cursor-pointer flex items-center justify-center gap-1.5"
                   >
                     <Icon n="sparkles" size={12} />
                     <span>{isRefiningBriefing ? "Refinando Briefing..." : "Aplicar Ajuste"}</span>
@@ -1190,14 +1175,14 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
 
                 {/* Refinement History log */}
                 {refinementHistory.length > 0 && (
-                  <div className="pt-2 border-t border-[#383129] space-y-1 max-h-32 overflow-y-auto">
-                    <div className="text-[10px] uppercase font-bold text-[#A39889]">
+                  <div className="pt-2 border-t border-[#E2D1BC] space-y-1 max-h-32 overflow-y-auto">
+                    <div className="text-[10px] uppercase font-bold text-[#755B4B]">
                       Histórico de Revisões:
                     </div>
                     {refinementHistory.map((item, hIdx) => (
                       <div
                         key={hIdx}
-                        className="text-[10px] text-[#D4CDC3] p-1.5 rounded bg-[#191613] border border-[#332C26]"
+                        className="text-[10px] text-[#5A4032] p-1.5 rounded bg-[#F4EBDD] border border-[#E2D1BC] break-words"
                       >
                         ✓ {item}
                       </div>
@@ -1207,16 +1192,16 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
               </div>
 
               {/* Confirmation Big CTA */}
-              <div className="bg-gradient-to-b from-[#2F221A] to-[#24201D] border-2 border-[#D97757] rounded-2xl p-4 sm:p-5 shadow-2xl space-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-lg bg-[#D97757] flex items-center justify-center text-white font-black shrink-0">
+              <div className="bg-gradient-to-b from-[#FCEEE6] to-[#FFFDF9] border-2 border-[#C45730] rounded-2xl p-4 sm:p-5 shadow-md space-y-3 min-w-0">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-6 h-6 rounded-lg bg-[#C45730] flex items-center justify-center text-white font-black shrink-0">
                     ✓
                   </div>
-                  <div>
-                    <h3 className="text-sm font-black text-[#F5F2EB]">
+                  <div className="min-w-0">
+                    <h3 className="text-sm font-black text-[#2E190F] !m-0">
                       Confirmar Briefing & Criar Skill
                     </h3>
-                    <p className="text-[11px] text-[#E28768]">
+                    <p className="text-[11px] text-[#A8421E]">
                       Tudo validado? Geraremos a especificação oficial no padrão Deda Skills
                     </p>
                   </div>
@@ -1226,7 +1211,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                   type="button"
                   onClick={handleConfirmAndCreateSkill}
                   disabled={isFinalizingSkill}
-                  className="w-full py-3 px-4 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white font-black text-xs uppercase tracking-wider transition-all shadow-[0_2px_10px_rgba(217,119,87,0.35)] flex items-center justify-center gap-2 cursor-pointer active:scale-98 disabled:opacity-50"
+                  className="w-full py-3 px-4 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white font-black text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer active:scale-98 disabled:opacity-50"
                 >
                   <Icon n="check-circle" size={15} />
                   <span>
@@ -1234,15 +1219,15 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                   </span>
                 </button>
 
-                <div className="flex items-center justify-between text-[11px] text-[#A39889] pt-1">
+                <div className="flex items-center justify-between gap-2 text-[11px] text-[#755B4B] pt-1 flex-wrap">
                   <button
                     type="button"
                     onClick={() => setCurrentTab("interview")}
-                    className="hover:text-[#F5F2EB] underline cursor-pointer"
+                    className="hover:text-[#2E190F] underline cursor-pointer"
                   >
                     &larr; Voltar à Entrevista
                   </button>
-                  <span className="font-mono text-[#E28768]">Padrão .skill</span>
+                  <span className="font-mono text-[#B44B25]">Padrão .skill</span>
                 </div>
               </div>
             </div>
@@ -1251,49 +1236,49 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
       )}
 
       {/* =========================================================================
-          TAB 3: SKILL CONCLUÍDA COM SUCESSO (RESPONSIVO COM TOKEN FOOTPRINT)
+          TAB 3: SKILL CONCLUÍDA COM SUCESSO
           ========================================================================= */}
       {currentTab === "completed" && createdSkill && (
-        <div className="max-w-3xl mx-auto bg-[#24201D] border border-[#D97757]/50 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-[#D97757]/15 border-2 border-[#D97757] flex items-center justify-center mx-auto text-[#D97757] shadow-lg">
+        <div className="max-w-3xl mx-auto bg-[#FFFDF9] border border-[#C45730]/50 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-md space-y-5 sm:space-y-6 text-center min-w-0">
+          <div className="w-14 h-14 rounded-2xl bg-[#FCEEE6] border-2 border-[#C45730] flex items-center justify-center mx-auto text-[#B44B25] shadow-sm">
             <Icon n="check-circle" size={28} />
           </div>
 
-          <div>
-            <div className="text-xs font-bold uppercase tracking-widest text-[#D97757] mb-1">
+          <div className="min-w-0">
+            <div className="text-xs font-bold uppercase tracking-widest text-[#B44B25] mb-1">
               Habilidade Forjada com Sucesso
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#F5F2EB]">
+            <h2 className="text-xl sm:text-3xl font-black text-[#2E190F] break-words">
               {createdSkill.name}
             </h2>
-            <p className="text-xs sm:text-sm text-[#D4CDC3] mt-2 max-w-xl mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#5A4032] mt-2 max-w-xl mx-auto leading-relaxed break-words">
               {createdSkill.description}
             </p>
           </div>
 
           {/* Quick Specifications Strip with Token Footprint */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-4 rounded-2xl bg-[#191613] border border-[#383129] text-left">
-            <div>
-              <div className="text-[10px] text-[#A39889] uppercase font-bold">Identificador</div>
-              <div className="text-xs font-mono text-[#D97757] font-bold truncate">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 sm:p-4 rounded-2xl bg-[#F4EBDD] border border-[#E2D1BC] text-left">
+            <div className="min-w-0">
+              <div className="text-[10px] text-[#755B4B] uppercase font-bold truncate">Identificador</div>
+              <div className="text-xs font-mono text-[#B44B25] font-bold truncate">
                 {createdSkill.id}
               </div>
             </div>
-            <div>
-              <div className="text-[10px] text-[#A39889] uppercase font-bold">Consumo de Contexto</div>
-              <div className="text-xs font-mono text-[#F5F2EB] font-bold">
+            <div className="min-w-0">
+              <div className="text-[10px] text-[#755B4B] uppercase font-bold truncate">Consumo de Contexto</div>
+              <div className="text-xs font-mono text-[#2E190F] font-bold truncate">
                 ⚡ {formatTokens(calculateSkillTokenProfile(createdSkill).totalTokens)}
               </div>
             </div>
-            <div>
-              <div className="text-[10px] text-[#A39889] uppercase font-bold">Modo de Execução</div>
-              <div className="text-xs text-[#F5F2EB] font-semibold">
+            <div className="min-w-0">
+              <div className="text-[10px] text-[#755B4B] uppercase font-bold truncate">Modo de Execução</div>
+              <div className="text-xs text-[#2E190F] font-semibold truncate">
                 {createdSkill.execution_mode}
               </div>
             </div>
-            <div>
-              <div className="text-[10px] text-[#A39889] uppercase font-bold">Status</div>
-              <div className="text-xs text-[#E28768] font-bold">✓ Ativa no Catálogo</div>
+            <div className="min-w-0">
+              <div className="text-[10px] text-[#755B4B] uppercase font-bold truncate">Status</div>
+              <div className="text-xs text-[#B44B25] font-bold truncate">✓ Ativa no Catálogo</div>
             </div>
           </div>
 
@@ -1302,7 +1287,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
             <button
               type="button"
               onClick={onCancel}
-              className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+              className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm cursor-pointer flex items-center justify-center gap-2"
             >
               <Icon n="list" size={14} />
               <span>Ver no Catálogo de Habilidades</span>
@@ -1315,7 +1300,7 @@ Objetivo: Resolver as rotinas de engenharia especificadas durante o diálogo int
                   createdSkill.sampleTestPrompt || ""
                 )}`;
               }}
-              className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-[#2A241F] hover:bg-[#332C26] text-[#F5F2EB] border border-[#483E34] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#2E190F] border border-[#CEB79A] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2"
             >
               <Icon n="play" size={14} />
               <span>Testar no Playground</span>

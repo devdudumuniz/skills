@@ -114,30 +114,30 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5"
+      className="modal-overlay fixed inset-0 z-50 bg-[#2E190F]/45 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="preferences-backup-title"
     >
       <div
-        className="w-full max-w-2xl bg-[#24201D] border border-[#483E34] rounded-2xl shadow-2xl text-[#F5F2EB] flex flex-col max-h-[90vh] overflow-hidden"
+        className="modal-content w-full max-w-2xl bg-[#FFFDF9] border border-[#CEB79A] rounded-2xl shadow-2xl text-[#2E190F] flex flex-col max-h-[90vh] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-5 py-4 border-b border-[#383129] flex items-center justify-between gap-3">
+        <div className="px-5 py-4 border-b border-[#E2D1BC] flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-[#32231C] border border-[#D97757]/40 flex items-center justify-center text-[#D97757] shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-[#FCEEE6] border border-[#E5A992] flex items-center justify-center text-[#B44B25] shrink-0">
               <Icon n="download" size={18} />
             </div>
             <div className="min-w-0">
               <h2
                 id="preferences-backup-title"
-                className="text-base font-bold text-[#F5F2EB] m-0 truncate"
+                className="text-base font-bold text-[#2E190F] m-0 truncate"
               >
                 Backup & Migração de Preferências (JSON)
               </h2>
-              <p className="text-xs text-[#A39889] m-0">
+              <p className="text-xs text-[#755B4B] m-0">
                 Exporte ou restaure suas habilidades instaladas e favoritas entre dispositivos
               </p>
             </div>
@@ -147,21 +147,21 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
             type="button"
             onClick={onClose}
             aria-label="Fechar modal de backup"
-            className="w-8 h-8 rounded-lg bg-[#2A241F] hover:bg-[#332B25] text-[#A39889] hover:text-[#F5F2EB] border border-[#383129] flex items-center justify-center shrink-0 cursor-pointer"
+            className="w-8 h-8 rounded-lg bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#5A4032] hover:text-[#2E190F] border border-[#CEB79A] flex items-center justify-center shrink-0 cursor-pointer"
           >
             <Icon n="x" size={16} />
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="px-5 pt-3 border-b border-[#383129] flex items-center gap-2 bg-[#1E1A17]">
+        <div className="px-5 pt-3 border-b border-[#E2D1BC] flex items-center gap-2 bg-[#F2E6D5]">
           <button
             type="button"
             onClick={() => setActiveTab("export")}
             className={`px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-t-lg border-b-2 transition-colors cursor-pointer inline-flex items-center gap-1.5 ${
               activeTab === "export"
-                ? "border-[#D97757] text-[#F5F2EB] bg-[#24201D]"
-                : "border-transparent text-[#A39889] hover:text-[#D4CDC3]"
+                ? "border-[#C45730] text-[#2E190F] bg-[#FFFDF9]"
+                : "border-transparent text-[#5A4032] hover:text-[#2E190F]"
             }`}
           >
             <Icon n="download" size={14} />
@@ -173,8 +173,8 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
             onClick={() => setActiveTab("import")}
             className={`px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-t-lg border-b-2 transition-colors cursor-pointer inline-flex items-center gap-1.5 ${
               activeTab === "import"
-                ? "border-[#D97757] text-[#F5F2EB] bg-[#24201D]"
-                : "border-transparent text-[#A39889] hover:text-[#D4CDC3]"
+                ? "border-[#C45730] text-[#2E190F] bg-[#FFFDF9]"
+                : "border-transparent text-[#5A4032] hover:text-[#2E190F]"
             }`}
           >
             <Icon n="upload" size={14} />
@@ -188,31 +188,31 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
             <>
               {/* Summary Metrics */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-[#1E1A17] border border-[#383129] rounded-xl p-3.5">
+                <div className="bg-[#F4EBDD] border border-[#E2D1BC] rounded-xl p-3.5">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A39889]">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#755B4B]">
                       Habilidades Instaladas
                     </span>
-                    <Icon n="check-circle" size={14} className="text-[#D97757]" />
+                    <Icon n="check-circle" size={14} className="text-[#C45730]" />
                   </div>
-                  <div className="text-xl font-black text-[#F5F2EB]">
+                  <div className="text-xl font-black text-[#2E190F]">
                     {backup.summary.installedCount}{" "}
-                    <span className="text-xs font-medium text-[#A39889]">
+                    <span className="text-xs font-medium text-[#755B4B]">
                       de {backup.summary.totalCatalogCount}
                     </span>
                   </div>
                 </div>
 
-                <div className="bg-[#1E1A17] border border-[#383129] rounded-xl p-3.5">
+                <div className="bg-[#F4EBDD] border border-[#E2D1BC] rounded-xl p-3.5">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A39889]">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#755B4B]">
                       Habilidades Favoritas
                     </span>
-                    <Icon n="star" size={14} className="text-[#E09F3E]" />
+                    <Icon n="star" size={14} className="text-[#9A6008]" />
                   </div>
-                  <div className="text-xl font-black text-[#F5F2EB]">
+                  <div className="text-xl font-black text-[#2E190F]">
                     {backup.summary.favoriteCount}{" "}
-                    <span className="text-xs font-medium text-[#A39889]">
+                    <span className="text-xs font-medium text-[#755B4B]">
                       de {backup.summary.totalCatalogCount}
                     </span>
                   </div>
@@ -222,14 +222,14 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
               {/* JSON Preview */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-semibold text-[#D4CDC3]">
+                  <span className="text-xs font-semibold text-[#5A4032]">
                     Prévia da Configuração Exportável
                   </span>
-                  <span className="text-[11px] text-[#A39889] font-mono">
+                  <span className="text-[11px] text-[#755B4B] font-mono">
                     {getBackupFilename()}
                   </span>
                 </div>
-                <pre className="m-0 max-h-56 overflow-auto bg-[#171412] border border-[#383129] rounded-xl p-3.5 text-xs text-[#D4CDC3] font-mono leading-relaxed">
+                <pre className="m-0 max-h-56 overflow-auto bg-[#F4EBDD] border border-[#CEB79A] rounded-xl p-3.5 text-xs text-[#2E190F] font-mono leading-relaxed">
                   {serializedBackup}
                 </pre>
               </div>
@@ -239,7 +239,7 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
                 <button
                   type="button"
                   onClick={handleCopyJson}
-                  className="px-4 py-2.5 rounded-xl bg-[#2A241F] hover:bg-[#332B25] text-[#F5F2EB] border border-[#483E34] text-xs sm:text-sm font-semibold inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#2E190F] border border-[#CEB79A] text-xs sm:text-sm font-semibold inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Icon n={copiedJson ? "check" : "copy"} size={15} />
                   <span>{copiedJson ? "JSON Copiado!" : "Copiar JSON"}</span>
@@ -248,7 +248,7 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
                 <button
                   type="button"
                   onClick={handleDownloadJson}
-                  className="px-4 py-2.5 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white border border-[#D97757] text-xs sm:text-sm font-bold inline-flex items-center justify-center gap-2 cursor-pointer shadow-[0_2px_10px_rgba(217,119,87,0.35)]"
+                  className="px-4 py-2.5 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white border border-[#C45730] text-xs sm:text-sm font-bold inline-flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                 >
                   <Icon n="download" size={15} />
                   <span>Baixar Backup (.json)</span>
@@ -257,14 +257,14 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
             </>
           ) : (
             <>
-              <div className="bg-[#1E1A17] border border-[#383129] rounded-xl p-4 space-y-3">
+              <div className="bg-[#F4EBDD] border border-[#E2D1BC] rounded-xl p-4 space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                   <div>
-                    <div className="text-sm font-bold text-[#F5F2EB]">
+                    <div className="text-sm font-bold text-[#2E190F]">
                       Restaurar de arquivo ou colar JSON
                     </div>
-                    <p className="text-xs text-[#A39889] m-0 mt-0.5">
-                      Carregue um arquivo <code className="text-[#E28768]">.json</code> exportado anteriormente para sincronizar suas habilidades neste dispositivo.
+                    <p className="text-xs text-[#5A4032] m-0 mt-0.5">
+                      Carregue um arquivo <code className="text-[#B44B25] font-semibold">.json</code> exportado anteriormente para sincronizar suas habilidades neste dispositivo.
                     </p>
                   </div>
 
@@ -280,7 +280,7 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="px-3.5 py-2 rounded-xl bg-[#2A241F] hover:bg-[#332B25] text-[#F5F2EB] border border-[#483E34] text-xs font-semibold inline-flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
+                    className="px-3.5 py-2 rounded-xl bg-[#FFFDF9] hover:bg-[#EFE1CE] text-[#2E190F] border border-[#CEB79A] text-xs font-semibold inline-flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
                   >
                     <Icon n="upload" size={14} />
                     <span>Selecionar Arquivo .json</span>
@@ -297,15 +297,15 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
                   rows={7}
                   placeholder={`{\n  "schema": "deda-skills-preferences",\n  "version": "1.0.0",\n  "preferences": {\n    "installedSkillIds": ["web-design"],\n    "favoriteSkillIds": ["web-design"]\n  }\n}`}
                   aria-label="Conteúdo JSON de preferências"
-                  className="w-full bg-[#171412] border border-[#383129] focus:border-[#D97757] rounded-xl p-3 text-xs font-mono text-[#F5F2EB] resize-y"
+                  className="w-full bg-[#FFFDF9] border border-[#CEB79A] focus:border-[#C45730] rounded-xl p-3 text-xs font-mono text-[#2E190F] placeholder-[#8F7564] resize-y"
                 />
 
                 {importError && (
                   <div
                     role="alert"
-                    className="p-3 rounded-xl bg-[#402820] border border-[#D97757]/50 text-[#F5F2EB] text-xs flex items-start gap-2"
+                    className="p-3 rounded-xl bg-[#FDECE9] border border-[#E5A992] text-[#9E2A1C] text-xs flex items-start gap-2"
                   >
-                    <Icon n="alert" size={15} className="text-[#E28768] shrink-0 mt-0.5" />
+                    <Icon n="alert" size={15} className="text-[#9E2A1C] shrink-0 mt-0.5" />
                     <span>{importError}</span>
                   </div>
                 )}
@@ -313,9 +313,9 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
                 {importSuccess && (
                   <div
                     role="status"
-                    className="p-3 rounded-xl bg-[#302720] border border-[#D97757]/60 text-[#F5F2EB] text-xs flex items-start gap-2"
+                    className="p-3 rounded-xl bg-[#FCEEE6] border border-[#E5A992] text-[#2E190F] text-xs flex items-start gap-2"
                   >
-                    <Icon n="check-circle" size={15} className="text-[#D97757] shrink-0 mt-0.5" />
+                    <Icon n="check-circle" size={15} className="text-[#B44B25] shrink-0 mt-0.5" />
                     <span>{importSuccess}</span>
                   </div>
                 )}
@@ -329,7 +329,7 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
                     setImportError(null);
                     setImportSuccess(null);
                   }}
-                  className="px-4 py-2.5 rounded-xl bg-[#2A241F] hover:bg-[#332B25] text-[#D4CDC3] border border-[#383129] text-xs sm:text-sm font-medium cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl bg-[#F7EFE4] hover:bg-[#EFE1CE] text-[#5A4032] border border-[#CEB79A] text-xs sm:text-sm font-medium cursor-pointer"
                 >
                   Limpar
                 </button>
@@ -337,7 +337,7 @@ export const PreferencesBackupModal: React.FC<PreferencesBackupModalProps> = ({
                 <button
                   type="button"
                   onClick={handleApplyImport}
-                  className="px-4 py-2.5 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white border border-[#D97757] text-xs sm:text-sm font-bold inline-flex items-center justify-center gap-2 cursor-pointer shadow-[0_2px_10px_rgba(217,119,87,0.35)]"
+                  className="px-4 py-2.5 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white border border-[#C45730] text-xs sm:text-sm font-bold inline-flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                 >
                   <Icon n="check" size={15} />
                   <span>Aplicar Preferências</span>

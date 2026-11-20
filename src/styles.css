@@ -1,58 +1,58 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta Editorial Sertão • Estilo Claude (Warm Earth & Terracotta) */
-  --c-1: #F5F2EB; /* Pergaminho Marfim / Papel de Xilogravura */
-  --c-2: #D4CDC3; /* Linho Cru / Areia do Sertão */
-  --c-3: #A39889; /* Terra Seca / Faveleira */
-  --c-4: #766B5E; /* Argila Fria */
-  --c-5: #50463B; /* Sombra de Aroeira */
-  --c-6: #3A3229; /* Borda de Barro Seco */
-  --c-7: #1E1A17; /* Noite do Sertão / Deep Warm Charcoal */
+  /* Paleta Editorial Sertão Claro • Pergaminho & Terracota */
+  --c-1: #2E190F; /* Café Torrado / Tinta Principal */
+  --c-2: #5A4032; /* Cacau Quente / Tinta Secundária */
+  --c-3: #755B4B; /* Argila Tostada / Texto Muted */
+  --c-4: #8F7564; /* Barro Claro / Atenuado */
+  --c-5: #CEB79A; /* Borda Areia Forte */
+  --c-6: #E2D1BC; /* Linha Divisória Linho */
+  --c-7: #FAF3E8; /* Pergaminho Claro do Sertão */
 
-  --bg: #1E1A17; /* Canvas Terroso Quente (Claude Dark) */
-  --panel: #27221E; /* Painel Cerâmica de Barro / Adobe */
-  --panel-2: #302A24; /* Superfície Elevada / Hover */
-  --panel-3: #3B332D; /* Destaque / Modais */
-  --ink: #F5F2EB; /* Texto Marfim Suave */
-  --ink-2: #D4CDC3; /* Texto Secundário Areia */
-  --muted: #A39889; /* Texto Muted */
-  --faint: #766B5E; /* Texto Atenuado */
-  --line: #383129; /* Linha de Divisão Terrosa */
-  --line-2: #483E34; /* Borda Destacada */
+  --bg: #FAF3E8; /* Canvas Pergaminho Quente */
+  --panel: #FFFDF9; /* Painel Marfim Elevado */
+  --panel-2: #F6ECE0; /* Superfície Hover / Linho */
+  --panel-3: #EFE1CE; /* Destaque / Areia Ativa */
+  --ink: #2E190F; /* Texto Principal Café Torrado */
+  --ink-2: #5A4032; /* Texto Secundário Cacau */
+  --muted: #755B4B; /* Texto Muted */
+  --faint: #8F7564; /* Texto Atenuado */
+  --line: #E2D1BC; /* Linha de Divisão */
+  --line-2: #CEB79A; /* Borda Destacada */
 
-  /* Terracota Icônico do Claude & Sol Poente do Sertão */
-  --accent: #D97757; /* Claude Terracotta / Barro Queimado */
-  --accent-hover: #E28768; /* Terracota Iluminado */
+  /* Terracota Queimado (WCAG AA com branco e em fundo claro) */
+  --accent: #C45730;
+  --accent-hover: #AE4823;
   --accent-ink: #FFFFFF;
-  --accent-subtle: rgba(217, 119, 87, 0.15);
-  --accent-glow: rgba(217, 119, 87, 0.35);
-  --accent-border: rgba(217, 119, 87, 0.45);
+  --accent-subtle: rgba(196, 87, 48, 0.12);
+  --accent-glow: rgba(196, 87, 48, 0.24);
+  --accent-border: rgba(196, 87, 48, 0.45);
 
-  --sertao-terracotta: #D97757;
-  --sertao-amber: #E09F3E;
-  --sertao-clay: #C45D3B;
-  --sertao-sand: #EADBC8;
-  --sertao-cactus: #85987E;
-  --sertao-leather: #A6623F;
+  --sertao-terracotta: #C45730;
+  --sertao-amber: #9A6008;
+  --sertao-clay: #AE4823;
+  --sertao-sand: #F2E6D5;
+  --sertao-cactus: #4C6B49;
+  --sertao-leather: #8B4E2B;
 
-  --ok: #D4CDC3;
-  --ok-bg: #302A24;
-  --warn: #E09F3E;
-  --warn-bg: #34271A;
-  --bad: #F5F2EB;
-  --bad-bg: #402820;
-  --info: #F5F2EB;
-  --info-bg: #302A24;
-  --neutral: #A39889;
-  --neutral-bg: #2A241F;
+  --ok: #2E190F;
+  --ok-bg: #F2E6D5;
+  --warn: #9A6008;
+  --warn-bg: #FFF6E3;
+  --bad: #9E2A1C;
+  --bad-bg: #FDECE9;
+  --info: #2E190F;
+  --info-bg: #F2E6D5;
+  --neutral: #5A4032;
+  --neutral-bg: #F2E6D5;
 
   --r: 12px;
   --r-sm: 8px;
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Charter", "Georgia", Arial, sans-serif;
   font-size: 14px;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 @layer base {
@@ -85,12 +85,12 @@
   }
 
   pre {
-    background: #171412;
+    background: #F4EBDD;
     border: 1px solid var(--line);
     padding: 12px 14px;
     border-radius: 8px;
     overflow: auto;
-    color: var(--ink-2);
+    color: var(--ink);
   }
 
   h1 {
@@ -121,7 +121,7 @@
     padding: 8px 12px;
     border: 1px solid var(--line-2);
     border-radius: 8px;
-    background: #1A1714;
+    background: #FFFDF9;
     color: var(--ink);
     outline: none;
     transition: border-color 0.15s, background 0.15s;
@@ -136,7 +136,7 @@
 
   input:focus, select:focus, textarea:focus {
     border-color: var(--accent);
-    background: #241F1A;
+    background: #FFFFFF;
   }
 
   button {
@@ -156,7 +156,7 @@
 }
 
 button.secondary {
-  background: #28221D;
+  background: #F4E9D8;
   color: var(--ink);
   border: 1px solid var(--line-2);
   padding: 8px 14px;
@@ -165,7 +165,7 @@ button.secondary {
 }
 
 button.secondary:hover {
-  background: #332B25;
+  background: #EADBC8;
   border-color: var(--c-3);
 }
 
@@ -188,9 +188,9 @@ button.secondary:hover {
   }
 }
 
-/* Sidebar Styles (Matching ChatGPT Plugins / Personalizar & Claude Warm Aesthetic) */
+/* Sidebar Styles (Warm Sertão Sand & Ivory) */
 .side {
-  background: #191613;
+  background: #F2E6D5;
   border-right: 1px solid var(--line);
   padding: 18px 12px;
   position: sticky;
@@ -211,7 +211,7 @@ button.secondary:hover {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 2px 0px 8px 4px;
+  padding: 2px 0px 10px 4px;
   color: var(--ink);
   border-bottom: 1px solid var(--line);
   margin-bottom: 0px;
@@ -221,13 +221,13 @@ button.secondary:hover {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: #28221D;
+  background: #FFFDF9;
   border: 1px solid var(--line-2);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--ink);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 6px rgba(46, 25, 15, 0.08);
 }
 
 .brand-info {
@@ -278,18 +278,19 @@ button.secondary:hover {
 }
 
 .side a:hover, button.side-nav-btn:hover {
-  background: #28231E;
+  background: #E8D8C3;
   color: var(--ink);
 }
 
 .side a.active, button.side-nav-btn.active {
-  background: #342D26;
+  background: #FFFDF9;
   color: var(--ink);
   font-weight: 600;
   border: 1px solid var(--line-2);
+  box-shadow: 0 1px 4px rgba(46, 25, 15, 0.06);
 }
 
-/* Installed Items in Sidebar (Matching Screenshot) */
+/* Installed Items in Sidebar */
 .side-installed-list {
   display: flex;
   flex-direction: column;
@@ -313,21 +314,22 @@ button.secondary:hover {
 }
 
 .side-installed-item:hover {
-  background: #28231E;
+  background: #E8D8C3;
   color: var(--ink);
 }
 
 .side-installed-item.active {
-  background: #342D26;
+  background: #FFFDF9;
   color: var(--ink);
   font-weight: 600;
+  box-shadow: 0 1px 3px rgba(46, 25, 15, 0.06);
 }
 
 .side-installed-avatar {
   width: 22px;
   height: 22px;
   border-radius: 5px;
-  background: #2A241F;
+  background: #FFFDF9;
   border: 1px solid var(--line-2);
   display: flex;
   align-items: center;
@@ -339,7 +341,7 @@ button.secondary:hover {
 
 .side-note {
   font-size: 11px;
-  color: var(--faint);
+  color: var(--muted);
   padding: 12px 8px;
   line-height: 1.45;
   margin: 0;
@@ -355,7 +357,7 @@ button.secondary:hover {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--faint);
+  color: var(--muted);
   font-size: 11.5px;
 }
 
@@ -384,22 +386,22 @@ main {
   font-size: 11.5px;
   font-weight: 600;
   white-space: nowrap;
-  background: #2A241F;
+  background: #F2E6D5;
   color: var(--ink-2);
   border: 1px solid var(--line-2);
 }
 
 .badge.ok {
-  background: #302720;
-  color: var(--accent);
-  border-color: var(--accent-border);
+  background: #FCEEE6;
+  color: #A8421E;
+  border-color: #E5A992;
 }
 
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(18, 15, 13, 0.82);
+  background: rgba(46, 25, 15, 0.45);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -409,14 +411,14 @@ main {
 }
 
 .modal-content {
-  background: #24201D;
+  background: #FFFDF9;
   border: 1px solid var(--line-2);
   border-radius: 14px;
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.85);
+  box-shadow: 0 20px 50px rgba(46, 25, 15, 0.2);
   color: var(--ink);
 }
 
@@ -431,12 +433,12 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3A3229;
+  background: #CEB79A;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #50463B;
+  background: #A98E70;
 }
 
 /* Keyboard shortcut kbd chip */
@@ -450,9 +452,9 @@ main {
   font-size: 9.5px;
   font-weight: 600;
   line-height: 1.35;
-  background: #241F1B;
-  color: #A39889;
-  border: 1px solid #3D352D;
+  background: #FFFDF9;
+  color: #755B4B;
+  border: 1px solid #D3BEA3;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -462,6 +464,7 @@ main {
    Fundo preto puro (#000000), texto branco (#FFFFFF) e bordas verde neon (#00FF66)
    ========================================================================= */
 html[data-accessibility-contrast="high"] {
+  color-scheme: dark;
   --c-1: #FFFFFF;
   --c-2: #FFFFFF;
   --c-3: #FFFFFF;
@@ -520,16 +523,22 @@ html[data-accessibility-contrast="high"] .modal-overlay {
   background: rgba(0, 0, 0, 0.92) !important;
 }
 
-/* Override all Tailwind dark/earthy surface classes & inline background surfaces */
+/* Override all Tailwind surface classes & inline background surfaces */
 html[data-accessibility-contrast="high"] :where(.shell [class*="bg-[#"]),
+html[data-accessibility-contrast="high"] :where(.shell [class*="bg-gradient-"]:not(.hc-cover-scrim):not(.pointer-events-none)),
 html[data-accessibility-contrast="high"] :where(.shell section > div:not([data-testid="excalidraw-canvas-container"]) [style*="background"]),
 html[data-accessibility-contrast="high"] :where(.shell > main > div [style*="background"]),
 html[data-accessibility-contrast="high"] :where(.shell > nav [style*="background"]),
 html[data-accessibility-contrast="high"] :where(.modal-content [class*="bg-[#"]),
+html[data-accessibility-contrast="high"] :where(.modal-content [class*="bg-gradient-"]:not(.hc-cover-scrim):not(.pointer-events-none)),
 html[data-accessibility-contrast="high"] :where(.modal-content [style*="background"]) {
   background: #000000 !important;
   background-color: #000000 !important;
   background-image: none !important;
+}
+
+html[data-accessibility-contrast="high"] .hc-cover-scrim {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.25), transparent) !important;
 }
 
 /* Text colors -> pure crisp White across all cards, labels, descriptions and metadata */
@@ -545,26 +554,57 @@ html[data-accessibility-contrast="high"] :where(.modal-content [style*="color"])
 /* Accent text highlights & active outline items -> Neon Green text on pure Black */
 html[data-accessibility-contrast="high"] .shell [class*="text-[#D97757]"],
 html[data-accessibility-contrast="high"] .shell [class*="text-[#E28768]"],
+html[data-accessibility-contrast="high"] .shell [class*="text-[#C45730]"],
+html[data-accessibility-contrast="high"] .shell [class*="text-[#B44B25]"],
+html[data-accessibility-contrast="high"] .shell [class*="text-[#A8421E]"],
+html[data-accessibility-contrast="high"] .shell [class*="text-[#9A6008]"],
 html[data-accessibility-contrast="high"] .shell [class*="text-[#E09F3E]"],
 html[data-accessibility-contrast="high"] .shell [class*="text-[#FFD700]"],
+html[data-accessibility-contrast="high"] .modal-content [class*="text-[#D97757]"],
+html[data-accessibility-contrast="high"] .modal-content [class*="text-[#E28768]"],
+html[data-accessibility-contrast="high"] .modal-content [class*="text-[#C45730]"],
+html[data-accessibility-contrast="high"] .modal-content [class*="text-[#B44B25]"],
+html[data-accessibility-contrast="high"] .modal-content [class*="text-[#A8421E]"],
+html[data-accessibility-contrast="high"] .modal-content [class*="text-[#9A6008]"],
 html[data-accessibility-contrast="high"] .shell > main button[style*="color: rgb(217, 119, 87)"],
 html[data-accessibility-contrast="high"] .shell > main button[style*="color: rgb(217, 119, 87)"] *,
 html[data-accessibility-contrast="high"] .shell > main [style*="color: rgb(217, 119, 87)"],
+html[data-accessibility-contrast="high"] .shell > main button[style*="color: rgb(196, 87, 48)"],
+html[data-accessibility-contrast="high"] .shell > main button[style*="color: rgb(196, 87, 48)"] *,
+html[data-accessibility-contrast="high"] .shell > main [style*="color: rgb(196, 87, 48)"],
+html[data-accessibility-contrast="high"] .shell > main button[style*="color: rgb(180, 75, 37)"],
+html[data-accessibility-contrast="high"] .shell > main button[style*="color: rgb(180, 75, 37)"] *,
+html[data-accessibility-contrast="high"] .shell > main [style*="color: rgb(180, 75, 37)"],
+html[data-accessibility-contrast="high"] .shell > main [style*="color: rgb(168, 66, 30)"],
+html[data-accessibility-contrast="high"] .shell > main [style*="color: rgb(154, 96, 8)"],
+html[data-accessibility-contrast="high"] .modal-content [style*="color: rgb(180, 75, 37)"],
+html[data-accessibility-contrast="high"] .modal-content [style*="color: rgb(154, 96, 8)"],
 html[data-accessibility-contrast="high"] .side-nav-btn.active,
 html[data-accessibility-contrast="high"] .side-installed-item.active,
 html[data-accessibility-contrast="high"] .badge.ok {
   color: #00FF66 !important;
 }
 
-/* Primary CTA terracotta actions (Tailwind bg-[#D97757] or inline background rgb(217,119,87)) -> Neon Green fill + pure Black text */
+/* Primary CTA terracotta actions (Tailwind & inline) -> Neon Green fill + pure Black text */
 html[data-accessibility-contrast="high"] body .shell [class*="bg-[#D97757]"],
 html[data-accessibility-contrast="high"] body .shell [class*="bg-[#E28768]"],
+html[data-accessibility-contrast="high"] body .shell [class*="bg-[#C45730]"],
+html[data-accessibility-contrast="high"] body .shell [class*="bg-[#AE4823]"],
+html[data-accessibility-contrast="high"] body .modal-content [class*="bg-[#D97757]"],
+html[data-accessibility-contrast="high"] body .modal-content [class*="bg-[#C45730]"],
+html[data-accessibility-contrast="high"] body .modal-content [class*="bg-[#AE4823]"],
 html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(217, 119, 87)"],
 html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(217, 119, 87)"],
 html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(226, 135, 104)"],
 html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(226, 135, 104)"],
+html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(196, 87, 48)"],
+html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(196, 87, 48)"],
+html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(174, 72, 35)"],
+html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(174, 72, 35)"],
 html[data-accessibility-contrast="high"] body .modal-content button[style*="background-color: rgb(217, 119, 87)"],
-html[data-accessibility-contrast="high"] body .modal-content button[style*="background: rgb(217, 119, 87)"] {
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background: rgb(217, 119, 87)"],
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background-color: rgb(196, 87, 48)"],
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background: rgb(196, 87, 48)"] {
   background: #00FF66 !important;
   background-color: #00FF66 !important;
   color: #000000 !important;
@@ -574,12 +614,23 @@ html[data-accessibility-contrast="high"] body .modal-content button[style*="back
 
 html[data-accessibility-contrast="high"] body .shell [class*="bg-[#D97757]"] *,
 html[data-accessibility-contrast="high"] body .shell [class*="bg-[#E28768]"] *,
+html[data-accessibility-contrast="high"] body .shell [class*="bg-[#C45730]"] *,
+html[data-accessibility-contrast="high"] body .shell [class*="bg-[#AE4823]"] *,
+html[data-accessibility-contrast="high"] body .modal-content [class*="bg-[#D97757]"] *,
+html[data-accessibility-contrast="high"] body .modal-content [class*="bg-[#C45730]"] *,
+html[data-accessibility-contrast="high"] body .modal-content [class*="bg-[#AE4823]"] *,
 html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(217, 119, 87)"] *,
 html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(217, 119, 87)"] *,
 html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(226, 135, 104)"] *,
 html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(226, 135, 104)"] *,
+html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(196, 87, 48)"] *,
+html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(196, 87, 48)"] *,
+html[data-accessibility-contrast="high"] body .shell button[style*="background-color: rgb(174, 72, 35)"] *,
+html[data-accessibility-contrast="high"] body .shell button[style*="background: rgb(174, 72, 35)"] *,
 html[data-accessibility-contrast="high"] body .modal-content button[style*="background-color: rgb(217, 119, 87)"] *,
-html[data-accessibility-contrast="high"] body .modal-content button[style*="background: rgb(217, 119, 87)"] * {
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background: rgb(217, 119, 87)"] *,
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background-color: rgb(196, 87, 48)"] *,
+html[data-accessibility-contrast="high"] body .modal-content button[style*="background: rgb(196, 87, 48)"] * {
   color: #000000 !important;
   background: transparent !important;
   background-color: transparent !important;

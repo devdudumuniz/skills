@@ -86,7 +86,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
     setTimeout(() => setToast(null), 2500);
   };
 
-  // Render file tree recursively matching Image 3 (image_355289d7.png)
+  // Render file tree recursively
   const renderTree = (nodes: SkillFileNode[] | undefined, depth = 0): React.ReactNode => {
     if (!nodes || nodes.length === 0) return null;
 
@@ -108,11 +108,11 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                     padding: "4px 8px",
                     borderRadius: 6,
                     cursor: "pointer",
-                    color: "#cbd5e1",
+                    color: "#2E190F",
                     fontSize: 12.5,
                     userSelect: "none",
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.05)")}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(46,25,15,0.06)")}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
                 >
                   {/* Chevron arrow */}
@@ -133,7 +133,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                   </svg>
 
                   {/* Folder icon */}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" style={{ flexShrink: 0 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#755B4B" strokeWidth="2" style={{ flexShrink: 0 }}>
                     <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
                   </svg>
 
@@ -142,7 +142,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
-                      fontWeight: depth === 0 ? 600 : 400,
+                      fontWeight: depth === 0 ? 600 : 500,
                     }}
                   >
                     {node.name}
@@ -166,14 +166,15 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                   padding: "5px 10px",
                   borderRadius: 6,
                   cursor: "pointer",
-                  backgroundColor: isSelected ? "rgba(255, 255, 255, 0.12)" : "transparent",
-                  color: isSelected ? "#ffffff" : "#94a3b8",
+                  backgroundColor: isSelected ? "#FCEEE6" : "transparent",
+                  color: isSelected ? "#A8421E" : "#5A4032",
+                  border: isSelected ? "1px solid #E5A992" : "1px solid transparent",
                   fontSize: 12.5,
                   fontWeight: isSelected ? 600 : 400,
                   transition: "background 0.1s, color 0.1s",
                 }}
                 onMouseEnter={(e) => {
-                  if (!isSelected) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.05)";
+                  if (!isSelected) e.currentTarget.style.backgroundColor = "rgba(46,25,15,0.06)";
                 }}
                 onMouseLeave={(e) => {
                   if (!isSelected) e.currentTarget.style.backgroundColor = "transparent";
@@ -207,7 +208,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
             style={{
               fontSize: 24,
               fontWeight: 700,
-              color: "#ffffff",
+              color: "#2E190F",
               margin: "16px 0 12px 0",
               lineHeight: 1.3,
             }}
@@ -223,7 +224,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
             style={{
               fontSize: 18,
               fontWeight: 600,
-              color: "#f1f5f9",
+              color: "#2E190F",
               margin: "20px 0 10px 0",
               lineHeight: 1.35,
             }}
@@ -239,7 +240,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
             style={{
               fontSize: 15,
               fontWeight: 600,
-              color: "#e2e8f0",
+              color: "#5A4032",
               margin: "14px 0 8px 0",
             }}
           >
@@ -254,14 +255,14 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
             style={{
               fontSize: 13.5,
               lineHeight: 1.6,
-              color: "#cbd5e1",
+              color: "#2E190F",
               paddingLeft: 12,
               marginBottom: 8,
               display: "flex",
               gap: 8,
             }}
           >
-            <span style={{ color: "#94a3b8", fontWeight: 600 }}>{line.split(" ")[0]}</span>
+            <span style={{ color: "#B44B25", fontWeight: 700 }}>{line.split(" ")[0]}</span>
             <span>{line.replace(/^\d+\.\s/, "")}</span>
           </div>
         );
@@ -273,7 +274,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
             style={{
               fontSize: 13.5,
               lineHeight: 1.6,
-              color: "#D4CDC3",
+              color: "#2E190F",
               paddingLeft: 14,
               marginBottom: 6,
               display: "flex",
@@ -281,7 +282,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
               gap: 8,
             }}
           >
-            <span style={{ color: "#D97757", marginTop: 2 }}>•</span>
+            <span style={{ color: "#C45730", marginTop: 2 }}>•</span>
             <span>{line.replace("- ", "")}</span>
           </div>
         );
@@ -295,7 +296,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
           style={{
             fontSize: 13.5,
             lineHeight: 1.65,
-            color: "#cbd5e1",
+            color: "#5A4032",
             margin: "0 0 10px 0",
           }}
         >
@@ -312,7 +313,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
       style={{
         position: "fixed",
         inset: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        backgroundColor: "rgba(46, 25, 15, 0.45)",
         backdropFilter: "blur(4px)",
         display: "flex",
         alignItems: "center",
@@ -324,19 +325,20 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
       {/* Toast Alert */}
       {toast && (
         <div
+          className="hc-toast"
           style={{
             position: "fixed",
             top: 24,
             left: "50%",
             transform: "translateX(-50%)",
-            background: "#202020",
-            color: "#EAEAEA",
-            border: "1px solid #545454",
+            background: "#FFFDF9",
+            color: "#2E190F",
+            border: "1px solid #CEB79A",
             padding: "8px 18px",
             borderRadius: 8,
             fontSize: 13,
-            fontWeight: 500,
-            boxShadow: "0 10px 25px rgba(0,0,0,0.7)",
+            fontWeight: 600,
+            boxShadow: "0 10px 25px rgba(46, 25, 15, 0.18)",
             zIndex: 10000,
           }}
         >
@@ -346,16 +348,16 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
 
       {/* Main Dialog */}
       <div
-        className="skill-file-detail-dialog"
+        className="modal-content skill-file-detail-dialog"
         onClick={(e) => e.stopPropagation()}
         style={{
           width: "100%",
           maxWidth: 940,
-          backgroundColor: "#24201D",
+          backgroundColor: "#FFFDF9",
           borderRadius: 16,
-          border: "1px solid #483E34",
-          boxShadow: "0 24px 60px rgba(0, 0, 0, 0.85)",
-          color: "#F5F2EB",
+          border: "1px solid #CEB79A",
+          boxShadow: "0 24px 60px rgba(46, 25, 15, 0.22)",
+          color: "#2E190F",
           display: "flex",
           flexDirection: "column",
           maxHeight: "88vh",
@@ -366,7 +368,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
         <div
           style={{
             padding: "14px 20px",
-            borderBottom: "1px solid #383129",
+            borderBottom: "1px solid #E2D1BC",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -379,7 +381,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
             style={{
               background: "transparent",
               border: "none",
-              color: "#EAEAEA",
+              color: "#2E190F",
               fontSize: 15,
               fontWeight: 600,
               cursor: "pointer",
@@ -389,7 +391,7 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
               padding: "4px 8px 4px 0",
               transition: "opacity 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.75")}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -407,14 +409,14 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
               style={{
                 background: "transparent",
                 border: "none",
-                color: "#94a3b8",
+                color: "#5A4032",
                 cursor: "pointer",
                 padding: 4,
                 display: "flex",
                 alignItems: "center",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#94a3b8")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#2E190F")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#5A4032")}
             >
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
@@ -430,14 +432,14 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
               style={{
                 background: "transparent",
                 border: "none",
-                color: "#94a3b8",
+                color: "#5A4032",
                 cursor: "pointer",
                 padding: 4,
                 display: "flex",
                 alignItems: "center",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#94a3b8")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#2E190F")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#5A4032")}
             >
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -453,14 +455,14 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
               style={{
                 background: "transparent",
                 border: "none",
-                color: "#94a3b8",
+                color: "#5A4032",
                 cursor: "pointer",
                 padding: 4,
                 display: "flex",
                 alignItems: "center",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#94a3b8")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#2E190F")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#5A4032")}
             >
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -474,13 +476,13 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
         <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
           {/* Left Column: Arquivos / File Tree */}
           <div
-            className="w-full md:w-[220px] shrink-0 border-b md:border-b-0 md:border-r border-[#383129] p-3.5 overflow-y-auto max-h-40 md:max-h-none bg-[#191613]"
+            className="w-full md:w-[220px] shrink-0 border-b md:border-b-0 md:border-r border-[#E2D1BC] p-3.5 overflow-y-auto max-h-40 md:max-h-none bg-[#F2E6D5]"
           >
             <div
               style={{
                 fontSize: 12,
                 fontWeight: 600,
-                color: "#A39889",
+                color: "#755B4B",
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
                 marginBottom: 10,
@@ -503,12 +505,12 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                       gap: 6,
                       padding: "5px 10px",
                       borderRadius: 6,
-                      backgroundColor: "#302A24",
-                      color: "#F5F2EB",
+                      backgroundColor: "#FCEEE6",
+                      color: "#A8421E",
                       fontSize: 12.5,
                       fontWeight: 600,
                       cursor: "pointer",
-                      border: "1px solid #483E34",
+                      border: "1px solid #E5A992",
                     }}
                   >
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -528,8 +530,8 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
             {yaml && (
               <div
                 style={{
-                  backgroundColor: "#191613",
-                  border: "1px solid #383129",
+                  backgroundColor: "#F4EBDD",
+                  border: "1px solid #CEB79A",
                   borderRadius: 10,
                   padding: "14px 18px",
                   marginBottom: 24,
@@ -547,11 +549,11 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                     justifyContent: "space-between",
                     alignItems: "center",
                     marginBottom: 10,
-                    borderBottom: "1px solid #383129",
+                    borderBottom: "1px solid #E2D1BC",
                     paddingBottom: 6,
                   }}
                 >
-                  <span style={{ color: "#D97757", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em" }}>
+                  <span style={{ color: "#B44B25", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em" }}>
                     YAML
                   </span>
 
@@ -562,13 +564,14 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                     style={{
                       background: "transparent",
                       border: "none",
-                      color: copiedYaml ? "#EAEAEA" : "#9B9B9B",
+                      color: copiedYaml ? "#B44B25" : "#5A4032",
                       cursor: "pointer",
                       padding: 2,
                       display: "flex",
                       alignItems: "center",
                       gap: 4,
                       fontSize: 11,
+                      fontWeight: 600,
                     }}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -588,13 +591,13 @@ export const SkillFileDetailModal: React.FC<SkillFileDetailModalProps> = ({
                       const val = line.substring(colonIdx + 1);
                       return (
                         <div key={idx}>
-                          <span style={{ color: "#EAEAEA", fontWeight: 600 }}>{key}</span>
-                          <span style={{ color: "#767676" }}>:</span>
-                          <span style={{ color: "#C2C2C2" }}>{val}</span>
+                          <span style={{ color: "#2E190F", fontWeight: 700 }}>{key}</span>
+                          <span style={{ color: "#755B4B" }}>:</span>
+                          <span style={{ color: "#5A4032" }}>{val}</span>
                         </div>
                       );
                     }
-                    return <div key={idx} style={{ color: "#C2C2C2" }}>{line}</div>;
+                    return <div key={idx} style={{ color: "#5A4032" }}>{line}</div>;
                   })}
                 </div>
               </div>

@@ -17,7 +17,7 @@ Nossas skills foram projetadas para serem **100% reaproveitáveis em qualquer ag
 - **Compatibilidade Agnóstica**: Seguem o padrão canônico `.skill` com especificação aberta em `SKILL.md`, executáveis por Claude Code, Cursor IDE, OpenAI Codex, OpenHands, Hermes e agentes locais CLI.
 - **Zero Vazamento de Credenciais**: Nenhuma skill armazena tokens privados, chaves de API, senhas ou caminhos pessoais de ambiente. A autenticação é provida via variáveis de ambiente padrão (`process.env`) ou parâmetros de execução informados pelo usuário.
 - **Isolamento & Salvaguardas**: Cada habilidade opera com limites determinísticos e procedimentos plan-first, evitando exfiltração de dados ou mutações não autorizadas.
-- **Tema & Responsividade**: Interface configurada no **Tema do Sertão no Estilo Claude (`#D97757` Terracotta / Barro Queimado)** com paleta terrosa quente, superfícies de cerâmica/adobe e arquitetura 100% responsiva para smartphones, tablets e desktops (com menu drawer e barra inferior para navegação com o polegar).
+- **Tema & Responsividade**: Interface configurada no **Tema Claro do Sertão (`#FAF3E8` Pergaminho Quente & `#C45730` Terracota)** com superfícies em marfim/linho, acentos em cobre/barro queimado, modo opcional de Alto Contraste para baixa visão e arquitetura 100% responsiva para smartphones, tablets e desktops.
 
 ---
 
@@ -38,6 +38,7 @@ Abaixo estão **algumas das skills oficiais disponíveis** na versão atual:
 │   ├── canvas-diagram-studio/       # Diagramas Excalidraw v2 com bindings nativos e layout anti-colisão
 │   ├── excalidraw-diagram-generator/# Gerador interativo de diagramas arquiteturais via prompt no Excalidraw
 │   ├── architecture-diagram-engine/ # Diagramas técnicos Draw.io/mxGraph (C4, ER, UML) validados
+│   ├── agent-profile-builder/       # Kit técnico de perfil de agente (identidade, RBAC deny-by-default, memória e validador)
 │   ├── status-portal/               # Skill geradora de portal de status executivo
 │   ├── status-portal-registro/      # Registro auditável de progresso e timeline
 │   └── status-portal-publicar/      # Sanitização e publicação para visão cliente
@@ -105,6 +106,9 @@ npm run skills:package
 
 ---
 
-## 📄 Licença
+## 📄 Licença & Autoria
 
-Distribuído sob licença MIT. Veja `LICENSE` para mais detalhes.
+- **Autor**: **Eduardo Muniz** (`@devdudumuniz`)
+- **Licença**: Distribuído sob licença **MIT**. Veja `LICENSE` (raiz) e `skills/LICENSE` (skills e pacotes `.skill`) para mais detalhes.
+- **Segurança**: Consulte `SECURITY.md` para diretrizes de execução local segura (`HOST=127.0.0.1`) e reporte responsável de vulnerabilidades.
+

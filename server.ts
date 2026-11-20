@@ -13,8 +13,47 @@ import {
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
+const HOST = process.env.HOST || "0.0.0.0";
 
-app.use(express.json({ limit: "10mb" }));
+app.disable("x-powered-by");
+app.use(express.json({ limit: "256kb" }));
+
+app.use((_req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("Referrer-Policy", "no-referrer");
+  res.setHeader("X-Frame-Options", "SAMEORIGIN");
+  next();
+});
+
+const apiRateBuckets = new Map<string, { count: number; resetAt: number }>();
+app.use("/api/", (req, res, next) => {
+  const now = Date.now();
+  const key = req.ip || "local";
+  const current = apiRateBuckets.get(key);
+  if (!current || current.resetAt <= now) {
+    apiRateBuckets.set(key, { count: 1, resetAt: now + 60_000 });
+    return next();
+  }
+  if (current.count >= 60) {
+    return res.status(429).json({
+      error: "Muitas requisições em sequência. Aguarde alguns segundos antes de tentar novamente.",
+    });
+  }
+  current.count += 1;
+  return next();
+});
+
+function sanitizeConversation(raw: unknown): Array<{ role: "user" | "model"; content: string }> {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .slice(-24)
+    .filter((item): item is { role?: unknown; content?: unknown } => Boolean(item) && typeof item === "object")
+    .map((item) => ({
+      role: item.role === "model" ? ("model" as const) : ("user" as const),
+      content: typeof item.content === "string" ? item.content.trim().slice(0, 4000) : "",
+    }))
+    .filter((item) => item.content.length > 0);
+}
 
 // Initialize GoogleGenAI SDK per gemini-api guidelines
 const apiKey = process.env.GEMINI_API_KEY || "";
@@ -92,9 +131,15 @@ const categoryToCordel: Record<string, { image: string; icon: string; subtitle: 
 
 // 1. POST /api/skills/interview/message
 app.post("/api/skills/interview/message", async (req: Request, res: Response) => {
-  const { conversation, mascotId = "tatu_bola" } = req.body;
+  const mascotId = typeof req.body?.mascotId === "string" ? req.body.mascotId : "tatu_bola";
+  const conversation = sanitizeConversation(req.body?.conversation);
+  if (conversation.length === 0) {
+    return res.status(400).json({
+      error: "Envie ao menos uma mensagem válida em 'conversation' para iniciar a entrevista.",
+    });
+  }
   const profile = MASCOT_PROFILES[mascotId] || MASCOT_PROFILES.master;
-  const userTurns = (conversation || []).filter((c: any) => c.role === "user");
+  const userTurns = conversation.filter((c) => c.role === "user");
   const turnCount = userTurns.length;
   const lastUserMsg = userTurns[userTurns.length - 1]?.content || "";
 
@@ -215,16 +260,22 @@ Diretrizes fundamentais:
 
 // 2. POST /api/skills/interview/generate-briefing
 app.post("/api/skills/interview/generate-briefing", async (req: Request, res: Response) => {
-  const { conversation, mascotId = "tatu_bola" } = req.body;
+  const mascotId = typeof req.body?.mascotId === "string" ? req.body.mascotId : "tatu_bola";
+  const conversation = sanitizeConversation(req.body?.conversation);
+  if (conversation.length === 0) {
+    return res.status(400).json({
+      error: "É necessário fornecer o histórico da entrevista ('conversation') para gerar o briefing.",
+    });
+  }
   const profile = MASCOT_PROFILES[mascotId] || MASCOT_PROFILES.master;
 
-  const chatText = (conversation || [])
-    .map((c: any) => `${c.role === "user" ? "CLIENTE" : "ENTREVISTADOR"}: ${c.content}`)
+  const chatText = conversation
+    .map((c) => `${c.role === "user" ? "CLIENTE" : "ENTREVISTADOR"}: ${c.content}`)
     .join("\n\n");
 
-  const userMessages = (conversation || [])
-    .filter((c: any) => c.role === "user")
-    .map((c: any) => c.content);
+  const userMessages = conversation
+    .filter((c) => c.role === "user")
+    .map((c) => c.content);
 
   const primaryGoal = userMessages[0] || "Automação e engenharia especializada para agentes autônomos.";
   const techDetails = userMessages[1] || "TypeScript / Node.js com execução local segura.";
@@ -363,7 +414,16 @@ O pacote será exportado no formato universal do Deda Skills contendo:
 
 // 3. POST /api/skills/interview/refine-briefing
 app.post("/api/skills/interview/refine-briefing", async (req: Request, res: Response) => {
-  const { currentBriefing, userInstruction } = req.body;
+  const currentBriefing =
+    typeof req.body?.currentBriefing === "string" ? req.body.currentBriefing.trim().slice(0, 20000) : "";
+  const userInstruction =
+    typeof req.body?.userInstruction === "string" ? req.body.userInstruction.trim().slice(0, 4000) : "";
+
+  if (!currentBriefing || !userInstruction) {
+    return res.status(400).json({
+      error: "Informe 'currentBriefing' e 'userInstruction' válidos para refinar o briefing.",
+    });
+  }
 
   if (apiKey) {
     try {
@@ -420,7 +480,14 @@ Retorne em JSON com 'updatedBriefing' e 'explanation'.`;
 
 // 4. POST /api/skills/interview/finalize-skill
 app.post("/api/skills/interview/finalize-skill", async (req: Request, res: Response) => {
-  const { briefingMarkdown } = req.body;
+  const briefingMarkdown =
+    typeof req.body?.briefingMarkdown === "string" ? req.body.briefingMarkdown.trim().slice(0, 24000) : "";
+
+  if (!briefingMarkdown) {
+    return res.status(400).json({
+      error: "O campo 'briefingMarkdown' é obrigatório e deve ser um texto Markdown válido.",
+    });
+  }
 
   // Extract candidate name from briefing header
   const titleMatch = briefingMarkdown.match(/# Briefing de Validação da Skill:\s*([^\n\r]+)/i);
@@ -535,7 +602,7 @@ app.post("/api/skills/interview/finalize-skill", async (req: Request, res: Respo
 
 // 5. POST /api/diagrams/excalidraw — Prompt-to-Excalidraw architecture & flow generator
 app.post("/api/diagrams/excalidraw", async (req: Request, res: Response) => {
-  const rawPrompt = typeof req.body?.prompt === "string" ? req.body.prompt.trim() : "";
+  const rawPrompt = typeof req.body?.prompt === "string" ? req.body.prompt.trim().slice(0, 4000) : "";
   const topology: DiagramTopology = ["architecture", "flowchart", "dataflow", "microservices"].includes(
     req.body?.topology
   )
@@ -686,8 +753,15 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`[Deda Skills] Server rodando na porta ${PORT} (${isDev ? "Dev com Vite" : "Produção"})`);
+  app.use((err: unknown, _req: Request, res: Response, _next: express.NextFunction) => {
+    if (err instanceof SyntaxError && "body" in err) {
+      return res.status(400).json({ error: "Corpo JSON inválido." });
+    }
+    return res.status(500).json({ error: "Erro interno ao processar requisição." });
+  });
+
+  app.listen(PORT, HOST, () => {
+    console.log(`[Deda Skills] Server rodando em http://${HOST}:${PORT} (${isDev ? "Dev com Vite" : "Produção"})`);
   });
 }
 

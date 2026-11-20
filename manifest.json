@@ -2,6 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/devdudumuniz/skills/main/manifest.schema.json",
   "name": "deda-skills",
   "version": "1.0.0",
+  "author": "Eduardo Muniz",
   "description": "Universal open catalog of production-grade AI agent skills for software engineering, devops, security, systems diagnosis, exact UI replication, and engineering status governance.",
   "homepage": "https://github.com/devdudumuniz/skills",
   "license": "MIT",
@@ -157,6 +158,17 @@
       "package": "packages/excalidraw-diagram-generator.skill",
       "execution_mode": "iterative-tdd",
       "tags": ["excalidraw", "architecture", "system-flow", "prompt-to-diagram", "interactive-canvas"]
+    },
+    {
+      "id": "agent-profile-builder",
+      "name": "Agent Profile Builder",
+      "category": "engineering",
+      "description": "Adiciona um agente especializado com identidade, personalidade, modelo (piloto local qwen3.5:4b em Ollama), permissoes deny-by-default no servidor, ferramentas (API/CLI/MCP), memoria isolada por usuario/tenant e validador estatico em Python sem recriar a stack existente.",
+      "path": "skills/agent-profile-builder",
+      "entrypoint": "SKILL.md",
+      "package": "packages/agent-profile-builder.skill",
+      "execution_mode": "plan-first",
+      "tags": ["agent-profile", "rbac", "ollama", "qwen3.5", "mcp", "memory-isolation", "security"]
     }
   ]
 }

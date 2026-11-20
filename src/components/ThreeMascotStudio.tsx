@@ -58,10 +58,10 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
     const width = container.clientWidth || 800;
     const height = container.clientHeight || 560;
 
-    // 1. Scene & Background
+    // 1. Scene & Background (Warm Sandstone Light Stage)
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x121212);
-    scene.fog = new THREE.FogExp2(0x121212, 0.05);
+    scene.background = new THREE.Color(0xf2e6d5);
+    scene.fog = new THREE.FogExp2(0xf2e6d5, 0.042);
     sceneRef.current = scene;
 
     // 2. Camera
@@ -79,7 +79,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
     renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.1;
     renderer.shadowMap.enabled = !isSoftwareGl;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -114,11 +114,11 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
     scene.add(keyLight);
     keyLightRef.current = keyLight;
 
-    const fillLight = new THREE.HemisphereLight(0xd9e2ec, 0x1a1a1a, 1.0);
+    const fillLight = new THREE.HemisphereLight(0xfffaf0, 0xceb79a, 1.35);
     scene.add(fillLight);
     fillLightRef.current = fillLight;
 
-    const accentLight = new THREE.PointLight(activeMascot.mediaKit.dimension3D.accentLight, 3.5, 6);
+    const accentLight = new THREE.PointLight(activeMascot.mediaKit.dimension3D.accentLight, 3.0, 6);
     accentLight.position.set(-2, 1.8, -1);
     scene.add(accentLight);
     accentLightRef.current = accentLight;
@@ -129,9 +129,9 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
     // Floor Disk
     const floorGeo = new THREE.CircleGeometry(6, 64);
     const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x161616,
+      color: 0xe7d6c0,
       roughness: 0.85,
-      metalness: 0.2,
+      metalness: 0.12,
     });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.rotation.x = -Math.PI / 2;
@@ -142,7 +142,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
     // Ground Grid Rings
     const ringGeo = new THREE.RingGeometry(1.6, 1.63, 64);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x333333,
+      color: 0xb99e7c,
       side: THREE.DoubleSide,
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
@@ -153,9 +153,9 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
     // Raised Circular Pedestal Podium
     const podiumGeo = new THREE.CylinderGeometry(1.4, 1.5, 0.25, 48);
     const podiumMat = new THREE.MeshStandardMaterial({
-      color: 0x222222,
-      roughness: 0.35,
-      metalness: 0.8,
+      color: 0xd8c3a8,
+      roughness: 0.45,
+      metalness: 0.25,
     });
     const podium = new THREE.Mesh(podiumGeo, podiumMat);
     podium.position.y = 0.125;
@@ -185,11 +185,11 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
     // Box Frame Geometry
     const cardGeo = new THREE.BoxGeometry(1.5, 1.8, 0.06);
 
-    // Materials: side/back metallic dark, front with high-res mascot texture
+    // Materials: side/back warm bronze metallic, front with high-res mascot texture
     const edgeMat = new THREE.MeshStandardMaterial({
-      color: 0x2a2a2a,
-      roughness: 0.25,
-      metalness: 0.9,
+      color: 0x8c7058,
+      roughness: 0.3,
+      metalness: 0.65,
     });
     const faceMat = new THREE.MeshStandardMaterial({
       map: mascotTexture,
@@ -214,9 +214,9 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
     // Contact Shadow Plane beneath card
     const shadowGeo = new THREE.PlaneGeometry(1.6, 0.8);
     const shadowMat = new THREE.MeshBasicMaterial({
-      color: 0x000000,
+      color: 0x2e190f,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.22,
       depthWrite: false,
     });
     const shadowPlane = new THREE.Mesh(shadowGeo, shadowMat);
@@ -386,27 +386,27 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
     switch (lightingPreset) {
       case "cyber":
         keyLightRef.current.color.setHex(0xd0e8ff);
-        keyLightRef.current.intensity = 2.4;
-        fillLightRef.current.color.setHex(0x223344);
-        rendererRef.current.toneMappingExposure = 1.2;
+        keyLightRef.current.intensity = 2.2;
+        fillLightRef.current.color.setHex(0xb8cde0);
+        rendererRef.current.toneMappingExposure = 1.1;
         break;
       case "studio":
         keyLightRef.current.color.setHex(0xffffff);
         keyLightRef.current.intensity = 2.0;
-        fillLightRef.current.color.setHex(0xffffff);
+        fillLightRef.current.color.setHex(0xfffaf0);
         rendererRef.current.toneMappingExposure = 1.05;
         break;
       case "neon":
-        keyLightRef.current.color.setHex(0xff007f);
-        keyLightRef.current.intensity = 3.0;
-        fillLightRef.current.color.setHex(0x00ffff);
-        rendererRef.current.toneMappingExposure = 1.35;
+        keyLightRef.current.color.setHex(0xff5ea8);
+        keyLightRef.current.intensity = 2.4;
+        fillLightRef.current.color.setHex(0xa2e6e6);
+        rendererRef.current.toneMappingExposure = 1.15;
         break;
       case "golden":
-        keyLightRef.current.color.setHex(0xffaa44);
-        keyLightRef.current.intensity = 2.8;
-        fillLightRef.current.color.setHex(0x663311);
-        rendererRef.current.toneMappingExposure = 1.15;
+        keyLightRef.current.color.setHex(0xffb85c);
+        keyLightRef.current.intensity = 2.4;
+        fillLightRef.current.color.setHex(0xf2d9b8);
+        rendererRef.current.toneMappingExposure = 1.1;
         break;
     }
   }, [lightingPreset]);
@@ -468,7 +468,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
   };
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-[#383129] bg-[#191613] shadow-2xl select-none">
+    <div className="relative w-full rounded-2xl overflow-hidden border border-[#CEB79A] bg-[#F2E6D5] shadow-md select-none">
       {/* 3D WebGL Canvas Container */}
       <div
         ref={mountRef}
@@ -477,18 +477,18 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
 
       {/* Top Header Badge Overlay */}
       <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-        <div className="flex items-center gap-2.5 bg-[#24201D]/90 border border-[#483E34] px-3 py-2 rounded-xl backdrop-blur-md pointer-events-auto shadow-lg">
-          <div className="w-8 h-8 rounded-lg bg-[#32231C] border border-[#D97757]/40 flex items-center justify-center">
-            <DedaLogo size={18} color="#D97757" />
+        <div className="flex items-center gap-2.5 bg-[#FFFDF9]/95 border border-[#CEB79A] px-3 py-2 rounded-xl backdrop-blur-md pointer-events-auto shadow-md">
+          <div className="w-8 h-8 rounded-lg bg-[#FCEEE6] border border-[#E5A992] flex items-center justify-center">
+            <DedaLogo size={18} color="#C45730" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-[#F5F2EB]">{activeMascot.name}</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#32231C] border border-[#D97757]/40 text-[#E28768]">
+              <span className="text-xs font-bold text-[#2E190F]">{activeMascot.name}</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#FCEEE6] border border-[#E5A992] text-[#A8421E] font-semibold">
                 {activeMascot.nickname}
               </span>
             </div>
-            <div className="text-[10px] text-[#A39889]">{activeMascot.title} • WebGL PBR</div>
+            <div className="text-[10px] text-[#755B4B]">{activeMascot.title} • WebGL PBR</div>
           </div>
         </div>
 
@@ -496,7 +496,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
           <a
             href={activeMascot.mediaKit.objPath}
             download={`deda-mascote-${activeMascot.id}.obj`}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#2A241F] hover:bg-[#332C26] text-[#E28768] text-xs font-bold border border-[#483E34] transition-all shadow-md cursor-pointer active:scale-95"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFFDF9]/95 hover:bg-[#EFE1CE] text-[#B44B25] text-xs font-bold border border-[#CEB79A] transition-all shadow-sm cursor-pointer active:scale-95"
             title="Baixar arquivo 3D Wavefront .OBJ"
           >
             <Icon n="cube" size={13} />
@@ -506,7 +506,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
           <button
             type="button"
             onClick={handleCaptureSnapshot}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#2A241F] hover:bg-[#332C26] text-[#F5F2EB] text-xs font-bold border border-[#483E34] transition-all shadow-md cursor-pointer active:scale-95"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFFDF9]/95 hover:bg-[#EFE1CE] text-[#2E190F] text-xs font-bold border border-[#CEB79A] transition-all shadow-sm cursor-pointer active:scale-95"
             title="Capturar foto PNG da cena 3D atual"
           >
             <Icon n="download" size={13} />
@@ -518,7 +518,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
           <button
             type="button"
             onClick={() => onOpenQuickInfo(activeMascot)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white text-xs font-bold transition-all shadow-md cursor-pointer active:scale-95"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white text-xs font-bold transition-all shadow-sm cursor-pointer active:scale-95"
           >
             <Icon n="zap" size={13} />
             <span>Ver Estilo</span>
@@ -527,7 +527,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
       </div>
 
       {/* Mascot Switcher Pills */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-[#24201D]/90 border border-[#483E34] p-1.5 rounded-2xl shadow-xl pointer-events-auto max-w-[92%] overflow-x-auto">
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-[#FFFDF9]/95 border border-[#CEB79A] p-1.5 rounded-2xl shadow-md pointer-events-auto max-w-[92%] overflow-x-auto">
         {MASCOT_AGENTS.map((m) => {
           const isSelected = m.id === activeMascotId;
           return (
@@ -537,14 +537,14 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
               onClick={() => setActiveMascotId(m.id)}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
                 isSelected
-                  ? "bg-[#D97757] text-white shadow-md"
-                  : "bg-[#2A241F] text-[#D4CDC3] hover:text-[#F5F2EB] hover:bg-[#332C26]"
+                  ? "bg-[#C45730] text-white shadow-sm"
+                  : "bg-[#F7EFE4] text-[#5A4032] hover:text-[#2E190F] hover:bg-[#EFE1CE]"
               }`}
             >
               <img
                 src={m.avatar}
                 alt={m.name}
-                className="w-5 h-5 rounded-full object-cover border border-[#483E34]"
+                className="w-5 h-5 rounded-full object-cover border border-[#CEB79A]"
               />
               <span>{m.name}</span>
             </button>
@@ -559,7 +559,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
           <button
             type="button"
             onClick={() => setIsHudCollapsed(!isHudCollapsed)}
-            className="px-3 py-1 rounded-full bg-[#24201D] border border-[#483E34] hover:border-[#D97757]/60 text-[11px] font-semibold text-[#D4CDC3] hover:text-[#F5F2EB] transition-colors cursor-pointer shadow-md flex items-center gap-1"
+            className="px-3 py-1 rounded-full bg-[#FFFDF9]/95 border border-[#CEB79A] hover:border-[#C45730] text-[11px] font-semibold text-[#5A4032] hover:text-[#2E190F] transition-colors cursor-pointer shadow-sm flex items-center gap-1"
           >
             <Icon n="chevron" size={12} className={isHudCollapsed ? "rotate-180" : ""} />
             <span>{isHudCollapsed ? "Mostrar Controles 3D" : "Ocultar Controles"}</span>
@@ -568,11 +568,11 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
 
         {/* The Dock Card */}
         {!isHudCollapsed && (
-          <div className="bg-[#24201D]/95 border border-[#383129] rounded-2xl p-3 sm:p-4 shadow-2xl backdrop-blur-md">
+          <div className="bg-[#FFFDF9]/95 border border-[#CEB79A] rounded-2xl p-3 sm:p-4 shadow-xl backdrop-blur-md">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center text-xs">
               {/* Lighting Presets */}
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#A39889] block mb-1.5">
+                <span className="text-[10px] uppercase font-bold text-[#755B4B] block mb-1.5">
                   Iluminação do Estúdio
                 </span>
                 <div className="grid grid-cols-4 gap-1">
@@ -583,8 +583,8 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
                       onClick={() => setLightingPreset(preset)}
                       className={`py-1 px-1.5 rounded-lg text-[10.5px] font-semibold capitalize transition-all cursor-pointer truncate ${
                         lightingPreset === preset
-                          ? "bg-[#32231C] text-[#F5F2EB] border border-[#D97757]/60"
-                          : "bg-[#1E1A17] text-[#A39889] hover:text-[#F5F2EB]"
+                          ? "bg-[#FCEEE6] text-[#A8421E] border border-[#C45730]/60"
+                          : "bg-[#F4EBDD] text-[#5A4032] hover:text-[#2E190F] hover:bg-[#EFE1CE]"
                       }`}
                     >
                       {preset === "cyber" ? "Cyber" : preset === "studio" ? "Studio" : preset === "neon" ? "Neon" : "Sertão"}
@@ -595,35 +595,35 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
 
               {/* Camera Angle Presets */}
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#A39889] block mb-1.5">
+                <span className="text-[10px] uppercase font-bold text-[#755B4B] block mb-1.5">
                   Ângulo da Câmera
                 </span>
                 <div className="grid grid-cols-4 gap-1">
                   <button
                     type="button"
                     onClick={() => setCameraView("front")}
-                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] text-center cursor-pointer truncate"
+                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#F4EBDD] hover:bg-[#EFE1CE] text-[#2E190F] text-center cursor-pointer truncate"
                   >
                     Frente
                   </button>
                   <button
                     type="button"
                     onClick={() => setCameraView("iso")}
-                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] text-center cursor-pointer truncate"
+                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#F4EBDD] hover:bg-[#EFE1CE] text-[#2E190F] text-center cursor-pointer truncate"
                   >
                     3/4 Iso
                   </button>
                   <button
                     type="button"
                     onClick={() => setCameraView("closeup")}
-                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] text-center cursor-pointer truncate"
+                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#F4EBDD] hover:bg-[#EFE1CE] text-[#2E190F] text-center cursor-pointer truncate"
                   >
                     Close
                   </button>
                   <button
                     type="button"
                     onClick={() => setCameraView("top")}
-                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#1E1A17] hover:bg-[#2A241F] text-[#D4CDC3] text-center cursor-pointer truncate"
+                    className="py-1 px-1 rounded-lg text-[10.5px] font-semibold bg-[#F4EBDD] hover:bg-[#EFE1CE] text-[#2E190F] text-center cursor-pointer truncate"
                   >
                     Topo
                   </button>
@@ -632,7 +632,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
 
               {/* Viewport Toggles & Quick Actions */}
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#A39889] block mb-1.5">
+                <span className="text-[10px] uppercase font-bold text-[#755B4B] block mb-1.5">
                   Interatividade & Modo
                 </span>
                 <div className="flex items-center gap-2">
@@ -641,8 +641,8 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
                     onClick={() => setIsAutoRotating(!isAutoRotating)}
                     className={`flex-1 py-1 px-2 rounded-lg text-[10.5px] font-semibold transition-all cursor-pointer ${
                       isAutoRotating
-                        ? "bg-[#32231C] text-[#E28768] border border-[#D97757]/50"
-                        : "bg-[#1E1A17] text-[#A39889]"
+                        ? "bg-[#FCEEE6] text-[#A8421E] border border-[#E5A992]"
+                        : "bg-[#F4EBDD] text-[#5A4032]"
                     }`}
                   >
                     {isAutoRotating ? "Auto-Giro: Ligado" : "Auto-Giro: Pausado"}
@@ -653,8 +653,8 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
                     onClick={() => setIsWireframe(!isWireframe)}
                     className={`py-1 px-2.5 rounded-lg text-[10.5px] font-semibold transition-all cursor-pointer ${
                       isWireframe
-                        ? "bg-[#32231C] text-[#FFD700] border border-[#FFD700]/40"
-                        : "bg-[#1E1A17] text-[#A39889]"
+                        ? "bg-[#FFF6E3] text-[#9A6008] border border-[#D99B38]"
+                        : "bg-[#F4EBDD] text-[#5A4032]"
                     }`}
                     title="Alternar modo Wireframe / PBR"
                   >
@@ -664,7 +664,7 @@ export const ThreeMascotStudio: React.FC<ThreeMascotStudioProps> = ({
                   <button
                     type="button"
                     onClick={() => onTestPrompt(activeMascot.suggestedSkillId, activeMascot.samplePrompts[0])}
-                    className="py-1 px-3 rounded-lg bg-[#D97757] hover:bg-[#E28768] text-white text-[10.5px] font-bold transition-all shadow-sm cursor-pointer shrink-0"
+                    className="py-1 px-3 rounded-lg bg-[#C45730] hover:bg-[#AE4823] text-white text-[10.5px] font-bold transition-all shadow-sm cursor-pointer shrink-0"
                     title="Testar prompt do mascote"
                   >
                     Testar

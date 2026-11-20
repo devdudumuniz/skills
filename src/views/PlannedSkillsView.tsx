@@ -44,7 +44,7 @@ const INITIAL_PLANNED_SKILLS: PlannedSkillItem[] = [
       "Valide a compatibilidade de contraste de cores (WCAG AA) com base nos tokens.",
     ],
     initialSteps: [
-      "1. Autenticar com token pessoal da API Figma por referência segura (DM_SECRET_FIGMA_TOKEN).",
+      "1. Autenticar com token pessoal da API Figma por referência segura (DEDA_SECRET_FIGMA_TOKEN).",
       "2. Fazer requisição GET /v1/files/:file_key para extrair árvore de nós e estilos.",
       "3. Mapear fills, strokes e typography para classes utilitárias do Tailwind.",
       "4. Renderizar componente React limpo sem estilos inline redundantes.",
@@ -317,40 +317,42 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
   ];
 
   return (
-    <div className="max-w-[1040px] mx-auto px-2 sm:px-5 pt-2 sm:pt-6 pb-16 text-[#F5F2EB] min-w-0">
+    <div className="max-w-[1040px] mx-auto px-2 sm:px-5 pt-2 sm:pt-6 pb-16 text-[#2E190F] min-w-0">
       {/* Toast Alert */}
       {toast && (
         <div
+          className="hc-toast"
           style={{
             position: "fixed",
             bottom: 24,
             right: 24,
-            backgroundColor: "#27221E",
-            border: "1px solid #483E34",
-            color: "#F5F2EB",
+            backgroundColor: "#FFFDF9",
+            border: "1px solid #CEB79A",
+            color: "#2E190F",
             padding: "10px 18px",
             borderRadius: 10,
             fontSize: 13,
-            boxShadow: "0 8px 24px rgba(0,0,0,0.7)",
+            boxShadow: "0 12px 28px rgba(46, 25, 15, 0.14)",
             zIndex: 9999,
             display: "flex",
             alignItems: "center",
             gap: 8,
           }}
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="2.5">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C45730" strokeWidth="2.5">
             <polyline points="20 6 9 17 4 12" />
           </svg>
           <span>{toast}</span>
         </div>
       )}
 
-      {/* Header Banner - Sertão & Claude */}
+      {/* Header Banner - Sertão Pergaminho */}
       <div
         className="rounded-2xl p-5 sm:p-7 mb-5 flex flex-col md:flex-row md:items-start justify-between gap-4"
         style={{
-          backgroundColor: "#27221E",
-          border: "1px solid #383129",
+          backgroundColor: "#FFFDF9",
+          border: "1px solid #E2D1BC",
+          boxShadow: "0 4px 16px rgba(46, 25, 15, 0.05)",
         }}
       >
         <div className="max-w-[660px] min-w-0">
@@ -360,7 +362,7 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.08em",
-              color: "#D97757",
+              color: "#B44B25",
               marginBottom: 4,
             }}
           >
@@ -370,7 +372,7 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
             style={{
               fontSize: 22,
               fontWeight: 700,
-              color: "#F5F2EB",
+              color: "#2E190F",
               margin: "0 0 8px 0",
               letterSpacing: "-0.015em",
             }}
@@ -380,12 +382,12 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
           <p
             style={{
               fontSize: 13.5,
-              color: "#D4CDC3",
+              color: "#5A4032",
               margin: 0,
               lineHeight: 1.55,
             }}
           >
-            Explore as competências em roadmap para Agentes de IA. Você pode votar nas prioridades da comunidade ou clicar em <b style={{ color: "#F5F2EB" }}>Iniciar Implementação</b> para carregar a proposta diretamente no Estúdio de Criação e contribuir com o código e diretrizes.
+            Explore as competências em roadmap para Agentes de IA. Você pode votar nas prioridades da comunidade ou clicar em <b style={{ color: "#2E190F" }}>Iniciar Implementação</b> para carregar a proposta diretamente no Estúdio de Criação e contribuir com o código e diretrizes.
           </p>
         </div>
 
@@ -394,9 +396,9 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
             type="button"
             onClick={handleBack}
             style={{
-              backgroundColor: "#2A241F",
-              color: "#F5F2EB",
-              border: "1px solid #443A30",
+              backgroundColor: "#F7EFE4",
+              color: "#2E190F",
+              border: "1px solid #CEB79A",
               borderRadius: 8,
               padding: "8px 14px",
               fontSize: 12.5,
@@ -425,7 +427,7 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
               left: 14,
               top: "50%",
               transform: "translateY(-50%)",
-              color: "#A39889",
+              color: "#755B4B",
               display: "flex",
               alignItems: "center",
               pointerEvents: "none",
@@ -444,11 +446,11 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
               width: "100%",
-              backgroundColor: "#24201D",
-              border: "1px solid #443A30",
+              backgroundColor: "#FFFDF9",
+              border: "1px solid #CEB79A",
               borderRadius: 22,
               padding: "10px 16px 10px 42px",
-              color: "#F5F2EB",
+              color: "#2E190F",
               fontSize: 13.5,
               boxSizing: "border-box",
               outline: "none",
@@ -476,9 +478,9 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                   type="button"
                   onClick={() => setStatusFilter(st.id)}
                   style={{
-                    backgroundColor: active ? "#32231C" : "transparent",
-                    color: active ? "#F5F2EB" : "#A39889",
-                    border: active ? "1px solid #D97757" : "1px solid #383129",
+                    backgroundColor: active ? "#FCEEE6" : "#FFFDF9",
+                    color: active ? "#A8421E" : "#5A4032",
+                    border: active ? "1px solid #C45730" : "1px solid #CEB79A",
                     borderRadius: 18,
                     padding: "5px 12px",
                     fontSize: 12,
@@ -502,9 +504,9 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                   type="button"
                   onClick={() => setCategoryFilter(ct.id)}
                   style={{
-                    backgroundColor: active ? "#302A24" : "transparent",
-                    color: active ? "#D97757" : "#A39889",
-                    border: active ? "1px solid #D97757" : "1px solid #383129",
+                    backgroundColor: active ? "#FCEEE6" : "#FFFDF9",
+                    color: active ? "#A8421E" : "#5A4032",
+                    border: active ? "1px solid #C45730" : "1px solid #CEB79A",
                     borderRadius: 8,
                     padding: "4px 10px",
                     fontSize: 11.5,
@@ -526,7 +528,7 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
           filteredSkills.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-[#24201D] border border-[#383129] hover:border-[#483E34] transition-all cursor-pointer shadow-md"
+              className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-[#FFFDF9] border border-[#E2D1BC] hover:border-[#CEB79A] transition-all cursor-pointer shadow-sm"
             >
               {/* Top/Left Content wrapper */}
               <div className="flex flex-col sm:flex-row items-start gap-4 flex-1 min-w-0 w-full">
@@ -546,9 +548,9 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                       style={{
                         fontSize: 11,
                         fontWeight: 700,
-                        backgroundColor: "#302A24",
-                        border: "1px solid #483E34",
-                        color: "#D4CDC3",
+                        backgroundColor: "#F4EBDD",
+                        border: "1px solid #E2D1BC",
+                        color: "#5A4032",
                         padding: "2px 8px",
                         borderRadius: 6,
                         textTransform: "uppercase",
@@ -562,9 +564,9 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                       style={{
                         fontSize: 11,
                         fontWeight: 600,
-                        backgroundColor: item.status === "contribuicao_aberta" ? "#32231C" : "#2A241F",
-                        border: item.status === "contribuicao_aberta" ? "1px solid #D97757" : "1px solid #383129",
-                        color: item.status === "contribuicao_aberta" ? "#D97757" : "#A39889",
+                        backgroundColor: item.status === "contribuicao_aberta" ? "#FCEEE6" : "#F4EBDD",
+                        border: item.status === "contribuicao_aberta" ? "1px solid #C45730" : "1px solid #E2D1BC",
+                        color: item.status === "contribuicao_aberta" ? "#A8421E" : "#5A4032",
                         padding: "2px 8px",
                         borderRadius: 999,
                       }}
@@ -575,11 +577,12 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                     <span
                       style={{
                         fontSize: 11,
-                        color: "#A39889",
-                        border: "1px solid #383129",
-                        backgroundColor: "#1E1A17",
+                        color: "#5A4032",
+                        border: "1px solid #E2D1BC",
+                        backgroundColor: "#FAF3E8",
                         borderRadius: 6,
                         padding: "1px 7px",
+                        fontWeight: 600,
                       }}
                     >
                       Prioridade {item.priority}
@@ -590,7 +593,7 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                     style={{
                       fontSize: 16,
                       fontWeight: 700,
-                      color: "#F5F2EB",
+                      color: "#2E190F",
                       margin: "0 0 6px 0",
                       lineHeight: 1.3,
                     }}
@@ -601,7 +604,7 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                   <p
                     style={{
                       fontSize: 13,
-                      color: "#D4CDC3",
+                      color: "#5A4032",
                       margin: "0 0 8px 0",
                       lineHeight: 1.5,
                     }}
@@ -612,36 +615,36 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                   <div
                     style={{
                       fontSize: 12,
-                      color: "#A39889",
+                      color: "#5A4032",
                       marginBottom: 10,
                       lineHeight: 1.45,
                     }}
                   >
-                    <b style={{ color: "#F5F2EB" }}>Por que é necessária:</b> {item.whyNeeded}
+                    <b style={{ color: "#2E190F" }}>Por que é necessária:</b> {item.whyNeeded}
                   </div>
 
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px 12px", fontSize: 11.5, color: "#766B5E", flexWrap: "wrap" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px 12px", fontSize: 11.5, color: "#755B4B", flexWrap: "wrap" }}>
                     <span>
-                      Contribuintes: <b style={{ color: "#A39889" }}>{item.contributors.join(", ")}</b>
+                      Contribuintes: <b style={{ color: "#5A4032" }}>{item.contributors.join(", ")}</b>
                     </span>
                     <span className="hidden sm:inline">•</span>
                     <span>
-                      Compatível com: <span style={{ color: "#A39889" }}>{item.targetRuntimes.join(", ")}</span>
+                      Compatível com: <span style={{ color: "#5A4032" }}>{item.targetRuntimes.join(", ")}</span>
                     </span>
                   </div>
                 </div>
               </div>
 
               {/* Right action column: Vote & Start Implementing */}
-              <div className="w-full md:w-auto flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-2 pt-3 md:pt-0 border-t md:border-t-0 border-[#383129] shrink-0 flex-wrap">
+              <div className="w-full md:w-auto flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-2 pt-3 md:pt-0 border-t md:border-t-0 border-[#E2D1BC] shrink-0 flex-wrap">
                 {/* Vote button */}
                 <button
                   type="button"
                   onClick={() => handleVote(item.id)}
                   style={{
-                    backgroundColor: item.hasVoted ? "#32231C" : "#2A241F",
-                    color: item.hasVoted ? "#D97757" : "#D4CDC3",
-                    border: item.hasVoted ? "1px solid #D97757" : "1px solid #443A30",
+                    backgroundColor: item.hasVoted ? "#FCEEE6" : "#FFFDF9",
+                    color: item.hasVoted ? "#A8421E" : "#5A4032",
+                    border: item.hasVoted ? "1px solid #C45730" : "1px solid #CEB79A",
                     borderRadius: 8,
                     padding: "6px 12px",
                     fontSize: 12,
@@ -660,14 +663,14 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                   <span>{item.votes} votos</span>
                 </button>
 
-                {/* Iniciar / Contribuir button in Claude Terracotta */}
+                {/* Iniciar / Contribuir button in Warm Terracotta */}
                 <button
                   type="button"
                   onClick={() => handleStartSkill(item)}
                   style={{
-                    backgroundColor: "#D97757",
+                    backgroundColor: "#C45730",
                     color: "#FFFFFF",
-                    border: "1px solid #D97757",
+                    border: "1px solid #C45730",
                     borderRadius: 8,
                     padding: "8px 14px",
                     fontSize: 12.5,
@@ -677,11 +680,11 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                     alignItems: "center",
                     gap: 6,
                     whiteSpace: "nowrap",
-                    boxShadow: "0 2px 10px rgba(217,119,87,0.35)",
+                    boxShadow: "0 4px 12px rgba(196, 87, 48, 0.25)",
                     transition: "all 0.15s ease",
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E28768")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#D97757")}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#AE4823")}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#C45730")}
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <line x1="12" y1="5" x2="12" y2="19" />
@@ -697,8 +700,9 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                   style={{
                     background: "transparent",
                     border: "none",
-                    color: "#A39889",
+                    color: "#755B4B",
                     fontSize: 11.5,
+                    fontWeight: 600,
                     cursor: "pointer",
                     textDecoration: "underline",
                     padding: "2px 4px",
@@ -714,10 +718,10 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
             style={{
               textAlign: "center",
               padding: "40px",
-              backgroundColor: "#24201D",
+              backgroundColor: "#FFFDF9",
               borderRadius: 12,
-              border: "1px dashed #443A30",
-              color: "#A39889",
+              border: "1px dashed #CEB79A",
+              color: "#755B4B",
             }}
           >
             Nenhuma proposta encontrada para os filtros selecionados.
@@ -733,7 +737,7 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
           style={{
             position: "fixed",
             inset: 0,
-            backgroundColor: "rgba(18, 15, 13, 0.82)",
+            backgroundColor: "rgba(46, 25, 15, 0.45)",
             backdropFilter: "blur(4px)",
             display: "flex",
             alignItems: "center",
@@ -743,57 +747,59 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
           }}
         >
           <div
+            className="modal-content"
             onClick={(e) => e.stopPropagation()}
             style={{
               width: "100%",
               maxWidth: 720,
-              backgroundColor: "#24201D",
+              backgroundColor: "#FFFDF9",
               borderRadius: 14,
-              border: "1px solid #483E34",
-              boxShadow: "0 20px 45px rgba(0,0,0,0.8)",
+              border: "1px solid #CEB79A",
+              boxShadow: "0 20px 45px rgba(46, 25, 15, 0.2)",
               padding: "24px 24px",
-              color: "#F5F2EB",
+              color: "#2E190F",
               maxHeight: "88vh",
               overflowY: "auto",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                <span style={{ fontSize: 11, backgroundColor: "#302A24", border: "1px solid #483E34", padding: "2px 8px", borderRadius: 6, color: "#D4CDC3" }}>
+                <span style={{ fontSize: 11, backgroundColor: "#F4EBDD", border: "1px solid #E2D1BC", padding: "2px 8px", borderRadius: 6, color: "#5A4032", fontWeight: 600 }}>
                   {selectedProposal.categoryLabel}
                 </span>
-                <span style={{ fontSize: 11, backgroundColor: "#32231C", border: "1px solid #D97757", color: "#D97757", padding: "2px 8px", borderRadius: 999 }}>
+                <span style={{ fontSize: 11, backgroundColor: "#FCEEE6", border: "1px solid #C45730", color: "#A8421E", padding: "2px 8px", borderRadius: 999, fontWeight: 600 }}>
                   {selectedProposal.statusLabel}
                 </span>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedProposal(null)}
-                style={{ background: "transparent", border: "none", color: "#A39889", cursor: "pointer", fontSize: 16, padding: 4 }}
+                aria-label="Fechar modal"
+                style={{ background: "transparent", border: "none", color: "#755B4B", cursor: "pointer", fontSize: 16, padding: 4 }}
               >
                 ✕
               </button>
             </div>
 
-            <h2 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 10px 0", color: "#F5F2EB" }}>
+            <h2 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 10px 0", color: "#2E190F" }}>
               {selectedProposal.name}
             </h2>
 
-            <p style={{ fontSize: 13.5, color: "#D4CDC3", lineHeight: 1.55, margin: "0 0 16px 0" }}>
+            <p style={{ fontSize: 13.5, color: "#5A4032", lineHeight: 1.55, margin: "0 0 16px 0" }}>
               {selectedProposal.description}
             </p>
 
-            <div style={{ backgroundColor: "#1E1A17", border: "1px solid #383129", borderRadius: 10, padding: 14, marginBottom: 16 }}>
-              <div style={{ fontSize: 11.5, fontWeight: 700, color: "#D97757", textTransform: "uppercase", marginBottom: 6 }}>
+            <div style={{ backgroundColor: "#F4EBDD", border: "1px solid #E2D1BC", borderRadius: 10, padding: 14, marginBottom: 16 }}>
+              <div style={{ fontSize: 11.5, fontWeight: 700, color: "#B44B25", textTransform: "uppercase", marginBottom: 6 }}>
                 Justificativa & Caso de Uso Real
               </div>
-              <div style={{ fontSize: 13, color: "#F5F2EB", lineHeight: 1.5 }}>
+              <div style={{ fontSize: 13, color: "#2E190F", lineHeight: 1.5 }}>
                 {selectedProposal.whyNeeded}
               </div>
             </div>
 
             <div style={{ marginBottom: 16 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: "#A39889", textTransform: "uppercase", marginBottom: 8 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: "#5A4032", textTransform: "uppercase", marginBottom: 8 }}>
                 Sugestões de Gatilhos & Prompts
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -801,12 +807,12 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                   <div
                     key={i}
                     style={{
-                      backgroundColor: "#2A241F",
-                      border: "1px solid #383129",
+                      backgroundColor: "#FAF3E8",
+                      border: "1px solid #E2D1BC",
                       borderRadius: 8,
                       padding: "8px 12px",
                       fontSize: 12.5,
-                      color: "#D4CDC3",
+                      color: "#5A4032",
                     }}
                   >
                     💬 {pr}
@@ -816,7 +822,7 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
             </div>
 
             <div style={{ marginBottom: 20 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: "#A39889", textTransform: "uppercase", marginBottom: 8 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: "#5A4032", textTransform: "uppercase", marginBottom: 8 }}>
                 Checklist do Procedimento Inicial
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -824,12 +830,12 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                   <div
                     key={i}
                     style={{
-                      backgroundColor: "#1E1A17",
-                      border: "1px solid #383129",
+                      backgroundColor: "#FAF3E8",
+                      border: "1px solid #E2D1BC",
                       borderRadius: 8,
                       padding: "8px 12px",
                       fontSize: 12.5,
-                      color: "#F5F2EB",
+                      color: "#2E190F",
                     }}
                   >
                     {st}
@@ -838,17 +844,18 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
               </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, borderTop: "1px solid #383129", paddingTop: 16, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, borderTop: "1px solid #E2D1BC", paddingTop: 16, flexWrap: "wrap" }}>
               <button
                 type="button"
                 onClick={() => setSelectedProposal(null)}
                 style={{
-                  backgroundColor: "#2A241F",
-                  color: "#F5F2EB",
-                  border: "1px solid #443A30",
+                  backgroundColor: "#F7EFE4",
+                  color: "#2E190F",
+                  border: "1px solid #CEB79A",
                   borderRadius: 8,
                   padding: "8px 16px",
                   fontSize: 13,
+                  fontWeight: 600,
                   cursor: "pointer",
                 }}
               >
@@ -862,15 +869,15 @@ export const PlannedSkillsView: React.FC<PlannedSkillsViewProps> = ({
                   handleStartSkill(p);
                 }}
                 style={{
-                  backgroundColor: "#D97757",
+                  backgroundColor: "#C45730",
                   color: "#FFFFFF",
-                  border: "1px solid #D97757",
+                  border: "1px solid #C45730",
                   borderRadius: 8,
                   padding: "8px 18px",
                   fontSize: 13,
                   fontWeight: 700,
                   cursor: "pointer",
-                  boxShadow: "0 2px 10px rgba(217,119,87,0.35)",
+                  boxShadow: "0 4px 12px rgba(196, 87, 48, 0.25)",
                 }}
               >
                 Iniciar esta Implementação Agora

@@ -398,20 +398,21 @@ export function App() {
             position: "fixed",
             bottom: 24,
             right: 24,
-            background: "#27221E",
-            border: "1px solid #483E34",
-            color: "#F5F2EB",
+            background: "#FFFDF9",
+            border: "1px solid #CEB79A",
+            color: "#2E190F",
             padding: "12px 20px",
             borderRadius: 10,
-            boxShadow: "0 8px 24px rgba(0,0,0,.75)",
+            boxShadow: "0 12px 28px rgba(46, 25, 15, 0.14)",
             zIndex: 9999,
             display: "flex",
             alignItems: "center",
             gap: 10,
             fontSize: 13.5,
+            fontWeight: 500,
           }}
         >
-          <Icon n="check-circle" size={18} />
+          <Icon n="check-circle" size={18} className="text-[#B44B25]" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -419,12 +420,12 @@ export function App() {
       {/* =========================================================================
           MOBILE TOP APP BAR (Pattern 2 from Mobile Guidelines: Touch Friendly)
           ========================================================================= */}
-      <header className="lg:hidden sticky top-0 z-40 bg-[#191613]/95 backdrop-blur-md border-b border-[#383129] px-4 py-2.5 flex items-center justify-between">
+      <header className="lg:hidden sticky top-0 z-40 bg-[#F2E6D5]/95 backdrop-blur-md border-b border-[#E2D1BC] px-4 py-2.5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => setIsMobileDrawerOpen(true)}
-            className="w-10 h-10 p-0 rounded-xl bg-[#26211D] hover:bg-[#2F2924] text-[#F5F2EB] border border-[#3D352D] flex items-center justify-center cursor-pointer active:scale-95 shrink-0"
+            className="w-10 h-10 p-0 rounded-xl bg-[#FFFDF9] hover:bg-[#F6ECE0] text-[#2E190F] border border-[#CEB79A] flex items-center justify-center cursor-pointer active:scale-95 shrink-0"
             aria-label="Abrir Menu de Navegação"
             title="Menu"
           >
@@ -438,12 +439,12 @@ export function App() {
               window.location.hash = "#/catalog";
             }}
           >
-            <div className="w-8 h-8 rounded-lg bg-[#2A241F] border border-[#443A30] flex items-center justify-center shrink-0">
-              <DedaLogo size={18} color="#D97757" />
+            <div className="w-8 h-8 rounded-lg bg-[#FFFDF9] border border-[#CEB79A] flex items-center justify-center shrink-0">
+              <DedaLogo size={18} color="#C45730" />
             </div>
             <div>
-              <div className="text-sm font-black text-[#F5F2EB] leading-tight">Deda Skills</div>
-              <div className="text-[10px] text-[#D97757] font-bold">Catálogo de Habilidades</div>
+              <div className="text-sm font-black text-[#2E190F] leading-tight">Deda Skills</div>
+              <div className="text-[10px] text-[#B44B25] font-bold">Catálogo de Habilidades</div>
             </div>
           </div>
         </div>
@@ -456,7 +457,7 @@ export function App() {
               setCurrentView("create");
               window.location.hash = "#/criar";
             }}
-            className="py-1.5 px-3 rounded-xl bg-[#D97757] hover:bg-[#E28768] text-white text-xs font-black shadow-md flex items-center gap-1.5 cursor-pointer active:scale-95"
+            className="py-1.5 px-3 rounded-xl bg-[#C45730] hover:bg-[#AE4823] text-white text-xs font-black shadow-md flex items-center gap-1.5 cursor-pointer active:scale-95"
           >
             <Icon n="plus" size={13} />
             <span>Criar</span>
@@ -471,27 +472,27 @@ export function App() {
         <div className="fixed inset-0 z-50 flex lg:hidden" role="dialog" aria-modal="true">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-[#2E190F]/45 backdrop-blur-sm transition-opacity"
             onClick={() => setIsMobileDrawerOpen(false)}
           />
 
           {/* Drawer Panel */}
-          <div className="relative w-72 max-w-[85vw] h-full bg-[#191613] border-r border-[#383129] p-4 flex flex-col z-10 shadow-2xl overflow-y-auto">
+          <div className="relative w-72 max-w-[85vw] h-full bg-[#F2E6D5] border-r border-[#E2D1BC] p-4 flex flex-col z-10 shadow-2xl overflow-y-auto">
             {/* Drawer Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#332A22] mb-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E2D1BC] mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-[#28221D] border border-[#3E352C] flex items-center justify-center shrink-0">
-                  <DedaLogo size={18} color="#D97757" />
+                <div className="w-8 h-8 rounded-lg bg-[#FFFDF9] border border-[#CEB79A] flex items-center justify-center shrink-0">
+                  <DedaLogo size={18} color="#C45730" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-[#F5F2EB]">Deda Skills</div>
-                  <div className="text-[10px] text-[#A39889]">Navegação Mobile</div>
+                  <div className="text-sm font-bold text-[#2E190F]">Deda Skills</div>
+                  <div className="text-[10px] text-[#755B4B]">Navegação Mobile</div>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsMobileDrawerOpen(false)}
-                className="w-9 h-9 rounded-xl bg-[#26211D] hover:bg-[#302A24] text-[#D4CDC3] hover:text-white border border-[#383129] flex items-center justify-center cursor-pointer active:scale-95"
+                className="w-9 h-9 rounded-xl bg-[#FFFDF9] hover:bg-[#F6ECE0] text-[#5A4032] hover:text-[#2E190F] border border-[#CEB79A] flex items-center justify-center cursor-pointer active:scale-95"
                 aria-label="Fechar Menu"
               >
                 <Icon n="x" size={16} />
@@ -526,7 +527,7 @@ export function App() {
                 <Icon n="users" size={16} />
                 <div className="flex items-center justify-between w-full">
                   <span>Mascotes Assistentes</span>
-                  <span className="text-[10px] bg-[#2F2721] px-1.5 py-0.5 rounded-full text-[#F5F2EB] border border-[#483E34]">
+                  <span className="text-[10px] bg-[#FFFDF9] px-1.5 py-0.5 rounded-full text-[#2E190F] border border-[#CEB79A] font-semibold">
                     6
                   </span>
                 </div>
@@ -542,8 +543,8 @@ export function App() {
                   setIsMobileDrawerOpen(false);
                 }}
               >
-                <Icon n="plus" size={16} />
-                <span className="text-[#D97757] font-bold">Criar Nova Habilidade</span>
+                <Icon n="plus" size={16} className="text-[#B44B25]" />
+                <span className="text-[#B44B25] font-bold">Criar Nova Habilidade</span>
               </button>
 
               <button
@@ -610,12 +611,12 @@ export function App() {
               </button>
 
               {/* Installed Section in Drawer */}
-              <div className="pt-4 mt-2 border-t border-[#332A22]">
-                <div className="text-[11px] uppercase tracking-wider text-[#A39889] font-bold px-2 mb-2">
+              <div className="pt-4 mt-2 border-t border-[#E2D1BC]">
+                <div className="text-[11px] uppercase tracking-wider text-[#755B4B] font-bold px-2 mb-2">
                   Instalados ({installedSuites.length})
                 </div>
                 {installedSuites.length === 0 ? (
-                  <div className="text-xs text-[#766B5E] px-2 py-1">Nenhuma skill instalada.</div>
+                  <div className="text-xs text-[#8F7564] px-2 py-1">Nenhuma skill instalada.</div>
                 ) : (
                   <div className="space-y-1">
                     {installedSuites.map((s) => (
@@ -626,9 +627,9 @@ export function App() {
                           openSuiteDetail(s);
                           setIsMobileDrawerOpen(false);
                         }}
-                        className="w-full text-left text-xs py-1.5 px-2 rounded-lg hover:bg-[#28221D] text-[#D4CDC3] hover:text-white truncate flex items-center gap-2 cursor-pointer"
+                        className="w-full text-left text-xs py-1.5 px-2 rounded-lg hover:bg-[#EAE0D0] text-[#5A4032] hover:text-[#2E190F] truncate flex items-center gap-2 cursor-pointer"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]"></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C45730]"></span>
                         <span className="truncate">{s.name}</span>
                       </button>
                     ))}
@@ -638,7 +639,7 @@ export function App() {
             </div>
 
             {/* Drawer Footer */}
-            <div className="pt-3 border-t border-[#332A22] mt-auto space-y-2.5">
+            <div className="pt-3 border-t border-[#E2D1BC] mt-auto space-y-2.5">
               <button
                 type="button"
                 onClick={handleToggleContrastMode}
@@ -647,7 +648,7 @@ export function App() {
                 className={`w-full px-3 py-2 rounded-lg border text-xs font-semibold flex items-center justify-between gap-2 cursor-pointer transition-colors ${
                   contrastMeta.isHighContrast
                     ? "bg-[#000000] border-[#00FF66] text-[#00FF66]"
-                    : "bg-[#24201D] border-[#3D352D] text-[#D4CDC3] hover:text-[#F5F2EB]"
+                    : "bg-[#FFFDF9] border-[#CEB79A] text-[#5A4032] hover:text-[#2E190F]"
                 }`}
               >
                 <span className="inline-flex items-center gap-2">
@@ -658,7 +659,7 @@ export function App() {
                   {contrastMeta.isHighContrast ? "ON" : "OFF"}
                 </span>
               </button>
-              <div className="text-[11px] text-[#A39889]">Deda Skills v1.0 • Pronta</div>
+              <div className="text-[11px] text-[#755B4B]">Deda Skills v1.0 • Pronta</div>
             </div>
           </div>
         </div>
@@ -670,8 +671,8 @@ export function App() {
       <nav className="side desktop-side" aria-label="Navegação Deda Skills">
         {/* Brand */}
         <div className="brand">
-          <div className="brand-icon-wrap" style={{ background: "#28221D", borderColor: "#443A30" }}>
-            <DedaLogo size={22} color="#D97757" />
+          <div className="brand-icon-wrap" style={{ background: "#FFFDF9", borderColor: "#CEB79A" }}>
+            <DedaLogo size={22} color="#C45730" />
           </div>
           <div className="brand-info">
             <div className="brand-title">Deda Skills</div>
@@ -719,8 +720,8 @@ export function App() {
             window.location.hash = "#/criar";
           }}
         >
-          <Icon n="plus" size={16} className="text-[#D97757]" />
-          <span className="text-[#D97757] font-bold">Criar Nova Habilidade</span>
+          <Icon n="plus" size={16} className="text-[#B44B25]" />
+          <span className="text-[#B44B25] font-bold">Criar Nova Habilidade</span>
         </button>
 
         <button
@@ -764,7 +765,7 @@ export function App() {
           <Icon n="users" size={16} />
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
             <span>Mascotes Assistentes</span>
-            <span style={{ fontSize: 10, background: "#2F2721", padding: "1px 6px", borderRadius: 10, color: "#F5F2EB", border: "1px solid #483E34" }}>
+            <span style={{ fontSize: 10, background: "#FFFDF9", padding: "1px 6px", borderRadius: 10, color: "#2E190F", border: "1px solid #CEB79A", fontWeight: 700 }}>
               6
             </span>
           </div>
@@ -799,7 +800,7 @@ export function App() {
 
         <div className="side-installed-list">
           {installedSuites.length === 0 ? (
-            <div style={{ fontSize: 11.5, color: "#767676", padding: "6px 8px" }}>
+            <div style={{ fontSize: 11.5, color: "#755B4B", padding: "6px 8px" }}>
               Nenhum agente instalado ainda.
             </div>
           ) : (
@@ -858,14 +859,14 @@ export function App() {
             className={`w-full mb-3 px-2.5 py-2 rounded-lg border text-left flex items-center justify-between gap-2 cursor-pointer transition-colors ${
               contrastMeta.isHighContrast
                 ? "bg-[#000000] border-[#00FF66] text-[#00FF66]"
-                : "bg-[#24201D] hover:bg-[#2F2823] border-[#3D352D] text-[#D4CDC3] hover:text-[#F5F2EB]"
+                : "bg-[#FFFDF9] hover:bg-[#F6ECE0] border-[#CEB79A] text-[#5A4032] hover:text-[#2E190F]"
             }`}
           >
             <div className="flex items-center gap-2 min-w-0">
               <Icon
                 n="eye"
                 size={14}
-                className={contrastMeta.isHighContrast ? "text-[#00FF66] shrink-0" : "text-[#D97757] shrink-0"}
+                className={contrastMeta.isHighContrast ? "text-[#00FF66] shrink-0" : "text-[#C45730] shrink-0"}
               />
               <div className="min-w-0">
                 <div className="text-[11.5px] font-semibold leading-tight truncate">
@@ -880,14 +881,14 @@ export function App() {
               className={`text-[10px] font-bold px-1.5 py-0.5 rounded border shrink-0 ${
                 contrastMeta.isHighContrast
                   ? "border-[#00FF66] text-[#00FF66] bg-[#000000]"
-                  : "border-[#483E34] text-[#A39889] bg-[#191613]"
+                  : "border-[#CEB79A] text-[#5A4032] bg-[#F2E6D5]"
               }`}
             >
               {contrastMeta.isHighContrast ? "ON" : "OFF"}
             </span>
           </button>
           <div className="side-update">
-            <Icon n="check-circle" size={13} className="text-[#D97757]" />
+            <Icon n="check-circle" size={13} className="text-[#C45730]" />
             <span>Deda Skills v1.0 • Pronta</span>
           </div>
         </div>
@@ -1134,7 +1135,7 @@ export function App() {
           MOBILE BOTTOM TAB BAR (Pattern 1 from Mobile Guidelines: Thumb Ergonomics)
           ========================================================================= */}
       <nav
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#191613]/95 backdrop-blur-lg border-t border-[#383129] grid grid-cols-5 items-center h-16 px-1 shadow-[0_-4px_24px_rgba(0,0,0,0.65)]"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FFFDF9]/95 backdrop-blur-lg border-t border-[#E2D1BC] grid grid-cols-5 items-center h-16 px-1 shadow-[0_-4px_20px_rgba(46,25,15,0.08)]"
         aria-label="Navegação Rápida Mobile"
       >
         <button
@@ -1145,7 +1146,7 @@ export function App() {
             window.location.hash = "#/catalog";
           }}
           className={`flex flex-col items-center justify-center py-1 bg-transparent border-0 transition-colors cursor-pointer ${
-            currentView === "catalog" ? "text-[#D97757]" : "text-[#8C8172] hover:text-[#D4CDC3]"
+            currentView === "catalog" ? "text-[#B44B25]" : "text-[#755B4B] hover:text-[#2E190F]"
           }`}
         >
           <Icon n="layers" size={19} />
@@ -1159,7 +1160,7 @@ export function App() {
             window.location.hash = "#/mascotes";
           }}
           className={`flex flex-col items-center justify-center py-1 bg-transparent border-0 transition-colors cursor-pointer ${
-            currentView === "mascots" ? "text-[#D97757]" : "text-[#8C8172] hover:text-[#D4CDC3]"
+            currentView === "mascots" ? "text-[#B44B25]" : "text-[#755B4B] hover:text-[#2E190F]"
           }`}
         >
           <Icon n="users" size={19} />
@@ -1175,10 +1176,10 @@ export function App() {
           }}
           className="flex flex-col items-center justify-center -mt-4 p-0 bg-transparent border-0 cursor-pointer"
         >
-          <div className="w-11 h-11 rounded-full bg-[#D97757] text-[#FFFFFF] flex items-center justify-center shadow-[0_4px_16px_rgba(217,119,87,0.5)] border-2 border-[#191613] active:scale-95 transition-transform">
+          <div className="w-11 h-11 rounded-full bg-[#C45730] text-[#FFFFFF] flex items-center justify-center shadow-[0_4px_16px_rgba(196,87,48,0.35)] border-2 border-[#FFFDF9] active:scale-95 transition-transform">
             <Icon n="plus" size={20} />
           </div>
-          <span className="text-[10px] font-bold text-[#D97757] mt-0.5">Criar</span>
+          <span className="text-[10px] font-bold text-[#B44B25] mt-0.5">Criar</span>
         </button>
 
         <button
@@ -1188,7 +1189,7 @@ export function App() {
             window.location.hash = "#/testar";
           }}
           className={`flex flex-col items-center justify-center py-1 bg-transparent border-0 transition-colors cursor-pointer ${
-            currentView === "test" ? "text-[#D97757]" : "text-[#8C8172] hover:text-[#D4CDC3]"
+            currentView === "test" ? "text-[#B44B25]" : "text-[#755B4B] hover:text-[#2E190F]"
           }`}
         >
           <Icon n="play" size={19} />
@@ -1202,7 +1203,7 @@ export function App() {
             window.location.hash = "#/planejadas";
           }}
           className={`flex flex-col items-center justify-center py-1 bg-transparent border-0 transition-colors cursor-pointer ${
-            currentView === "planned" ? "text-[#D97757]" : "text-[#8C8172] hover:text-[#D4CDC3]"
+            currentView === "planned" ? "text-[#B44B25]" : "text-[#755B4B] hover:text-[#2E190F]"
           }`}
         >
           <Icon n="calendar" size={19} />
